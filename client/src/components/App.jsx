@@ -1,8 +1,12 @@
 import React from 'react';
+import SwissController from './SwissController.jsx';
 
 const App = () => {
   return (
-    <h1>Pogchamp!</h1>
+    <div>
+      <h1>Pogchamp</h1>
+      <SwissController />
+    </div>
   );
 }
 
