@@ -1,3 +1,27 @@
-#navigation, #sideBar, #landing {
+.navBar, .sideBar, .mainPage {
   border: 3px blue solid;
+}
+
+.navBar, .sideBar {
+  /* position: fixed; */
+  float: left;
+}
+
+#container, #sideBar, #landing {
+  height: 100%;
+}
+
+#root {
+  height: 100%
+}
+
+#logo {
+  float: left;
+  margin: 15px;
+}
+
+#signup {
+  display: inline;
+  float: right;
+  margin: 15px;
 }
