@@ -13,8 +13,7 @@ const client = new MongoClient(url);
 client.connect(function(err) {
   assert.strictEqual(null, err);
   console.log("Connected successfully to server");
-
-  const db = client.db(dbName);
-
-  client.close();
 });
+
+// create reference to database
+const db = client.db(dbName);
