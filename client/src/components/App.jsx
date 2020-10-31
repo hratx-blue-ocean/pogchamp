@@ -1,11 +1,12 @@
 import React from 'react';
-import SwissController from './SwissController.jsx';
+// import SwissController from './SwissController.jsx';
+import LandingPage from './landingPage/LandingPage.jsx';
 
 const App = () => {
   return (
     <div>
-      <h1>Pogchamp</h1>
-      <SwissController />
+      {/* <SwissController /> */}
+      <LandingPage />
     </div>
   );
 }
