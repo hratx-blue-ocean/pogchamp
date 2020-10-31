@@ -7,7 +7,8 @@ const SwissController = (props) => {
     tournamentName: '',
     gameName: '',
     rounds: '',
-    currentRound: 0
+    currentRound: 0,
+    winner: ''
   });
 
   const [playerInfo, setPlayerInfo] = useState({});
@@ -62,6 +63,10 @@ const SwissController = (props) => {
       let newScore = playerInfo[player] + currentScore;
       setPlayerInfo({...playerInfo, [player]: newScore});
     }
+  }
+
+  const revealWinner = () => {
+    setGameDetails({...gameDetails, winner: pairs[0][0]})
   }
 
   return (
@@ -127,10 +132,14 @@ const SwissController = (props) => {
       }
       {
         gameDetails.currentRound === parseInt(gameDetails.rounds)
-          ? <Button
+          ? <div>
+            <Button
               variant="contained"
               color="primary"
-              className="create-pairings">Reveal Winner!</Button>
+              className="create-pairings"
+              onClick={revealWinner}>Reveal Winner!</Button>
+            <p>{gameDetails.winner !== '' ? <p>{gameDetails.winner} wins!</p> : ''}</p>
+            </div>
           : ''
       }
     </div>
