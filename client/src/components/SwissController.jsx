@@ -7,6 +7,7 @@ const SwissController = (props) => {
     rounds: 'add rounds'
   });
   const [playerInfo, setPlayerInfo] = useState({});
+  const [pairs, setPairs] = useState([]);
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
@@ -37,20 +38,24 @@ const SwissController = (props) => {
   const handlePairings = (e) => {
     e.preventDefault();
 
-    console.log('before sorting', playerInfo)
     const sorted =
       Object.entries(playerInfo)
       .sort((a, b) => b[1] - a[1])
-      .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-
-    console.log('sorted: ', sorted)
-
+    // [alec, rose, brandon, leslie, grant, emily]
+    // [[alec, rose], [brandon, leslie], [grant,emily]]
+    for(let i = 0; i < sorted.length; i+=2) {
+      let pair = [sorted[i][0], sorted[i+1][0]]
+      setPairs([...pairs, pair])
+    }
   }
 
   const handleScoreUpdate = (e, player) => {
     e.preventDefault();
-    playerInfo[player] += parseInt(listRefs.get(player).current.value);
-    console.log('new score:', player, ':', playerInfo[player])
+    let currentScore = parseInt(listRefs.get(player).current.value);
+    if(currentScore) {
+      let newScore = playerInfo[player] + currentScore;
+      setPlayerInfo({...playerInfo, [player]: newScore});
+    }
   }
 
   return (
@@ -82,7 +87,7 @@ const SwissController = (props) => {
                 listRefs.set(player, React.createRef())
                 return (
                   <div key={index}>
-                    <p>{player}</p>
+                    <p>{player} - {playerInfo[player]}</p>
                     <form onSubmit={(e) => handleScoreUpdate(e, player)}>
                       <input ref={listRefs.get(player)}></input>
                       <button type="submit">add to score</button>
@@ -95,6 +100,13 @@ const SwissController = (props) => {
       <form>
         <button onClick={handlePairings}>Create pairings</button>
       </form>
+      {
+        pairs.length
+          ? pairs.map((pair, index) => {
+              return <p>{pair[0]} vs {pair[1]}</p>
+            })
+          : ''
+      }
     </div>
   )
 }
