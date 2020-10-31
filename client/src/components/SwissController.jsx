@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const SwissController = (props) => {
   const [gameDetails, setGameDetails] = useState({
@@ -6,6 +6,7 @@ const SwissController = (props) => {
     gameName: 'add game name',
     rounds: 'add rounds'
   });
+
   const [playerInfo, setPlayerInfo] = useState({});
   const [pairs, setPairs] = useState([]);
 
@@ -37,16 +38,15 @@ const SwissController = (props) => {
 
   const handlePairings = (e) => {
     e.preventDefault();
-
+    let newPairs = [];
     const sorted =
       Object.entries(playerInfo)
       .sort((a, b) => b[1] - a[1])
-    // [alec, rose, brandon, leslie, grant, emily]
-    // [[alec, rose], [brandon, leslie], [grant,emily]]
+
     for(let i = 0; i < sorted.length; i+=2) {
-      let pair = [sorted[i][0], sorted[i+1][0]]
-      setPairs([...pairs, pair])
+      newPairs.push([sorted[i][0], sorted[i+1][0]]);
     }
+    setPairs(newPairs);
   }
 
   const handleScoreUpdate = (e, player) => {
@@ -103,7 +103,7 @@ const SwissController = (props) => {
       {
         pairs.length
           ? pairs.map((pair, index) => {
-              return <p>{pair[0]} vs {pair[1]}</p>
+              return <p key={index}>{ pair[0] } vs { pair[1] }</p>
             })
           : ''
       }
