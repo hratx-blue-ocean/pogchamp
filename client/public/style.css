@@ -1,10 +1,28 @@
-.navBar, .sideBar, .mainPage {
+.navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
   border: 3px blue solid;
 }
 
 .navBar, .sideBar {
   /* position: fixed; */
   float: left;
+}
+
+.carouselItem {
+  width: 100%;
+  height: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+.sideBarItem {
+  height: 150px;
+}
+
+.carouselImg {
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  position: relative;
 }
 
 #container, #sideBar, #landing {
@@ -24,4 +42,17 @@
   display: inline;
   float: right;
   margin: 15px;
+}
+
+#carouselText {
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.footer {
+  height: 50px;
 }
