@@ -20,7 +20,7 @@ const SwissController = (props) => {
   // - players
   // - game name
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     setGameDetails({
@@ -30,7 +30,7 @@ const SwissController = (props) => {
     })
   }
 
-  const handleAddPlayer = () => {
+  const handleAddPlayer = (e) => {
     e.preventDefault();
     let playerName = players.current.value;
     if(playerInfo[playerName] === undefined) {
