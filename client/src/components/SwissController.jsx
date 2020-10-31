@@ -6,6 +6,7 @@ const SwissController = (props) => {
     gameName: 'Set game name',
     rounds: 0
   });
+
   const [playerInfo, setPlayerInfo] = useState({});
 
   const tournamentRef = useRef(null);
