@@ -84,7 +84,8 @@ const SwissController = (props) => {
                   <div key={index}>
                     <p>{player}</p>
                     <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                      <input ref={listRefs.get(player)}></input><button type="submit">add to score</button>
+                      <input ref={listRefs.get(player)}></input>
+                      <button type="submit">add to score</button>
                     </form>
                   </div>
                 )
@@ -96,15 +97,6 @@ const SwissController = (props) => {
       </form>
     </div>
   )
-
 }
-
-
-
-/**
- *
- * What I like doing when I need a bunch of dynamic refs is create an ES6 Map like this.listRefs = new Map(), have some kind of unique identifier and loop through in the constructor like items.forEach(item => this.listRefs.set(id, React.createRef()) and then inside the loop, assuming you’re returning react components and not html elements, use ref={this.listRefs.get(id)}.
- *
- */
 
 export default SwissController;
