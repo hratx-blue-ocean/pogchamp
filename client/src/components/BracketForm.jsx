@@ -1,35 +1,54 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
 const BracketForm = () => {
+
+  const [bracketDetails, setBracketDetails] = useState({
+    tournamentName: '',
+    gameName: '',
+    numberOfPlayers: 0,
+    prizeAmount: 0
+  });
+
+  const tournament = useRef(null);
+  const game = useRef(null);
+  const players = useRef(null);
+  const prize = useRef(null);
+
+  const handleSubmit = () => {
+    event.preventDefault();
+
+    setBracketDetails({
+      tournamentName: tournament.current.value,
+      gameName: game.current.value,
+      numberOfPlayers: players.current.value,
+      prizeAmount: prize.current.value
+    })
+  }
+
   return (
     <div>
-      <form>
-        <label>
-          Tournament Name:
-          <input type="text" placeholder="enter tournament name"/>
-        </label>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="enter tournament name" ref={tournament}/>
 
-        <label>
-          Game Name:
-          <input type="text" placeholder="enter game name"/>
-        </label>
+        <input type="text" placeholder="enter game name" ref={game}/>
 
-        <label>
-           Number of Players:
-          <input type="text" placeholder="enter number of players"/>
-        </label>
+        <input type="text" placeholder="enter number of players" ref={players}/>
 
-        <label>
-          Player Names:
-          <input type="text" placeholder="enter player names"/>
-        </label>
+        <input type="text" placeholder="enter prize amount" ref={prize}/>
 
-        <label>
-          Prize Amount:
-          <input type="text" placeholder="enter prize amount"/>
-        </label>
-        <button type="submit">Submit</button>
+        <button type="add">Submit</button>
       </form>
+
+      {
+        bracketDetails === {}
+        ? ''
+        : <div>
+          <h2> this is tournament name: {bracketDetails.tournamentName}</h2>
+          <h2> this is the game name: {bracketDetails.gameName}</h2>
+          <h2> this is the number of players: {bracketDetails.numberOfPlayers}</h2>
+          <h2> this is the prize amount: {bracketDetails.prizeAmount}</h2>
+        </div>
+      }
     </div>
   )
 }
