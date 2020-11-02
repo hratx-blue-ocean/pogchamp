@@ -3,6 +3,7 @@ import LandingPage from './LandingPage.jsx';
 import SwissController from './SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
 import PopulateForm from './PopulateForm.jsx';
+import UserDashboard from './UserDashboard.jsx';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,6 +21,9 @@ const App = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
+          <Link to="/userDashboard">User Dashboard</Link>
+        </li>
+        <li>
           <Link to="/swiss">Swiss</Link>
         </li>
         <li>
@@ -35,9 +39,13 @@ const App = () => {
           <PopulateForm />
           <BracketForm />
         </Route>
+        <Route path="/userDashboard">
+          <UserDashboard />
+        </Route>
         <Route path="/">
           <LandingPage />
         </Route>
+
       </Switch>
     </Router>
   );

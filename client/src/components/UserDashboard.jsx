@@ -6,7 +6,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-//PAGE ELEMENTS
+//PAGE ELEMENTS TO INCLUDE
 // Player Avatar
 // Create Tournament Selector
 // Player stats (Wins/Losses, Total Tournaments Played, Total Earnings, Average Earnings)
@@ -47,8 +47,7 @@ const UserDashboard = (props) => {
           </Select>
       </FormControl>
     </div>
-
-  )
+  );
 }
 
 export default UserDashboard;
