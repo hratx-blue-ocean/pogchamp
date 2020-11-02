@@ -30,7 +30,7 @@ const UserDashboard = (props) => {
 
   return (
     <div>
-      <FormControl variant="outlined" className="formControl">
+      <FormControl style={{minWidth: 120}} variant="outlined" className="formControl">
         <InputLabel id="tournament style selector">Style</InputLabel>
         <Select
           labelId="tournament style"
