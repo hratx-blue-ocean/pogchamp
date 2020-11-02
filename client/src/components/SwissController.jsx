@@ -66,7 +66,11 @@ const SwissController = (props) => {
   }
 
   const revealWinner = () => {
-    setGameDetails({...gameDetails, winner: pairs[0][0]})
+    if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
+      setGameDetails({...gameDetails, winner: 'tie'})
+    } else {
+      setGameDetails({...gameDetails, winner: pairs[0][0]})
+    }
   }
 
   return (
