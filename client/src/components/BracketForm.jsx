@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Container, Grid, Button, TextField, FormControl } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
 import './BracketForm.css';
 
 const BracketForm = () => {
@@ -83,9 +84,10 @@ const BracketForm = () => {
                   alignItems="center"
                   className="bracket-player"
                 >
-                  <p>
-                    <h4>{player.name}</h4> <DeleteForeverIcon/>
-                  </p>
+                  <h4>{player.name}</h4>
+                  <IconButton>
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
 
                 </Grid>
               )
