@@ -3,8 +3,7 @@ import {Formik} from 'formik';
 
 const SignIn = (props) => {
   return (
-    <div>
-      Sign In
+    <div id="loginContainer">
       <Formik
        initialValues={{ email: '', password: '' }}
        validate={values => {
@@ -36,6 +35,7 @@ const SignIn = (props) => {
          /* and other goodies */
        }) => (
          <form onSubmit={handleSubmit}>
+           <label>Email: </label>
            <input
              type="email"
              name="email"
@@ -44,6 +44,8 @@ const SignIn = (props) => {
              value={values.email}
            />
            {errors.email && touched.email && errors.email}
+           <br />
+           <label>Password: </label>
            <input
              type="password"
              name="password"
@@ -52,6 +54,7 @@ const SignIn = (props) => {
              value={values.password}
            />
            {errors.password && touched.password && errors.password}
+           <br />
            <button type="submit" disabled={isSubmitting}>
              Submit
            </button>
