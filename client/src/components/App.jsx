@@ -1,6 +1,6 @@
 import React from 'react';
 import LandingPage from './LandingPage.jsx';
-import SwissController from './SwissController.jsx';
+import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
 import PopulateForm from './PopulateForm.jsx';
 import UserDashboard from './UserDashboard.jsx';
