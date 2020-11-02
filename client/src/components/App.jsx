@@ -2,11 +2,14 @@ import React from 'react';
 import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
+
 import PopulateForm from './PopulateForm.jsx';
+import UserDashboard from './UserDashboard/UserDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
 import SignIn from './SignIn.jsx';
 import { Grid, Paper, Modal } from '@material-ui/core';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,6 +27,12 @@ const App = () => {
       <Login show={login} handleShow={showLogin} />
       <ul>
         <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/userDashboard">User Dashboard</Link>
+        </li>
+        <li>
           <Link to="/swiss">Swiss</Link>
         </li>
         <li>
@@ -37,12 +46,17 @@ const App = () => {
           <SwissController />
         </Route>
         <Route path="/bracket">
-          <PopulateForm />
+          {/* <PopulateForm /> */}
           <BracketForm />
+
+        </Route>
+        <Route path="/userDashboard">
+          <UserDashboard />
         </Route>
         <Route path="/">
           <LandingPage />
         </Route>
+
       </Switch>
       <Footer />
     </Router>
