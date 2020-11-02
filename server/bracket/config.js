@@ -1,1 +1,3 @@
-//some git ignore things here
+module.exports = {
+  api_key: ''
+}
