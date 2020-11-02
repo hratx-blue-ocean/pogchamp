@@ -46,7 +46,7 @@ const BracketForm = () => {
 
 
   return (
-    <Container>
+    <Container maxWidth="lg" className="bracketForm">
     <h1>Bracket</h1>
     <div>
       <h4>Tournament Name: {bracketDetails.tournamentName}</h4>
@@ -75,7 +75,9 @@ const BracketForm = () => {
       <div>
         {playersInTournament.participants.map(player => {
           return (
-           <h4>{player.name}</h4>
+            <p>
+              <h4>{player.name}</h4> <DeleteForeverIcon/>
+           </p>
           )
         })}
       </div>
@@ -87,49 +89,3 @@ const BracketForm = () => {
 
 export default BracketForm;
 
-
-
-
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <input type="text" placeholder="enter tournament name" inputRef={tournament}/>
-
-//         <input type="text" placeholder="enter game name" inputRef={game}/>
-
-//         <input type="text" placeholder="enter number of players" inputRef={players}/>
-
-//         <input type="text" placeholder="enter prize amount" inputRef={prize}/>
-
-//         <button type="add">Submit</button>
-//       </form>
-
-//       <form onSubmit={handleAddingPlayers}>
-//         <input type="text" placeholder="enter player name" inputRef={playerName}/>
-//         <button>Submit</button>
-//       </form>
-
-//       {
-//         playersInTournament.participants === []
-//         ? ''
-//         :
-//         <div>
-//           {playersInTournament.participants.map(player => {
-//             return <h1>{player.name}</h1>
-//           })}
-//         </div>
-//       }
-
-//       {
-//         bracketDetails === {}
-//         ? ''
-//         : <div>
-//           <h2> this is the tournament name: {bracketDetails.tournamentName}</h2>
-//           <h2> this is the game name: {bracketDetails.gameName}</h2>
-//           <h2> this is the number of players: {bracketDetails.numberOfPlayers}</h2>
-//           <h2> this is the prize amount: {bracketDetails.prizeAmount}</h2>
-//         </div>
-//       }
-//     </div>
-//   )
-// }
