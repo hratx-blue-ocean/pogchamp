@@ -12,6 +12,10 @@ body {
   right: 0;
 }
 
+#loginModal {
+  background: rgba(255, 255, 255, 1.0);
+}
+
 .carouselItem {
   width: 100%;
   height: inherit;

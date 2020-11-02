@@ -1,9 +1,10 @@
 import React from 'react';
 import {Formik} from 'formik';
 
-const SignUp = (props) => {
+const SignIn = (props) => {
   return (
     <div>
+      Sign In
       <Formik
        initialValues={{ email: '', password: '' }}
        validate={values => {
@@ -61,4 +62,4 @@ const SignUp = (props) => {
   )
 }
 
-export default SignUp;
+export default SignIn;
