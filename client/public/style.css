@@ -1,0 +1,86 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
+  border: 1px lightgray dotted;
+}
+
+#navigation {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.carouselItem {
+  width: 100%;
+  height: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+.static {
+  position: fixed;
+}
+
+.sideBarItem {
+  height: auto;
+}
+
+.carouselImg {
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  position: relative;
+}
+
+#container, #sideBar, #landing {
+  height: 100%;
+}
+
+#root {
+  height: 100%
+}
+
+#logo {
+  float: left;
+  margin: 15px;
+}
+
+#signup {
+  display: inline;
+  float: right;
+  margin: 15px;
+}
+
+#carouselText {
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.footer {
+  height: 50px;
+}
+
+.swissPairing {
+  margin: 30px 0;
+  background: #f3f3f3;
+  padding: 10px 20px;
+}
+.setup-form {
+  border: 1px solid #d0d0d0;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.setup-form h2 {
+  margin-top: 0;
+}
+.swiss-player {
+  padding: 10px;
+  background: #e8e8e8;
+  margin: 5px 0;
+}
