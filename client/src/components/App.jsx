@@ -25,15 +25,12 @@ const App = () => {
       <Login show={login} handleShow={showLogin} />
       <ul>
         <li>
-<<<<<<< HEAD
           <Link to="/">Home</Link>
         </li>
         <li>
           <Link to="/userDashboard">User Dashboard</Link>
         </li>
         <li>
-=======
->>>>>>> 2d693f5a18b1a88570e79cfbb1593d9569e9edc9
           <Link to="/swiss">Swiss</Link>
         </li>
         <li>
