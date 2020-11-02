@@ -9,13 +9,19 @@ const BracketForm = () => {
     prizeAmount: 0
   });
 
+  const [playersInTournament, setPlayers] = useState({
+    participants: []
+  });
+
+  const playerName = useRef(null);
+
   const tournament = useRef(null);
   const game = useRef(null);
   const players = useRef(null);
   const prize = useRef(null);
 
-  const handleSubmit = () => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     setBracketDetails({
       tournamentName: tournament.current.value,
@@ -23,6 +29,17 @@ const BracketForm = () => {
       numberOfPlayers: players.current.value,
       prizeAmount: prize.current.value
     })
+  }
+
+  const handleAddingPlayers = (e) => {
+    e.preventDefault();
+
+    let player =  playerName.current.value;
+    // console.log('this is the entire', player);
+
+    setPlayers({ participants: [...playersInTournament.participants, {name: player}]});
+
+    console.log("these are all the players" , playersInTournament);
   }
 
   return (
@@ -39,11 +56,27 @@ const BracketForm = () => {
         <button type="add">Submit</button>
       </form>
 
+      <form onSubmit={handleAddingPlayers}>
+        <input type="text" placeholder="enter player name" ref={playerName}/>
+        <button>Submit</button>
+      </form>
+
+      {
+        playersInTournament.participants === []
+        ? ''
+        :
+        <div>
+          {playersInTournament.participants.map(player => {
+            return <h1>{player.name}</h1>
+          })}
+        </div>
+      }
+
       {
         bracketDetails === {}
         ? ''
         : <div>
-          <h2> this is tournament name: {bracketDetails.tournamentName}</h2>
+          <h2> this is the tournament name: {bracketDetails.tournamentName}</h2>
           <h2> this is the game name: {bracketDetails.gameName}</h2>
           <h2> this is the number of players: {bracketDetails.numberOfPlayers}</h2>
           <h2> this is the prize amount: {bracketDetails.prizeAmount}</h2>
