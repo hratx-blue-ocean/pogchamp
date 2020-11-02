@@ -4,6 +4,10 @@ import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
 import PopulateForm from './PopulateForm.jsx';
 import UserDashboard from './UserDashboard/UserDashboard.jsx';
+import Navigation from './Navigation.jsx';
+import Footer from './Footer.jsx';
+import SignIn from './SignIn.jsx';
+import { Grid, Paper, Modal } from '@material-ui/core';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,23 +17,30 @@ import {
 
 
 const App = () => {
+  const [login, showLogin] = React.useState(false);
+
   return (
     <Router>
-      <h1><Link to="/">Pogchamp</Link></h1>
+      <Navigation handleLogin={showLogin} />
+      <Login show={login} handleShow={showLogin} />
       <ul>
         <li>
+<<<<<<< HEAD
           <Link to="/">Home</Link>
         </li>
         <li>
           <Link to="/userDashboard">User Dashboard</Link>
         </li>
         <li>
+=======
+>>>>>>> 2d693f5a18b1a88570e79cfbb1593d9569e9edc9
           <Link to="/swiss">Swiss</Link>
         </li>
         <li>
           <Link to="/bracket">Bracket</Link>
         </li>
       </ul>
+
 
       <Switch>
         <Route path="/swiss">
@@ -47,7 +58,28 @@ const App = () => {
         </Route>
 
       </Switch>
+      <Footer />
     </Router>
+  );
+}
+
+const Login = ( { show, handleShow } ) => {
+  const body = (
+    <div id="loginModal">
+      <h2>Login</h2>
+      <SignIn />
+    </div>
+  );
+
+  return (
+    <div id="modalContainer">
+      <Modal
+        open={show}
+        onClose={() => handleShow(false)}
+      >
+        {body}
+      </Modal>
+    </div>
   );
 }
 
