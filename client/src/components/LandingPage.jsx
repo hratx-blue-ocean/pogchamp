@@ -17,8 +17,8 @@ const LandingPage = (props) => {
         </Grid>
         <Grid container>
           <Grid item xs={2} className="sideBar">
-            <Drawer type="permanant">
-              <Toolbar />
+
+
                 <div className="sideBarItem">
                   Top 5 Earners
               </div>
@@ -28,10 +28,11 @@ const LandingPage = (props) => {
                 <div className="sideBarItem">
                   Top 5 Players
               </div>
-            </Drawer>
+
           </Grid>
           <Grid item xs={10} className="mainPage">
             <MainPage />
+
           </Grid>
         </Grid>
         <Grid item xs={12} className="footer">
