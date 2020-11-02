@@ -1,10 +1,28 @@
-.navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
-  border: 3px blue solid;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.navBar, .sideBar {
-  /* position: fixed; */
-  float: left;
+.navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
+  border: 1px lightgray dotted;
+}
+
+#navigation {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#loginModal {
+  margin: 50px;
+  background: rgba(255, 255, 255, 1.0);
+  height: 50%;
+  justify-items: center;
+}
+
+#loginContainer {
+  margin: 50px;
 }
 
 .carouselItem {
@@ -14,9 +32,12 @@
   z-index: 1;
 }
 
+.static {
+  position: fixed;
+}
 
 .sideBarItem {
-  height: 150px;
+  height: auto;
 }
 
 .carouselImg {
