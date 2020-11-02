@@ -3,7 +3,7 @@ import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
 import PopulateForm from './PopulateForm.jsx';
-import UserDashboard from './UserDashboard.jsx';
+import UserDashboard from './UserDashboard/UserDashboard.jsx';
 import {
   BrowserRouter as Router,
   Switch,
