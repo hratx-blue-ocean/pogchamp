@@ -41,6 +41,22 @@ const LandingPage = (props) => {
     {
       name: "Tournament 4",
       location: "HR - Senior Open Classroom"
+    },
+    {
+      name: "Tournament 5",
+      location: "Buck's Game Shop"
+    },
+    {
+      name: "Tournament 6",
+      location: "Card Den"
+    },
+    {
+      name: "Tournament 7",
+      location: "Josh's Basement"
+    },
+    {
+      name: "Tournament 8",
+      location: "HR - Senior Open Classroom"
     }
   ]
 
@@ -81,7 +97,7 @@ const LandingPage = (props) => {
               <Grid container className="tournaments">
                 <Grid item xs={12} className="tournamentCarousel">
                   <Carousel animation="slide" interval={10000}>
-                    <Grid item xs={12}>
+                    <Grid container>
                       {
                         tournaments.map((item, i) => <TournamentItem key={i} item={item} />)
                       }
@@ -116,12 +132,10 @@ function DescriptionItem(props) {
 
 function TournamentItem(props) {
   return (
-    <Grid container>
+    <Grid item xs={3}>
       <Paper>
-        <Grid item xs={12}>
           {props.item.name}
           <p>{props.item.location}</p>
-        </Grid>
       </Paper>
     </Grid>
   )
