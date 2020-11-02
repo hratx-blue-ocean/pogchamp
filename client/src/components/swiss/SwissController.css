@@ -16,3 +16,6 @@
   background: #e8e8e8;
   margin: 5px 0;
 }
+.setup-form .MuiFormControl-root, .setup-form .MuiButton-contained {
+  margin: 5px;
+}

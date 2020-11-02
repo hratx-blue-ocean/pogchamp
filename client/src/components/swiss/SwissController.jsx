@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button } from '@material-ui/core';
+import { Container, Grid, Button, TextField, FormControl } from '@material-ui/core';
 import './SwissController.css';
 
 
@@ -39,6 +39,7 @@ const SwissController = (props) => {
     if(playerInfo[playerName] === undefined) {
       setPlayerInfo({...playerInfo, [playerName]: 0})
     }
+    players.current.value = '';
   }
 
   const handlePairings = (e) => {
@@ -64,6 +65,7 @@ const SwissController = (props) => {
       let newScore = playerInfo[player] + currentScore;
       setPlayerInfo({...playerInfo, [player]: newScore});
     }
+    listRefs.get(player).current.value = '';
   }
 
   const revealWinner = () => {
@@ -75,27 +77,27 @@ const SwissController = (props) => {
   }
 
   return (
-    <div className="swissPairing">
+    <Container maxWidth="lg" className="swissPairing">
       <h1>Swiss Pairing</h1>
       <div>
         <h4>Tournament Name: {gameDetails.tournamentName}</h4>
         <h4>Game Name: {gameDetails.gameName}</h4>
         <h4>Total Rounds: {gameDetails.rounds}</h4>
       </div>
-
-      <form onSubmit={handleSubmit} className="setup-form">
+      <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h2>Add your tournament details:</h2>
-        <input type="text" placeholder="tournament name" ref={tournamentRef}></input>
-        <input type="text" placeholder="game name" ref={game}></input>
-        <input type="text" placeholder="number of rounds" ref={rounds}></input>
-        <button>Submit</button>
+        <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
+        <TextField label="game name" variant="outlined" size="small" inputRef={game} />
+        <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
+        <Button variant="contained" type="submit">Submit</Button>
       </form>
+
       {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               <h2>Add the players:</h2>
-              <input type="text" placeholder="enter player name" ref={players}></input>
-              <button>Submit</button>
+              <TextField label="enter player name" variant="outlined" size="small" inputRef={players} />
+              <Button variant="contained" type="submit">Submit</Button>
             </form>
           : ''
       }
@@ -107,13 +109,20 @@ const SwissController = (props) => {
               {Object.keys(playerInfo).map((player, index) => {
                 listRefs.set(player, React.createRef())
                 return (
-                  <div key={index} className="swiss-player">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                    key={index}
+                    className="swiss-player"
+                  >
                     <p>{player} - {playerInfo[player]}</p>
                     <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                      <input ref={listRefs.get(player)}></input>
-                      <button type="submit">add to score</button>
+                      <TextField label="add to score" variant="outlined" size="small"  inputRef={listRefs.get(player)} />
+                      <Button variant="contained" type="submit">add to score</Button>
                     </form>
-                  </div>
+                  </Grid>
                 )
               })}
             </div>
@@ -147,7 +156,7 @@ const SwissController = (props) => {
             </div>
           : ''
       }
-    </div>
+    </Container>
   )
 }
 
