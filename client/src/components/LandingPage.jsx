@@ -32,7 +32,6 @@ const LandingPage = (props) => {
           </Grid>
           <Grid item xs={10} className="mainPage">
             <MainPage />
-            <SignUp />
           </Grid>
         </Grid>
         <Grid item xs={12} className="footer">
