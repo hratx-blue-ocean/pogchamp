@@ -1,5 +1,5 @@
 import React from 'react';
-import LandingPage from './landingPage/LandingPage.jsx';
+import LandingPage from './LandingPage.jsx';
 import SwissController from './SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
 import PopulateForm from './PopulateForm.jsx';

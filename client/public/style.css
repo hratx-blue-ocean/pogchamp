@@ -3,12 +3,13 @@ body {
 }
 
 .navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
-  border: 3px blue solid;
+  border: 1px lightgray dotted;
 }
 
-.navBar, .sideBar {
-  /* position: fixed; */
-  float: left;
+#navigation {
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .carouselItem {
@@ -18,9 +19,12 @@ body {
   z-index: 1;
 }
 
+.static {
+  position: fixed;
+}
 
 .sideBarItem {
-  height: 150px;
+  height: auto;
 }
 
 .carouselImg {
