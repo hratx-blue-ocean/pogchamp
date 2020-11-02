@@ -11,7 +11,7 @@ const LandingPage = (props) => {
 
   return (
     <div>
-      <Login show={login} handleShow={showLogin}/>
+      <Login show={login} handleShow={showLogin} />
       <Grid container direction="row" alignItems="center" id="container">
         <Grid item xs={12} className="navBar">
           <div id="navigation">
@@ -56,7 +56,7 @@ const Login = ( { show, handleShow } ) => {
   );
 
   return (
-    <div>
+    <div id="modalContainer">
       <Modal
         open={show}
         onClose={() => handleShow(false)}

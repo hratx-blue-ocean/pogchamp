@@ -13,7 +13,14 @@ body {
 }
 
 #loginModal {
+  margin: 50px;
   background: rgba(255, 255, 255, 1.0);
+  height: 50%;
+  justify-items: center;
+}
+
+#modalContainer {
+  margin: 50px;
 }
 
 .carouselItem {
