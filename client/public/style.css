@@ -14,6 +14,17 @@ body {
   right: 0;
 }
 
+#loginModal {
+  margin: 50px;
+  background: rgba(255, 255, 255, 1.0);
+  height: 50%;
+  justify-items: center;
+}
+
+#loginContainer {
+  margin: 50px;
+}
+
 .carouselItem {
   width: 100%;
   height: inherit;

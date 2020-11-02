@@ -1,9 +1,9 @@
 import React from 'react';
 import {Formik} from 'formik';
 
-const SignUp = (props) => {
+const SignIn = (props) => {
   return (
-    <div>
+    <div id="loginContainer">
       <Formik
        initialValues={{ email: '', password: '' }}
        validate={values => {
@@ -35,6 +35,7 @@ const SignUp = (props) => {
          /* and other goodies */
        }) => (
          <form onSubmit={handleSubmit}>
+           <label>Email: </label>
            <input
              type="email"
              name="email"
@@ -43,6 +44,8 @@ const SignUp = (props) => {
              value={values.email}
            />
            {errors.email && touched.email && errors.email}
+           <br />
+           <label>Password: </label>
            <input
              type="password"
              name="password"
@@ -51,6 +54,7 @@ const SignUp = (props) => {
              value={values.password}
            />
            {errors.password && touched.password && errors.password}
+           <br />
            <button type="submit" disabled={isSubmitting}>
              Submit
            </button>
@@ -61,4 +65,4 @@ const SignUp = (props) => {
   )
 }
 
-export default SignUp;
+export default SignIn;
