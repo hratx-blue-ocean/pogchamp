@@ -1,10 +1,14 @@
 import React, { useState, useRef } from 'react';
+import { Button } from '@material-ui/core';
+
 
 const SwissController = (props) => {
   const [gameDetails, setGameDetails] = useState({
-    tournamentName: 'add tournament name',
-    gameName: 'add game name',
-    rounds: 'add rounds'
+    tournamentName: '',
+    gameName: '',
+    rounds: '',
+    currentRound: 0,
+    winner: ''
   });
 
   const [playerInfo, setPlayerInfo] = useState({});
@@ -20,7 +24,7 @@ const SwissController = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setGameDetails({
+    setGameDetails({...gameDetails,
       tournamentName: tournamentRef.current.value,
       gameName: game.current.value,
       rounds: rounds.current.value
@@ -47,6 +51,9 @@ const SwissController = (props) => {
       newPairs.push([sorted[i][0], sorted[i+1][0]]);
     }
     setPairs(newPairs);
+    if(gameDetails.currentRound < Number(gameDetails.rounds)) {
+      gameDetails.currentRound ++;
+    }
   }
 
   const handleScoreUpdate = (e, player) => {
@@ -58,35 +65,48 @@ const SwissController = (props) => {
     }
   }
 
+  const revealWinner = () => {
+    if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
+      setGameDetails({...gameDetails, winner: 'tie'})
+    } else {
+      setGameDetails({...gameDetails, winner: pairs[0][0]})
+    }
+  }
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="swissPairing">
+      <h1>Swiss Pairing</h1>
+      <div>
+        <h4>Tournament Name: {gameDetails.tournamentName}</h4>
+        <h4>Game Name: {gameDetails.gameName}</h4>
+        <h4>Total Rounds: {gameDetails.rounds}</h4>
+      </div>
+
+      <form onSubmit={handleSubmit} className="setup-form">
+        <h2>Add your tournament details:</h2>
         <input type="text" placeholder="tournament name" ref={tournamentRef}></input>
         <input type="text" placeholder="game name" ref={game}></input>
         <input type="text" placeholder="number of rounds" ref={rounds}></input>
         <button>Submit</button>
       </form>
-
-      <form onSubmit={handleAddPlayer}>
-        <input type="text" placeholder="enter player name" ref={players}></input>
-        <button>Submit</button>
-      </form>
-
-      <div>
-        <h2>Tournament Name: {gameDetails.tournamentName}</h2>
-        <h2>Game Name: {gameDetails.gameName}</h2>
-        <h2>Rounds: {gameDetails.rounds}</h2>
-      </div>
-
+      {
+        gameDetails.rounds !== ''
+          ? <form onSubmit={handleAddPlayer} className="setup-form">
+              <h2>Add the players:</h2>
+              <input type="text" placeholder="enter player name" ref={players}></input>
+              <button>Submit</button>
+            </form>
+          : ''
+      }
       {
         playerInfo === {}
           ? ''
           : <div>
-            <h2>Players:</h2>
+            <h4>Players:</h4>
               {Object.keys(playerInfo).map((player, index) => {
                 listRefs.set(player, React.createRef())
                 return (
-                  <div key={index}>
+                  <div key={index} className="swiss-player">
                     <p>{player} - {playerInfo[player]}</p>
                     <form onSubmit={(e) => handleScoreUpdate(e, player)}>
                       <input ref={listRefs.get(player)}></input>
@@ -97,14 +117,33 @@ const SwissController = (props) => {
               })}
             </div>
       }
-      <form>
-        <button onClick={handlePairings}>Create pairings</button>
-      </form>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handlePairings}
+        className="create-pairings">Create Pairings</Button>
+      {
+        gameDetails.currentRound > 0
+          ? <h2>Round {gameDetails.currentRound}</h2>
+          : <p>Add players and click "Create pairings" to begin</p>
+      }
       {
         pairs.length
           ? pairs.map((pair, index) => {
               return <p key={index}>{ pair[0] } vs { pair[1] }</p>
             })
+          : ''
+      }
+      {
+        gameDetails.currentRound === parseInt(gameDetails.rounds)
+          ? <div>
+            <Button
+              variant="contained"
+              color="primary"
+              className="create-pairings"
+              onClick={revealWinner}>Reveal Winner!</Button>
+            <p>{gameDetails.winner !== '' ? <p>{gameDetails.winner} wins!</p> : ''}</p>
+            </div>
           : ''
       }
     </div>
