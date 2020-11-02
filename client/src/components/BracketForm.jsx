@@ -1,4 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { Container, Grid, Button, TextField, FormControl } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
+import './BracketForm.css';
 
 const BracketForm = () => {
 
@@ -9,13 +13,19 @@ const BracketForm = () => {
     prizeAmount: 0
   });
 
+  const [playersInTournament, setPlayers] = useState({
+    participants: []
+  });
+
+  const playerName = useRef(null);
+
   const tournament = useRef(null);
   const game = useRef(null);
   const players = useRef(null);
   const prize = useRef(null);
 
-  const handleSubmit = () => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     setBracketDetails({
       tournamentName: tournament.current.value,
@@ -25,32 +35,81 @@ const BracketForm = () => {
     })
   }
 
+  const handleAddingPlayers = (e) => {
+    e.preventDefault();
+
+    let player = playerName.current.value;
+    // console.log('this is the entire', player);
+
+    setPlayers({ participants: [...playersInTournament.participants, { name: player }] });
+
+    console.log("these are all the players", playersInTournament);
+  }
+
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="enter tournament name" ref={tournament}/>
+    <Container maxWidth="lg" className="bracketForm">
+      <h1>Bracket</h1>
+      <div>
+        <h4>Tournament Name: {bracketDetails.tournamentName}</h4>
+        <h4>Game Name: {bracketDetails.gameName}</h4>
+        <h4>Number of Players: {bracketDetails.numberOfPlayers}</h4>
+        <h4>Prize Amount: {bracketDetails.prizeAmount}</h4>
+      </div>
 
-        <input type="text" placeholder="enter game name" ref={game}/>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
+        <TextField label="tournament name" inputRef={tournament} />
+        <TextField label="game name" inputRef={game} />
+        <TextField label="number of players" inputRef={players} />
+        <TextField label="prize amount" inputRef={prize} />
+        <Button type="submit">Submit</Button>
+      </form>
 
-        <input type="text" placeholder="enter number of players" ref={players}/>
-
-        <input type="text" placeholder="enter prize amount" ref={prize}/>
-
-        <button type="add">Submit</button>
+      <form noValidate autoComplete="off" onSubmit={handleAddingPlayers} className="setup-form">
+        <TextField label="player name" inputRef={playerName} />
+        <Button type="submit">Add</Button>
       </form>
 
       {
-        bracketDetails === {}
-        ? ''
-        : <div>
-          <h2> this is tournament name: {bracketDetails.tournamentName}</h2>
-          <h2> this is the game name: {bracketDetails.gameName}</h2>
-          <h2> this is the number of players: {bracketDetails.numberOfPlayers}</h2>
-          <h2> this is the prize amount: {bracketDetails.prizeAmount}</h2>
-        </div>
+        playersInTournament.participants === []
+          ? ''
+          :
+          <div>
+            {playersInTournament.participants.map(player => {
+              return (
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                  className="bracket-player"
+                >
+                  <h4>{player.name}</h4>
+                  <IconButton>
+                    <DeleteForeverIcon fontSize="small" />
+                  </IconButton>
+
+                </Grid>
+              )
+            })}
+          </div>
       }
-    </div>
+    </Container>
+
   )
 }
 
 export default BracketForm;
+
+{/* <Grid
+  container
+  direction="row"
+  justify="space-between"
+  alignItems="center"
+  className="bracket-player"
+>
+  <p>
+    <h4>{player.name}</h4> <DeleteForeverIcon />
+  </p>
+
+</Grid> */}
