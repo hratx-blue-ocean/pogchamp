@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { Container, Grid, Button, TextField, FormControl } from '@material-ui/core';
 import './SwissController.css';
 
-
 const SwissController = (props) => {
   const [gameDetails, setGameDetails] = useState({
     tournamentName: '',
@@ -117,7 +116,7 @@ const SwissController = (props) => {
                 }
               </Container>
             </div>
-          :<div>
+          : <div>
               { gameDetails.currentRound === 0
                 ? <Button
                     variant="contained"
@@ -160,7 +159,7 @@ const SwissController = (props) => {
                   >
                     <p>{player} - {playerInfo[player]}</p>
                     <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                      <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} />
+                      <TextField label="add to score" variant="outlined" size="small"  inputRef={listRefs.get(player)} />
                       <Button variant="contained" type="submit">add to score</Button>
                     </form>
                   </Grid>
@@ -168,12 +167,16 @@ const SwissController = (props) => {
               })}
               {
                 gameDetails.currentRound > 0 && gameDetails.currentRound !== (parseInt(gameDetails.rounds) + 1)
-                  ? <Button onClick={handlePairings} variant="contained" className="round-progress">Round {gameDetails.currentRound} scoring complete</Button>
+                  ? <Button onClick={handlePairings}
+                      variant="outlined"
+                      className="round-progress">
+                      Round {gameDetails.currentRound} scoring complete</Button>
                   : ''
               }
 
             </div>
       }
+
     </Container>
   )
 }
