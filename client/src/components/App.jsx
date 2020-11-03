@@ -3,6 +3,7 @@ import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
 import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
+import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
 import SignIn from './SignIn.jsx';
@@ -31,6 +32,9 @@ const App = () => {
           <Link to="/organizerDashboard">Organizer Dashboard</Link>
         </li>
         <li>
+          <Link to="/playerDashboard">Player Dashboard</Link>
+        </li>
+        <li>
           <Link to="/swiss">Swiss</Link>
         </li>
         <li>
@@ -50,6 +54,9 @@ const App = () => {
         </Route>
         <Route path="/organizerDashboard">
           <OrganizerDashboard />
+        </Route>
+        <Route path="/playerDashboard">
+          <PlayerDashboard />
         </Route>
         <Route path="/">
           <LandingPage />
