@@ -1,9 +1,8 @@
 import React from 'react';
 import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
-import BracketForm from './BracketForm.jsx';
+import BracketComponent from './bracket/BracketComponent.jsx';
 
-// import PopulateForm from './PopulateForm.jsx';
 import UserDashboard from './UserDashboard/UserDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
@@ -16,7 +15,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
 
 const App = () => {
   const [login, showLogin] = React.useState(false);
@@ -47,8 +45,7 @@ const App = () => {
         </Route>
         <Route path="/bracket">
           {/* <PopulateForm /> */}
-          <BracketForm />
-
+          <BracketComponent />
         </Route>
         <Route path="/userDashboard">
           <UserDashboard />
