@@ -22,7 +22,7 @@ const App = () => {
 
   return (
     <Router>
-      <div id="header">
+      <div className="header">
         <Navigation handleLogin={showLogin} />
         <Login show={login} handleShow={showLogin} />
         <ul>
