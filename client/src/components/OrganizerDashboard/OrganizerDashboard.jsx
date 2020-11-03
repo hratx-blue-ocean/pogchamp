@@ -14,7 +14,7 @@ import {
   Button,
   Typography
 } from '@material-ui/core';
-import './UserDashboard.css';
+import './OrganizerDashboard.css';
 
 //PAGE ELEMENTS TO INCLUDE
 // Player Avatar

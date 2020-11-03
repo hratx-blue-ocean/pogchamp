@@ -8,13 +8,12 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'pogchamp';
 
 // create a new client
-const client = new MongoClient(url);
+const client = new MongoClient(url, { useUnifiedTopology: true });
 
-client.connect(function(err) {
+// create a connection
+client.connect((err, result) => {
   assert.strictEqual(null, err);
   console.log("Connected successfully to server");
 });
 
-// create reference to database
 const db = client.db(dbName);
-
