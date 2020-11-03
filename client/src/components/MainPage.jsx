@@ -58,14 +58,18 @@ const tournaments = [
 const MainPage = (props) => {
   return (
     <div>
-      <Carousel animation="slide" interval={6000}>
-        {
-          description.map((item, i) => <DescriptionItem key={i} item={item} />)
-        }
-      </Carousel>
+      <Grid container className="Description">
+        <Grid item xs={11} >
+          <Carousel animation="slide" interval={6000}>
+            {
+              description.map((item, i) => <DescriptionItem key={i} item={item} />)
+            }
+          </Carousel>
+        </Grid>
+      </Grid>
       <hr />
       <Grid container className="tournaments">
-        <Grid item xs={12} spacing={1} className="tournamentCarousel">
+        <Grid item xs={11} spacing={1} className="tournamentCarousel">
           <Carousel animation="slide" interval={10000}>
             <Grid container spacing={1}>
               {

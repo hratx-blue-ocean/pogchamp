@@ -8,7 +8,7 @@ body {
 }
 
 a:visited {
-  color: #83858b
+  color: #ff7f28
 
 }
 
@@ -25,6 +25,14 @@ a:visited {
   right: 0;
   position: sticky;
   z-index: 1000;
+}
+
+.mainPage {
+  padding-left: 30px;
+}
+
+.sideBarHeader {
+  color: #ff7f28
 }
 
 #loginModal {
