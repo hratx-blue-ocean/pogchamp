@@ -110,10 +110,16 @@ const SwissController = (props) => {
                 onClick={revealWinner}>Reveal Winner!</Button>
               <Container maxWidth="sm" className="pairings-container">
                 {
-                  gameDetails.winner !== ''
+                  gameDetails.winner !== '' && gameDetails.winner !== 'tie'
                     ? <h2>{gameDetails.winner} wins!!</h2>
                     : ''
                 }
+                {
+                  gameDetails.winner !== '' && gameDetails.winner === 'tie'
+                    ? <h2>It's a tie!</h2>
+                    : ''
+                }
+
               </Container>
             </div>
           : <div>
@@ -159,7 +165,7 @@ const SwissController = (props) => {
                   >
                     <p>{player} - {playerInfo[player]}</p>
                     <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                      <TextField label="add to score" variant="outlined" size="small"  inputRef={listRefs.get(player)} />
+                      <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} />
                       <Button variant="contained" type="submit">add to score</Button>
                     </form>
                   </Grid>
