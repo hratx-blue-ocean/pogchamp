@@ -16,8 +16,8 @@ import TableRow from '@material-ui/core/TableRow';
 const rows = [
   createData(0, 'Magic, The Gathering', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Swiss'),
   createData(1, 'Team Fortress 2', '07 Apr, 2019', 'Mothership Games', 'Austin, TX', 'Bracket'),
-  createData(2, 'Counterstrike', '12 Aug, 2019', 'Mage\'s Sanctum', 'Austin, TX', 'Swiss'),
-  createData(3, 'Starcraft 2', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Bracket'),
+  createData(2, 'Starcraft 2', '12 Aug, 2019', 'Mage\'s Sanctum', 'Austin, TX', 'Swiss'),
+  createData(3, 'Warhammer 40k', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Bracket'),
   createData(4, 'Super Smash Bros', '16 Mar, 2019', 'Josh\'s Couch', 'Austin, TX', 'Swiss'),
 ];
 
