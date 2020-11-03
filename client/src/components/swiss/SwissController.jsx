@@ -48,23 +48,22 @@ const SwissController = (props) => {
     players.current.value = '';
   }
 
-
-  const handlePairings = (e) => {
-    e.preventDefault();
-
-    let roundArray = [];
+  const checkWinners = () => {
     let newRoundWinners = {};
 
+
     let createArray = (winner) => {
+      let roundArray = [];
       for(let i = 1; i <= Number(gameDetails.rounds); i++) {
         if(gameDetails.currentRound === i) {
-          roundArray[i] = true;
+          roundArray.push(true)
         } else {
-          console.log('roundWinners[winner]', roundWinners[winner])
-          roundArray[i] = roundWinners[winner][i]
+          roundArray.push(roundWinners[winner][i])
         }
       }
+      newRoundWinners[winner] = roundArray;
     }
+
 
     for(let i = 0; i < pairs.length; i++) {
       let firstPlayer = pairs[i][0];
@@ -75,9 +74,15 @@ const SwissController = (props) => {
         : secondPlayer;
 
       createArray(winner);
-      newRoundWinners[winner] = roundArray;
+
     }
+
     setRoundWinners({...roundWinners, ...newRoundWinners});
+  }
+
+  const handlePairings = (e) => {
+    checkWinners();
+    e.preventDefault();
 
     let newPairs = [];
     const sorted =
