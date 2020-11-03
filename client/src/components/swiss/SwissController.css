@@ -40,3 +40,9 @@
   margin: 20px auto 0;
   font-size: 17px;
 }
+.MuiSvgIcon-root.won {
+  color: #08ca08;
+}
+.MuiSvgIcon-root.lost {
+    color: #a00000;
+}
