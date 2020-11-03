@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { Container, Grid, Button, TextField, FormControl } from '@material-ui/core';
 import './SwissController.css';
 
-
 const SwissController = (props) => {
   const [gameDetails, setGameDetails] = useState({
     tournamentName: '',
@@ -53,7 +52,7 @@ const SwissController = (props) => {
       newPairs.push([sorted[i][0], sorted[i+1][0]]);
     }
     setPairs(newPairs);
-    if(gameDetails.currentRound < Number(gameDetails.rounds)) {
+    if(gameDetails.currentRound <= Number(gameDetails.rounds)) {
       gameDetails.currentRound ++;
     }
   }
@@ -102,6 +101,47 @@ const SwissController = (props) => {
           : ''
       }
       {
+        gameDetails.currentRound === (parseInt(gameDetails.rounds) + 1)
+          ? <div>
+              <Button
+                variant="contained"
+                color="primary"
+                className="create-pairings"
+                onClick={revealWinner}>Reveal Winner!</Button>
+              <Container maxWidth="sm" className="pairings-container">
+                {
+                  gameDetails.winner !== ''
+                    ? <h2>{gameDetails.winner} wins!!</h2>
+                    : ''
+                }
+              </Container>
+            </div>
+          : <div>
+              { gameDetails.currentRound === 0
+                ? <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handlePairings}
+                    className="create-pairings">Create Pairings</Button>
+                : ''
+              }
+                <Container maxWidth="sm" className="pairings-container">
+                  {
+                    gameDetails.currentRound > 0
+                      ? <h2>Round {gameDetails.currentRound}</h2>
+                      : <p>Add players and click "Create pairings" to begin</p>
+                  }
+                  {
+                    pairs.length
+                      ? pairs.map((pair, index) => {
+                          return <p key={index}>{ pair[0] } vs { pair[1] }</p>
+                        })
+                      : ''
+                  }
+                </Container>
+            </div>
+      }
+      {
         playerInfo === {}
           ? ''
           : <div>
@@ -125,37 +165,18 @@ const SwissController = (props) => {
                   </Grid>
                 )
               })}
+              {
+                gameDetails.currentRound > 0 && gameDetails.currentRound !== (parseInt(gameDetails.rounds) + 1)
+                  ? <Button onClick={handlePairings}
+                      variant="outlined"
+                      className="round-progress">
+                      Round {gameDetails.currentRound} scoring complete</Button>
+                  : ''
+              }
+
             </div>
       }
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handlePairings}
-        className="create-pairings">Create Pairings</Button>
-      {
-        gameDetails.currentRound > 0
-          ? <h2>Round {gameDetails.currentRound}</h2>
-          : <p>Add players and click "Create pairings" to begin</p>
-      }
-      {
-        pairs.length
-          ? pairs.map((pair, index) => {
-              return <p key={index}>{ pair[0] } vs { pair[1] }</p>
-            })
-          : ''
-      }
-      {
-        gameDetails.currentRound === parseInt(gameDetails.rounds)
-          ? <div>
-            <Button
-              variant="contained"
-              color="primary"
-              className="create-pairings"
-              onClick={revealWinner}>Reveal Winner!</Button>
-            <p>{gameDetails.winner !== '' ? <p>{gameDetails.winner} wins!</p> : ''}</p>
-            </div>
-          : ''
-      }
+
     </Container>
   )
 }
