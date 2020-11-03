@@ -2,8 +2,7 @@ import React from 'react';
 import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
-
-import UserDashboard from './UserDashboard/UserDashboard.jsx';
+import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
 import SignIn from './SignIn.jsx';
@@ -22,6 +21,7 @@ const App = () => {
 
   return (
     <Router>
+
       <div id="header">
         <Navigation handleLogin={showLogin} />
         <Login show={login} handleShow={showLogin} />
@@ -41,7 +41,6 @@ const App = () => {
         </ul>
       </div>
 
-
       <Switch>
         <Route path="/swiss">
           <SwissController />
@@ -51,8 +50,8 @@ const App = () => {
           <BracketForm />
 
         </Route>
-        <Route path="/userDashboard">
-          <UserDashboard />
+        <Route path="/organizerDashboard">
+          <OrganizerDashboard />
         </Route>
         <Route path="/">
           <LandingPage />
