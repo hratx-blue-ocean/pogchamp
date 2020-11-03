@@ -49,7 +49,7 @@ const App = () => {
 
         </Route>
         <Route path="/organizerDashboard">
-          <UserDashboard />
+          <OrganizerDashboard />
         </Route>
         <Route path="/">
           <LandingPage />

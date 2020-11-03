@@ -6,22 +6,16 @@ import {
   FormHelperText,
   FormControl,
   Select,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography
 } from '@material-ui/core';
+import TournamentHistory from './TournamentHistory/TournamentHistory.jsx';
 import './OrganizerDashboard.css';
+import './TournamentHistory/TournamentHistory.css';
 
 //PAGE ELEMENTS TO INCLUDE
-// Player Avatar
+// Organizer Avatar
 // Create Tournament Selector
 // Player stats (Wins/Losses, Total Tournaments Played, Total Earnings, Average Earnings)
-// Player Tournament History (Tournament Name, Game Name, W or L)
-// Nearby/Upcoming Tournaments Viewer
+// Organizer's Tournament History (Tournament Name, Game Name, Winner)
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -39,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserDashboard = (props) => {
+const OrganizerDashboard = (props) => {
   const classes = useStyles();
   const [tournamentStyle, setTournamentStyle] = useState('');
 
@@ -63,10 +57,10 @@ const UserDashboard = (props) => {
             <MenuItem value={"Swiss"}>Swiss</MenuItem>
           </Select>
       </FormControl>
-
+      <TournamentHistory />
     </div>
   );
 }
 
-export default UserDashboard;
+export default OrganizerDashboard;
 
