@@ -1,7 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
+import {
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from '@material-ui/core';
 import './PlayerDashboard.css';
+import PlayerTournamentHistory from './PlayerTournamentHistory/PlayerTournamentHistory.jsx';
 
 const useStyles = makeStyles({
   root: {
@@ -11,6 +20,18 @@ const useStyles = makeStyles({
     height: 140,
   },
 });
+
+const createData = (id, game, date, location, cityAndState, style, result) => {
+  return { id, game, date, location, cityAndState, style , result};
+}
+
+const rows = [
+  createData(0, 'Magic, The Gathering', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Swiss', 'Win'),
+  createData(1, 'Team Fortress 2', '07 Apr, 2019', 'Mothership Games', 'Austin, TX', 'Bracket', 'Win'),
+  createData(2, 'Starcraft 2', '12 Aug, 2019', 'Mage\'s Sanctum', 'Austin, TX', 'Swiss', 'Win'),
+  createData(3, 'Warhammer 40k', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Bracket', 'Win'),
+  createData(4, 'Super Smash Bros', '16 Mar, 2019', 'Josh\'s Couch', 'Austin, TX', 'Swiss', 'Win'),
+];
 
 const PlayerDashboard = () => {
   const classes = useStyles();
@@ -42,6 +63,7 @@ const PlayerDashboard = () => {
           </Button>
         </CardActions>
       </Card>
+      <PlayerTournamentHistory />
     </>
   );
 }
