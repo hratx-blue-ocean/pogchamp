@@ -2,16 +2,29 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 15px;
   padding: 0;
+  background-color: #58595e;
+  /* border: #ff7f28 1px solid; */
+  color: #272a33
+}
+
+a:visited {
+  color: #83858b
+
 }
 
 .navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
   /* border: 1px lightgray dotted; */
 }
 
-#navigation {
+#header {
+  background: inherit;
+  background-color: #272a33;
+  color: #83858b;
   top: 0;
   left: 0;
   right: 0;
+  position: sticky;
+  z-index: 1000;
 }
 
 #loginModal {
