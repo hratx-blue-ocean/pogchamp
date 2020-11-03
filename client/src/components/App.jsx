@@ -2,7 +2,7 @@ import React from 'react';
 import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
 import BracketForm from './BracketForm.jsx';
-import UserDashboard from './UserDashboard/UserDashboard.jsx';
+import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
 import SignIn from './SignIn.jsx';
@@ -28,7 +28,7 @@ const App = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/userDashboard">User Dashboard</Link>
+          <Link to="/organizerDashboard">Organizer Dashboard</Link>
         </li>
         <li>
           <Link to="/swiss">Swiss</Link>
@@ -48,7 +48,7 @@ const App = () => {
           <BracketForm />
 
         </Route>
-        <Route path="/userDashboard">
+        <Route path="/organizerDashboard">
           <UserDashboard />
         </Route>
         <Route path="/">
