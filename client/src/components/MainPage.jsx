@@ -59,7 +59,7 @@ const MainPage = (props) => {
   return (
     <div>
       <Grid container className="Description">
-        <Grid item xs={11} >
+        <Grid item xs={12} >
           <Carousel animation="slide" interval={6000}>
             {
               description.map((item, i) => <DescriptionItem key={i} item={item} />)
@@ -69,7 +69,7 @@ const MainPage = (props) => {
       </Grid>
       <hr />
       <Grid container className="tournaments">
-        <Grid item xs={11} spacing={1} className="tournamentCarousel">
+        <Grid item xs={12} spacing={1} className="tournamentCarousel">
           <Carousel animation="slide" interval={10000}>
             <Grid container spacing={1}>
               {
