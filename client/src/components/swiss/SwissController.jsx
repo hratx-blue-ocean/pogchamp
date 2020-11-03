@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Container, Grid, Button, TextField, FormControl } from '@material-ui/core';
+import { Container, Grid, Button, TextField } from '@material-ui/core';
+import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
 
 const SwissController = (props) => {
@@ -12,14 +13,14 @@ const SwissController = (props) => {
   });
 
   const [playerInfo, setPlayerInfo] = useState({});
+  const [roundWinners, setRoundWinners] = useState({});
   const [pairs, setPairs] = useState([]);
+  const [currentRoundScores, setCurrentRoundScores] = useState({});
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
   const rounds = useRef(null);
   const players = useRef(null);
-  const score = useRef(null);
-  let listRefs = new Map();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,14 +36,44 @@ const SwissController = (props) => {
     e.preventDefault();
 
     let playerName = players.current.value;
+    let roundArray = [];
+
     if(playerInfo[playerName] === undefined) {
+      for(let i = 1; i <= Number(gameDetails.rounds); i++) {
+        roundArray.push(false)
+      }
+      setRoundWinners({...roundWinners, [playerName]: roundArray})
       setPlayerInfo({...playerInfo, [playerName]: 0})
     }
     players.current.value = '';
   }
 
+  const checkWinners = () => {
+    let newRoundWinners = {};
+
+    let createArray = (winner) => {
+      let roundArray = [...roundWinners[winner]];
+      roundArray.splice((Number(gameDetails.currentRound) - 1), 1, true);
+      newRoundWinners[winner] = roundArray;
+    }
+
+    for(let i = 0; i < pairs.length; i++) {
+      let firstPlayer = pairs[i][0];
+      let secondPlayer = pairs[i][1];
+      let winner =
+        currentRoundScores[firstPlayer] > currentRoundScores[secondPlayer]
+        ? firstPlayer
+        : secondPlayer;
+
+      createArray(winner);
+    }
+    setRoundWinners({...roundWinners, ...newRoundWinners});
+  }
+
   const handlePairings = (e) => {
+    checkWinners();
     e.preventDefault();
+
     let newPairs = [];
     const sorted =
       Object.entries(playerInfo)
@@ -57,16 +88,6 @@ const SwissController = (props) => {
     }
   }
 
-  const handleScoreUpdate = (e, player) => {
-    e.preventDefault();
-    let currentScore = parseInt(listRefs.get(player).current.value);
-    if(currentScore) {
-      let newScore = playerInfo[player] + currentScore;
-      setPlayerInfo({...playerInfo, [player]: newScore});
-    }
-    listRefs.get(player).current.value = '';
-  }
-
   const revealWinner = () => {
     if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
       setGameDetails({...gameDetails, winner: 'tie'})
@@ -78,6 +99,7 @@ const SwissController = (props) => {
   return (
     <Container maxWidth="lg" className="swissPairing">
       <h1>Swiss Pairing</h1>
+
       <div>
         <h4>Tournament Name: {gameDetails.tournamentName}</h4>
         <h4>Game Name: {gameDetails.gameName}</h4>
@@ -110,8 +132,13 @@ const SwissController = (props) => {
                 onClick={revealWinner}>Reveal Winner!</Button>
               <Container maxWidth="sm" className="pairings-container">
                 {
-                  gameDetails.winner !== ''
+                  gameDetails.winner !== '' && gameDetails.winner !== 'tie'
                     ? <h2>{gameDetails.winner} wins!!</h2>
+                    : ''
+                }
+                {
+                  gameDetails.winner !== '' && gameDetails.winner === 'tie'
+                    ? <h2>It's a tie!</h2>
                     : ''
                 }
               </Container>
@@ -141,42 +168,14 @@ const SwissController = (props) => {
                 </Container>
             </div>
       }
-      {
-        playerInfo === {}
-          ? ''
-          : <div>
-            <h4>Players:</h4>
-              {Object.keys(playerInfo).map((player, index) => {
-                listRefs.set(player, React.createRef())
-                return (
-                  <Grid
-                    container
-                    direction="row"
-                    justify="space-between"
-                    alignItems="center"
-                    key={index}
-                    className="swiss-player"
-                  >
-                    <p>{player} - {playerInfo[player]}</p>
-                    <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                      <TextField label="add to score" variant="outlined" size="small"  inputRef={listRefs.get(player)} />
-                      <Button variant="contained" type="submit">add to score</Button>
-                    </form>
-                  </Grid>
-                )
-              })}
-              {
-                gameDetails.currentRound > 0 && gameDetails.currentRound !== (parseInt(gameDetails.rounds) + 1)
-                  ? <Button onClick={handlePairings}
-                      variant="outlined"
-                      className="round-progress">
-                      Round {gameDetails.currentRound} scoring complete</Button>
-                  : ''
-              }
-
-            </div>
-      }
-
+      <SwissPlayers
+        gameDetails={gameDetails}
+        playerInfo={playerInfo}
+        currentRoundScores={currentRoundScores}
+        setCurrentRoundScores={setCurrentRoundScores}
+        setPlayerInfo={setPlayerInfo}
+        roundWinners={roundWinners}
+        handlePairings={handlePairings}/>
     </Container>
   )
 }
