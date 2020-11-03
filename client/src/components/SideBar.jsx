@@ -15,9 +15,9 @@ const Earners = () => {
     <div id="earners" className="sideBarItem">
       <h2>Top five earners:</h2>
       <hr></hr>
-      {earners.map(earner => {
+      {earners.map((earner, i) => {
         return (
-          <p>{earner}</p>
+          <p key={i}>{earner}</p>
         )
       })}
     </div>
@@ -29,9 +29,9 @@ const Winners = () => {
     <div id="winners" className="sideBarItem">
       <h2>Top Five Winners:</h2>
       <hr></hr>
-      {winners.map(winner => {
+      {winners.map((winner, i) => {
         return (
-          <p>{winner}</p>
+          <p key={i}>{winner}</p>
         )
       })}
     </div>
@@ -43,9 +43,9 @@ const Players = () => {
     <div id="topplayers" className="sideBarItem">
       <h2>Top Five Players:</h2>
       <hr></hr>
-      {players.map(player => {
+      {players.map((player, i) => {
         return (
-          <p>{player}</p>
+          <p key={i}>{player}</p>
         )
       })}
     </div>
