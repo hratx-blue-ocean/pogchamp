@@ -1,11 +1,11 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
+  margin: 15px;
   padding: 0;
 }
 
 .navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
-  border: 1px lightgray dotted;
+  /* border: 1px lightgray dotted; */
 }
 
 #navigation {
@@ -73,6 +73,7 @@ body {
   height: 100%;
   z-index: 10;
   cursor: pointer;
+  padding: 15px;
 }
 
 .footer {
