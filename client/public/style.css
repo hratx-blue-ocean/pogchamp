@@ -16,6 +16,11 @@ a:visited {
   /* border: 1px lightgray dotted; */
 }
 
+.TournamentPaper {
+  background: #272a33;
+  color: #ff7f28;
+}
+
 .header {
   background: inherit;
   background-color: #272a33;

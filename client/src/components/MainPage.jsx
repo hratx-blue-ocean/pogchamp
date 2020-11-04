@@ -102,8 +102,10 @@ function TournamentItem(props) {
   return (
     <Grid item xs={3}>
       <Paper>
-        {props.item.name}
-        <p>{props.item.location}</p>
+        <div className="TournamentPaper">
+          {props.item.name}
+          <p>{props.item.location}</p>
+        </div>
       </Paper>
     </Grid>
   )
