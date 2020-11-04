@@ -3,11 +3,11 @@ import {
   Container,
   Grid,
   Button,
-  TextField, 
+  TextField,
   FormControl,
 } from "@material-ui/core";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever"; 
-import IconButton from "@material-ui/core/IconButton"; 
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import IconButton from "@material-ui/core/IconButton";
 
 const BracketForm = ({ startTournament }) => {
   const [bracketDetails, setBracketDetails] = useState({
@@ -99,61 +99,17 @@ const BracketForm = ({ startTournament }) => {
 
       <h3>Enter Tournament Information</h3>
       <form autoComplete="off" onSubmit={handleSubmit} className="setup-form">
-        <TextField
-          required
-          label="tournament name"
-          variant="outlined"
-          size="small"
-          inputRef={tournament}
-        />
-        <TextField
-          required
-          label="game name"
-          variant="outlined"
-          size="small"
-          inputRef={game}
-        />
-        <TextField
-          required
-          label="number of players"
-          variant="outlined"
-          size="small"
-          inputRef={players}
-        />
-        <TextField
-          required
-          label="prize amount"
-          variant="outlined"
-          size="small"
-          inputRef={prize}
-        />
-        <TextField
-          required
-          label="description"
-          variant="outlined"
-          size="small"
-          inputRef={description}
-        />
-        <Button type="submit" variant="outlined" className="buttons">
-          Submit
-        </Button>
+        <TextField required label="tournament name" variant="outlined" size="small" inputRef={tournament}/>
+        <TextField required label="game name" variant="outlined" size="small" inputRef={game}/>
+        <TextField required label="number of players" variant="outlined" size="small" inputRef={players}/>
+        <TextField required label="prize amount" variant="outlined" size="small" inputRef={prize}/>
+        <TextField required label="description" variant="outlined" size="small" inputRef={description}/>
+        <Button type="submit" variant="outlined" >Submit</Button>
       </form>
 
-      <form
-        autoComplete="off"
-        onSubmit={handleAddingPlayers}
-        className="setup-form"
-      >
-        <TextField
-          required
-          label="player name"
-          variant="outlined"
-          size="small"
-          inputRef={playerName}
-        />
-        <Button type="submit" variant="outlined" className="buttons">
-          Add Player
-        </Button>
+      <form autoComplete="off" onSubmit={handleAddingPlayers} className="setup-form">
+        <TextField required label="player name" variant="outlined" size="small" inputRef={playerName}/>
+        <Button type="submit" variant="outlined">Add Player</Button>
       </form>
 
       {playersInTournament.participants === [] ? (
@@ -187,6 +143,8 @@ const BracketForm = ({ startTournament }) => {
         </div>
       )}
       <form noValidate autoComplete="off" className="setup-form">
+        {playersInTournament.participants.length >= 4
+        ?
         <Button
           type="submit"
           variant="outlined"
@@ -196,6 +154,11 @@ const BracketForm = ({ startTournament }) => {
         >
           Start Tournament
         </Button>
+        :
+        <Button type="submit" variant="outlined" disabled>
+        Start Tournament
+        </Button>
+      }
       </form>
     </Container>
   );
