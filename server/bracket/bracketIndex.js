@@ -18,12 +18,12 @@ router.post('/postParticipant', (req, res) => {
     res.send(result)
   })
   .catch((err) => {
-    console.log(err);
+    console.log("Error posting participants:",err);
   })
 })
 
 router.post('/createTournament', (req, res) => {
-  // console.log('creating Tournament');
+  console.log('creating Tournament');
   let body = req.body;
   let obj = { "name": body.name, "description": body.description}
   axios.post(`${baseUrl}.json?api_key=${api_key}`, obj)
@@ -31,7 +31,7 @@ router.post('/createTournament', (req, res) => {
     res.send(result.data);
   })
   .catch((error) => {
-    console.log("error", error)
+    console.log("Error creating new tournament", error)
   })
 })
 
@@ -42,7 +42,7 @@ router.post('/startTournament', (req, res) => {
     res.status(200).end();
   })
   .catch((err) => {
-  console.log('error', err)
+  console.log('Erorr starting Tournament', err)
   })
 })
 
@@ -65,18 +65,31 @@ router.post('/updateMatch', (req, res) => {
       loserId = player_one;
     }
     obj["match"]["winner_id"] = participant_id;
-    console.log('loserid:', loserId);
+    // console.log('loserid:', loserId);
     axios.put(`${baseUrl}/${tournament_id}/matches/${match_id}.json?api_key=${api_key}`, obj)
-    .then((data) => {
+    .then((result) => {
       res.send({"loserId": loserId});
     })
     .catch((err) => {
-      console.log('error posting winner:', err)
+      console.log('Error posting winner', err)
     })
   })
   .catch((err) => {
-    console.log("error getting back matchid",err);
+    console.log("Error getting match id",err);
   })
+})
+
+router.put('/finalizeTournament', (req, res) => {
+  let id = req.body.tournamentId;
+  axios.post(`${baseUrl}/${id}/finalize.json?api_key=${api_key}`)
+  .then((result) => {
+    console.log('Finalized tournament');
+    res.status(200).end();
+  })
+  .catch((err) => {
+    console.log("Error finalizing tournament:", err);
+  })
+
 })
 
 module.exports = router;
