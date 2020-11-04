@@ -10,12 +10,12 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 
 const SwissPlayers = (props) => {
-  const score = useRef(null);
+  const score = useRef('0');
   let listRefs = new Map();
 
   const handleScoreUpdate = (e, player) => {
     e.preventDefault();
-    let currentScore = parseInt(listRefs.get(player).current.value);
+    let currentScore = Number(listRefs.get(player).current.value);
     if(currentScore) {
       let newScore = props.playerInfo[player] + currentScore;
       props.setPlayerInfo({...props.playerInfo, [player]: newScore});
@@ -72,10 +72,14 @@ const SwissPlayers = (props) => {
                   </TableContainer>
                 </Grid>
                 <Grid item sm={4} align="right">
-                  <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                    <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} />
-                    <Button variant="contained" type="submit">add to score</Button>
-                  </form>
+                  {
+                    player.toLowerCase() === 'bye'
+                      ? ''
+                      : <form onSubmit={(e) => handleScoreUpdate(e, player)}>
+                          <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} />
+                          <Button variant="contained" type="submit">add to score</Button>
+                        </form>
+                  }
                 </Grid>
                 </Grid>
               )
