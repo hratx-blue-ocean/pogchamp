@@ -30,8 +30,12 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "gojs": "^2.1.28",
+    "gojs-react": "^1.0.9",
     "html-webpack-plugin": "^4.5.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-tournament-bracket": "^0.2.4",
+    "tournament-bracket-tree": "0.0.1"
   }
 }
