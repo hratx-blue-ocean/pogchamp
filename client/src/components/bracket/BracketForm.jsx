@@ -97,13 +97,14 @@ const BracketForm = ({ startTournament }) => {
         </div>
       )}
 
-      <h3>Enter Tournament Information</h3>
       <form autoComplete="off" onSubmit={handleSubmit} className="setup-form">
+      <h3>Enter Tournament Information</h3>
         <TextField
           required
           label="tournament name"
           variant="outlined"
           size="small"
+          helperText="* required field"
           inputRef={tournament}
         />
         <TextField
@@ -173,15 +174,13 @@ const BracketForm = ({ startTournament }) => {
             {playersInTournament.participants.map((player, i) => {
               return (
                 <Grid item xs={3} key={i}>
-                  <h4>{player.name}</h4>
-
-                  <DeleteForeverIcon
+                  <h4>{player.name} <DeleteForeverIcon
                   className="delete"
                     fontSize="small"
                     onClick={(e) => {
                       deletePlayers(e, player.name);
                     }}
-                  />
+                  /></h4>
                 </Grid>
               );
             })}
