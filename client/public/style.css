@@ -119,10 +119,3 @@ ul.navigation {
   display: inline;
   margin: 0 6px;
 }
-.game-details h4 {
-  padding: 19px;
-  background: #000;
-  color: #fff;
-  outline: 1px solid #677bf1;
-  outline-offset: -4px;
-}

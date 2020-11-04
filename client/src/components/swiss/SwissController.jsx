@@ -91,9 +91,30 @@ const SwissController = (props) => {
   }
 
   const revealWinner = () => {
+    // playerInfo = {
+    //   'leslie': 6,
+    //   'rose': 5,
+    //   'grant': 3,
+    //   'alec': 2
+    // }
+    // pairs = [['leslie', 'rose'], ['grant', 'alec']]
+    // playerInfo[pairs[0][0]] <-- highest score earned
+    // let highestScore = playerInfo[pairs[0][0]];
+    // // iterate over pairs
+    // pairs.forEach(pair => {
+    //   // check if either player has score equal to highest score
+    //   // pair[0]
+    //   // pair[1]
+    // })
+
+    // set winner to array with all tied winners
+    // in return if winner is array, iterate over array and list all winners
+
     if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
       // TO DO: Show who is tied instead of default "It's a tie"
       // account for multiple player ties
+
+      // build array with all winners
       setGameDetails({...gameDetails, winner: 'tie'})
     } else {
       setGameDetails({...gameDetails, winner: pairs[0][0]})
@@ -102,18 +123,11 @@ const SwissController = (props) => {
 
   return (
     <Container maxWidth="lg" className="swissPairing">
-      <h1>Swiss Pairing</h1>
-      <Grid
-        container
-        direction="row"
-        justify="space-around"
-        alignItems="center"
-        className="game-details"
-      >
-        <h4>Tournament Name: {gameDetails.tournamentName}</h4>
-        <h4>Game Name: {gameDetails.gameName}</h4>
-        <h4>Total Rounds: {gameDetails.rounds}</h4>
-      </Grid>
+        <div className="game-details">
+          <h2>{gameDetails.tournamentName}</h2>
+          <h4>{gameDetails.gameName}</h4>
+          <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
+        </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h2>Add your tournament details:</h2>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />

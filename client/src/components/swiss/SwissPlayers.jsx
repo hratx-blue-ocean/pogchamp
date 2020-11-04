@@ -40,7 +40,9 @@ const SwissPlayers = (props) => {
                   justify="space-between"
                   alignItems="center"
                   key={index}
-                  className={player.toLowerCase() === 'bye' ? "swiss-player bye-player" : "swiss-player"}
+                  className={player.toLowerCase() === 'bye'
+                    ? "swiss-player bye-player"
+                    : "swiss-player"}
                 >
                 <Grid item sm={3}>
                   <p>{player} - {props.playerInfo[player]}</p>
