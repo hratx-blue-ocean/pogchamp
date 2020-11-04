@@ -1,17 +1,44 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
+  margin: 15px;
   padding: 0;
+  background-color: #58595e;
+  /* border: #ff7f28 1px solid; */
+  color: #272a33
+}
+
+a:visited {
+  color: #ff7f28
+
 }
 
 .navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
-  border: 1px lightgray dotted;
+  /* border: 1px lightgray dotted; */
 }
 
-#navigation {
+.TournamentPaper {
+  background: #272a33;
+  color: #ff7f28;
+  padding: 5px;
+}
+
+.header {
+  background: inherit;
+  background-color: #272a33;
+  color: #83858b;
   top: 0;
   left: 0;
   right: 0;
+  position: sticky;
+  z-index: 1000;
+}
+
+.mainPage {
+  padding-left: 30px;
+}
+
+.sideBarHeader {
+  color: #ff7f28
 }
 
 #loginModal {
@@ -73,6 +100,7 @@ body {
   height: 100%;
   z-index: 10;
   cursor: pointer;
+  padding: 15px;
 }
 
 .footer {

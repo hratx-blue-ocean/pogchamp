@@ -1,7 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Formik} from 'formik';
 
 const SignIn = (props) => {
+
+  const [data, setData] = useState({
+    "username": "",
+    "password": ""
+  })
+
+  const encrypt = (password) => {
+    return password.split('').reverse().join('');
+  }
+
   return (
     <div id="loginContainer">
       <Formik
@@ -18,8 +28,11 @@ const SignIn = (props) => {
          return errors;
        }}
        onSubmit={(values, { setSubmitting }) => {
+         console.log(values)
+         let username = values.email;
+         let password = encrypt(values.password);
          setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
+           setData({username, password});
            setSubmitting(false);
          }, 400);
        }}

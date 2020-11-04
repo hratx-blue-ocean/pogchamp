@@ -1,10 +1,9 @@
 import React from 'react';
 import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
-import BracketForm from './BracketForm.jsx';
-
-// import PopulateForm from './PopulateForm.jsx';
-import UserDashboard from './UserDashboard/UserDashboard.jsx';
+import BracketComponent from './bracket/BracketComponent.jsx';
+import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
+import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
 import SignIn from './SignIn.jsx';
@@ -17,29 +16,32 @@ import {
   Link
 } from "react-router-dom";
 
-
 const App = () => {
   const [login, showLogin] = React.useState(false);
 
   return (
     <Router>
-      <Navigation handleLogin={showLogin} />
-      <Login show={login} handleShow={showLogin} />
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/userDashboard">User Dashboard</Link>
-        </li>
-        <li>
-          <Link to="/swiss">Swiss</Link>
-        </li>
-        <li>
-          <Link to="/bracket">Bracket</Link>
-        </li>
-      </ul>
-
+      <div className="header">
+        <Navigation handleLogin={showLogin} />
+        <Login show={login} handleShow={showLogin} />
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/player-dashboard">Player Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/organizer-dashboard">Organizer Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/swiss">Swiss</Link>
+          </li>
+          <li>
+            <Link to="/bracket">Bracket</Link>
+          </li>
+        </ul>
+      </div>
 
       <Switch>
         <Route path="/swiss">
@@ -47,11 +49,13 @@ const App = () => {
         </Route>
         <Route path="/bracket">
           {/* <PopulateForm /> */}
-          <BracketForm />
-
+          <BracketComponent />
         </Route>
-        <Route path="/userDashboard">
-          <UserDashboard />
+        <Route path="/organizer-dashboard">
+          <OrganizerDashboard />
+        </Route>
+        <Route path="/player-dashboard">
+          <PlayerDashboard />
         </Route>
         <Route path="/">
           <LandingPage />
@@ -63,7 +67,7 @@ const App = () => {
   );
 }
 
-const Login = ( { show, handleShow } ) => {
+const Login = ({ show, handleShow }) => {
   const body = (
     <div id="loginModal">
       <h2>Login</h2>

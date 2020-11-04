@@ -19,3 +19,30 @@
 .setup-form .MuiFormControl-root, .setup-form .MuiButton-contained {
   margin: 5px;
 }
+.pairings-container {
+  padding: 20px;
+  background: #000000;
+  color: #f3f3f3;
+  text-align: center;
+  outline: 2px solid #677cf1;
+  outline-offset: -8px;
+}
+.MuiButton-containedPrimary.create-pairings {
+  color: #fff;
+  background-color: #3f51b5;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 35px;
+  font-size: 25px;
+}
+.swissPairing .MuiButton-outlined.round-progress {
+  display: block;
+  margin: 20px auto 0;
+  font-size: 17px;
+}
+.MuiSvgIcon-root.won {
+  color: #08ca08;
+}
+.MuiSvgIcon-root.lost {
+    color: #a00000;
+}

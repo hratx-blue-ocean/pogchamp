@@ -5,7 +5,7 @@ import { Grid, Paper } from '@material-ui/core';
 const description = [
   {
     name: "Welcome to Pog Champ",
-    description: "A tornament management system",
+    description: "Create and manage tournaments between you and your friends! Supports Bracket pairings and Swiss Pair tournaments.",
     url: "https://nexus.leagueoflegends.com/wp-content/uploads/2019/06/Banner_T2_Image_tnp3w61gzna8r2n3rojp.jpg"
   },
   {
@@ -58,16 +58,20 @@ const tournaments = [
 const MainPage = (props) => {
   return (
     <div>
-      <Carousel animation="slide" interval={6000}>
-        {
-          description.map((item, i) => <DescriptionItem key={i} item={item} />)
-        }
-      </Carousel>
+      <Grid container className="Description">
+        <Grid item xs={12} >
+          <Carousel animation="slide" interval={6000}>
+            {
+              description.map((item, i) => <DescriptionItem key={i} item={item} />)
+            }
+          </Carousel>
+        </Grid>
+      </Grid>
       <hr />
       <Grid container className="tournaments">
-        <Grid item xs={12} className="tournamentCarousel">
+        <Grid item xs={12} spacing={1} className="tournamentCarousel">
           <Carousel animation="slide" interval={10000}>
-            <Grid container>
+            <Grid container spacing={1}>
               {
                 tournaments.map((item, i) => <TournamentItem key={i} item={item} />)
               }
@@ -98,8 +102,10 @@ function TournamentItem(props) {
   return (
     <Grid item xs={3}>
       <Paper>
-        {props.item.name}
-        <p>{props.item.location}</p>
+        <div className="TournamentPaper">
+          {props.item.name}
+          <p>{props.item.location}</p>
+        </div>
       </Paper>
     </Grid>
   )

@@ -105,3 +105,10 @@ dist
 
 ./package-lock.json
 package-lock.json
+
+# Mac OS 
+.DS_Store
+client/.DS_Store
+
+#bracket
+*config.js*
