@@ -97,8 +97,65 @@ const BracketForm = ({ startTournament }) => {
         </div>
       )}
 
-      <h3>Enter Tournament Information</h3>
       <form autoComplete="off" onSubmit={handleSubmit} className="setup-form">
+      <h3>Enter Tournament Information</h3>
+        <TextField
+          required
+          label="tournament name"
+          variant="outlined"
+          size="small"
+          helperText="* required field"
+          inputRef={tournament}
+        />
+        <TextField
+          required
+          label="game name"
+          variant="outlined"
+          size="small"
+          inputRef={game}
+        />
+        <TextField
+          required
+          label="number of players"
+          variant="outlined"
+          size="small"
+          inputRef={players}
+        />
+        <TextField
+          required
+          label="prize amount"
+          variant="outlined"
+          size="small"
+          inputRef={prize}
+        />
+        <TextField
+          required
+          label="description"
+          variant="outlined"
+          size="small"
+          inputRef={description}
+        />
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
+      </form>
+
+      <form
+        autoComplete="off"
+        onSubmit={handleAddingPlayers}
+        className="setup-form"
+      >
+        <TextField
+          required
+          label="player name"
+          variant="outlined"
+          size="small"
+          helperText="Minimum of 4 Players Required"
+          inputRef={playerName}
+        />
+        <Button type="submit" variant="contained">
+          Add Player
+        </Button>
         <TextField required label="tournament name" variant="outlined" size="small" inputRef={tournament}/>
         <TextField required label="game name" variant="outlined" size="small" inputRef={game}/>
         <TextField required label="number of players" variant="outlined" size="small" inputRef={players}/>
@@ -128,14 +185,13 @@ const BracketForm = ({ startTournament }) => {
             {playersInTournament.participants.map((player, i) => {
               return (
                 <Grid item xs={3} key={i}>
-                  <h4>{player.name}</h4>
-
-                  <DeleteForeverIcon
+                  <h4>{player.name} <DeleteForeverIcon
+                  className="delete"
                     fontSize="small"
                     onClick={(e) => {
                       deletePlayers(e, player.name);
                     }}
-                  />
+                  /></h4>
                 </Grid>
               );
             })}
@@ -147,7 +203,7 @@ const BracketForm = ({ startTournament }) => {
         ?
         <Button
           type="submit"
-          variant="outlined"
+          variant="contained"
           onClick={(event) => {
             handleTournament(event);
           }}

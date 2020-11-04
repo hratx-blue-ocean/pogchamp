@@ -27,3 +27,7 @@
 .title{
   text-align: center;
 }
+
+.delete {
+  vertical-align: text-bottom;
+}
