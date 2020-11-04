@@ -1,0 +1,33 @@
+.bracketForm {
+  margin: 30px 0;
+  background: #f3f3f3;
+  padding: 10px 20px;
+}
+
+.setup-form {
+  border: 1px solid #d0d0d0;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.setup-form h2 {
+  margin-top: 0;
+}
+
+.bracket-player {
+  padding: 10px;
+  background: #e8e8e8;
+  margin: 5px 0;
+}
+
+.setup-form .MuiFormControl-root, .setup-form .MuiButton-contained {
+  margin: 5px;
+}
+
+.title{
+  text-align: center;
+}
+
+.buttons {
+  justify-content: right;
+}

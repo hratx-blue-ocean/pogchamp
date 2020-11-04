@@ -1,0 +1,48 @@
+.swissPairing {
+  margin: 30px 0;
+  background: #f3f3f3;
+  padding: 10px 20px;
+}
+.setup-form {
+  border: 1px solid #d0d0d0;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.setup-form h2 {
+  margin-top: 0;
+}
+.swiss-player {
+  padding: 10px;
+  background: #e8e8e8;
+  margin: 5px 0;
+}
+.setup-form .MuiFormControl-root, .setup-form .MuiButton-contained {
+  margin: 5px;
+}
+.pairings-container {
+  padding: 20px;
+  background: #000000;
+  color: #f3f3f3;
+  text-align: center;
+  outline: 2px solid #677cf1;
+  outline-offset: -8px;
+}
+.MuiButton-containedPrimary.create-pairings {
+  color: #fff;
+  background-color: #3f51b5;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 35px;
+  font-size: 25px;
+}
+.swissPairing .MuiButton-outlined.round-progress {
+  display: block;
+  margin: 20px auto 0;
+  font-size: 17px;
+}
+.MuiSvgIcon-root.won {
+  color: #08ca08;
+}
+.MuiSvgIcon-root.lost {
+    color: #a00000;
+}
