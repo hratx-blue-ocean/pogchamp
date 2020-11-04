@@ -16,7 +16,11 @@ function LiveTournament({players}) {
       }
 
       <h1>Live Bracket Tournament</h1>
+<<<<<<< HEAD
       {players.length === 0 || players.length === 1 ?
+=======
+      {players.length === 0 ?  
+>>>>>>> main
         <div style={{height: 550}}>
         <h4 style={{color: "grey"}}>Will show tournament here</h4>
       </div> : null}

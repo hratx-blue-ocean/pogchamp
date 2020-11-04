@@ -111,4 +111,4 @@ package-lock.json
 client/.DS_Store
 
 #bracket
-*config.js*
+# *config.js*
