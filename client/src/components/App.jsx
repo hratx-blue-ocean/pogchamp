@@ -22,26 +22,24 @@ const App = () => {
 
   return (
     <Router>
-      <Navigation handleLogin={showLogin} />
-      <Login show={login} handleShow={showLogin} />
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/organizerDashboard">Organizer Dashboard</Link>
-        </li>
-        <li>
-          <Link to="/playerDashboard">Player Dashboard</Link>
-        </li>
-        <li>
-          <Link to="/swiss">Swiss</Link>
-        </li>
-        <li>
-          <Link to="/bracket">Bracket</Link>
-        </li>
-      </ul>
-
+      <div className="header">
+        <Navigation handleLogin={showLogin} />
+        <Login show={login} handleShow={showLogin} />
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/userDashboard">User Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/swiss">Swiss</Link>
+          </li>
+          <li>
+            <Link to="/bracket">Bracket</Link>
+          </li>
+        </ul>
+      </div>
 
       <Switch>
         <Route path="/swiss">
@@ -68,7 +66,7 @@ const App = () => {
   );
 }
 
-const Login = ( { show, handleShow } ) => {
+const Login = ({ show, handleShow }) => {
   const body = (
     <div id="loginModal">
       <h2>Login</h2>

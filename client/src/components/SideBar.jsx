@@ -13,7 +13,7 @@ const SideBar = () => {
 const Earners = () => {
   return (
     <div id="earners" className="sideBarItem">
-      <h2>Top five earners:</h2>
+      <h2 className="sideBarHeader">Top five earners:</h2>
       <hr></hr>
       {earners.map((earner, i) => {
         return (
@@ -27,7 +27,7 @@ const Earners = () => {
 const Winners = () => {
   return (
     <div id="winners" className="sideBarItem">
-      <h2>Top Five Winners:</h2>
+      <h2 className="sideBarHeader">Top Five Winners:</h2>
       <hr></hr>
       {winners.map((winner, i) => {
         return (
@@ -41,7 +41,7 @@ const Winners = () => {
 const Players = () => {
   return (
     <div id="topplayers" className="sideBarItem">
-      <h2>Top Five Players:</h2>
+      <h2 className="sideBarHeader">Top Five Players:</h2>
       <hr></hr>
       {players.map((player, i) => {
         return (
