@@ -1,7 +1,7 @@
 import React from 'react';
 import LandingPage from './LandingPage.jsx';
 import SwissController from './swiss/SwissController.jsx';
-import BracketForm from './BracketForm.jsx';
+import BracketComponent from './bracket/BracketComponent.jsx';
 import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
 import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
 import Navigation from './Navigation.jsx';
@@ -29,7 +29,10 @@ const App = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/userDashboard">User Dashboard</Link>
+            <Link to="/player-dashboard">Player Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/organizer-dashboard">Organizer Dashboard</Link>
           </li>
           <li>
             <Link to="/swiss">Swiss</Link>
@@ -48,10 +51,10 @@ const App = () => {
           {/* <PopulateForm /> */}
           <BracketComponent />
         </Route>
-        <Route path="/organizerDashboard">
+        <Route path="/organizer-dashboard">
           <OrganizerDashboard />
         </Route>
-        <Route path="/playerDashboard">
+        <Route path="/player-dashboard">
           <PlayerDashboard />
         </Route>
         <Route path="/">
