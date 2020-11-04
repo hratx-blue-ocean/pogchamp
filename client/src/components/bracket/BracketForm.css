@@ -28,6 +28,7 @@
   text-align: center;
 }
 
-.buttons {
-  justify-content: right;
+.delete{
+  position: sticky;
+  right: 100px;
 }

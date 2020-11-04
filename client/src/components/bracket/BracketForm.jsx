@@ -134,7 +134,7 @@ const BracketForm = ({ startTournament }) => {
           size="small"
           inputRef={description}
         />
-        <Button type="submit" variant="outlined" className="buttons">
+        <Button type="submit" variant="contained">
           Submit
         </Button>
       </form>
@@ -152,7 +152,7 @@ const BracketForm = ({ startTournament }) => {
           helperText="Minimum of 4 Players Required"
           inputRef={playerName}
         />
-        <Button type="submit" variant="outlined" className="buttons">
+        <Button type="submit" variant="contained">
           Add Player
         </Button>
       </form>
@@ -176,6 +176,7 @@ const BracketForm = ({ startTournament }) => {
                   <h4>{player.name}</h4>
 
                   <DeleteForeverIcon
+                  className="delete"
                     fontSize="small"
                     onClick={(e) => {
                       deletePlayers(e, player.name);
@@ -190,7 +191,7 @@ const BracketForm = ({ startTournament }) => {
       <form noValidate autoComplete="off" className="setup-form">
         <Button
           type="submit"
-          variant="outlined"
+          variant="contained"
           onClick={(event) => {
             handleTournament(event);
           }}
