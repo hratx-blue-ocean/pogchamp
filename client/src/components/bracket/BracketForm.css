@@ -23,3 +23,11 @@
 .setup-form .MuiFormControl-root, .setup-form .MuiButton-contained {
   margin: 5px;
 }
+
+.title{
+  text-align: center;
+}
+
+.buttons {
+  justify-content: right;
+}

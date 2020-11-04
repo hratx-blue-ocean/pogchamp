@@ -16,7 +16,6 @@ import {
   Link
 } from "react-router-dom";
 
-
 const App = () => {
   const [login, showLogin] = React.useState(false);
 
@@ -47,8 +46,7 @@ const App = () => {
         </Route>
         <Route path="/bracket">
           {/* <PopulateForm /> */}
-          <BracketForm />
-
+          <BracketComponent />
         </Route>
         <Route path="/organizerDashboard">
           <OrganizerDashboard />
