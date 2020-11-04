@@ -3,11 +3,11 @@ import {
   Container,
   Grid,
   Button,
-  TextField, 
+  TextField,
   FormControl,
 } from "@material-ui/core";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever"; 
-import IconButton from "@material-ui/core/IconButton"; 
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import IconButton from "@material-ui/core/IconButton";
 
 const BracketForm = ({ startTournament }) => {
   const [bracketDetails, setBracketDetails] = useState({
@@ -149,6 +149,7 @@ const BracketForm = ({ startTournament }) => {
           label="player name"
           variant="outlined"
           size="small"
+          helperText="Minimum of 4 Players Required"
           inputRef={playerName}
         />
         <Button type="submit" variant="outlined" className="buttons">
