@@ -103,11 +103,17 @@ const SwissController = (props) => {
   return (
     <Container maxWidth="lg" className="swissPairing">
       <h1>Swiss Pairing</h1>
-      <div>
+      <Grid
+        container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+        className="game-details"
+      >
         <h4>Tournament Name: {gameDetails.tournamentName}</h4>
         <h4>Game Name: {gameDetails.gameName}</h4>
         <h4>Total Rounds: {gameDetails.rounds}</h4>
-      </div>
+      </Grid>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h2>Add your tournament details:</h2>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
