@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Modal } from '@material-ui/core';
+import { Container, Grid, Paper, Modal } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import MainPage from './MainPage.jsx';
@@ -9,7 +9,7 @@ const LandingPage = (props) => {
 
 
   return (
-    <div>
+    <Container>
       <Grid container direction="row" alignItems="center" id="container">
         <Grid container>
           <Grid item xs={2} className="sideBar">
@@ -20,7 +20,7 @@ const LandingPage = (props) => {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Container>
   )
 }
 

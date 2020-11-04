@@ -6,3 +6,10 @@
 .selectEmpty {
   margin-top: 2;
 }
+
+.MuiButtonBase-root.select-style {
+  margin: 0 8px;
+}
+.MuiButtonBase-root.select-style a {
+  text-decoration: none;
+}
