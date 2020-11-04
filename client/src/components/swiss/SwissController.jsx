@@ -120,7 +120,7 @@ const SwissController = (props) => {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               <h2>Add the players:</h2>
-              <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 points for that round.</p>
+              <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
               <TextField label="enter player name" variant="outlined" size="small" inputRef={players} />
               <Button variant="contained" type="submit">Submit</Button>
             </form>

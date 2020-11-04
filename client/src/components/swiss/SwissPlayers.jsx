@@ -28,7 +28,7 @@ const SwissPlayers = (props) => {
     <div>
     {
       props.playerInfo === {}
-      ? ''
+        ? ''
         : <div>
           <h4>Players:</h4>
             {Object.keys(props.playerInfo).map((player, index) => {
@@ -40,7 +40,7 @@ const SwissPlayers = (props) => {
                   justify="space-between"
                   alignItems="center"
                   key={index}
-                  className="swiss-player"
+                  className={player.toLowerCase() === 'bye' ? "swiss-player bye-player" : "swiss-player"}
                 >
                 <Grid item sm={3}>
                   <p>{player} - {props.playerInfo[player]}</p>

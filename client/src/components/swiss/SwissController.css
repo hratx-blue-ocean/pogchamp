@@ -46,3 +46,6 @@
 .MuiSvgIcon-root.lost {
     color: #a00000;
 }
+.swiss-player.bye-player {
+  background: #bdbdbd;
+}
