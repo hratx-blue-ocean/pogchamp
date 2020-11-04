@@ -15,7 +15,7 @@ const LandingPage = (props) => {
           <Grid item xs={2} className="sideBar">
             <SideBar />
           </Grid>
-          <Grid item xs={10} className="mainPage">
+          <Grid item xs={9} className="mainPage">
             <MainPage />
           </Grid>
         </Grid>
