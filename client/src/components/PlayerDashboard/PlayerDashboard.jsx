@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+  Container,
   Card,
   CardActionArea,
   CardActions,
@@ -37,7 +38,7 @@ const PlayerDashboard = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <Container>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -64,7 +65,7 @@ const PlayerDashboard = () => {
         </CardActions>
       </Card>
       <PlayerTournamentHistory />
-    </>
+    </Container>
   );
 }
 

@@ -24,7 +24,7 @@ const App = () => {
       <div className="header">
         <Navigation handleLogin={showLogin} />
         <Login show={login} handleShow={showLogin} />
-        <ul>
+        <ul className="navigation">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -48,7 +48,6 @@ const App = () => {
           <SwissController />
         </Route>
         <Route path="/bracket">
-          {/* <PopulateForm /> */}
           <BracketComponent />
         </Route>
         <Route path="/organizer-dashboard">

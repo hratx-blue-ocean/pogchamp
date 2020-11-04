@@ -6,10 +6,16 @@ import {
   FormHelperText,
   FormControl,
   Select,
+  Button,
+  Container
 } from '@material-ui/core';
 import TournamentHistory from './TournamentHistory/TournamentHistory.jsx';
 import './OrganizerDashboard.css';
 import './TournamentHistory/TournamentHistory.css';
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
 
 //PAGE ELEMENTS TO INCLUDE
 // Organizer Avatar
@@ -42,23 +48,12 @@ const OrganizerDashboard = (props) => {
   };
 
   return (
-    <div>
+    <Container>
       <h2>Choose Tournament Style</h2>
-      <FormControl style={{minWidth: 120}} variant="outlined" className="formControl">
-        <InputLabel id="tournament style selector">Style</InputLabel>
-        <Select
-          labelId="tournament style"
-          id="tournament style"
-          value={tournamentStyle}
-          onChange={handleTournamentStyleChange}
-          label="Tournament Style"
-          >
-            <MenuItem value={"Bracket"}>Bracket</MenuItem>
-            <MenuItem value={"Swiss"}>Swiss</MenuItem>
-          </Select>
-      </FormControl>
+      <Button variant="outlined" className="select-style"><Link to="/bracket">Bracket</Link></Button>
+      <Button variant="outlined" className="select-style"><Link to="/swiss">Swiss</Link></Button>
       <TournamentHistory />
-    </div>
+    </Container>
   );
 }
 
