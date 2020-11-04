@@ -3,11 +3,11 @@ import {
   Container,
   Grid,
   Button,
-  TextField, 
+  TextField,
   FormControl,
 } from "@material-ui/core";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever"; 
-import IconButton from "@material-ui/core/IconButton"; 
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import IconButton from "@material-ui/core/IconButton";
 
 const BracketForm = ({ startTournament }) => {
   const [bracketDetails, setBracketDetails] = useState({
@@ -97,13 +97,14 @@ const BracketForm = ({ startTournament }) => {
         </div>
       )}
 
-      <h3>Enter Tournament Information</h3>
       <form autoComplete="off" onSubmit={handleSubmit} className="setup-form">
+      <h3>Enter Tournament Information</h3>
         <TextField
           required
           label="tournament name"
           variant="outlined"
           size="small"
+          helperText="* required field"
           inputRef={tournament}
         />
         <TextField
@@ -134,7 +135,7 @@ const BracketForm = ({ startTournament }) => {
           size="small"
           inputRef={description}
         />
-        <Button type="submit" variant="outlined" className="buttons">
+        <Button type="submit" variant="contained">
           Submit
         </Button>
       </form>
@@ -149,9 +150,10 @@ const BracketForm = ({ startTournament }) => {
           label="player name"
           variant="outlined"
           size="small"
+          helperText="Minimum of 4 Players Required"
           inputRef={playerName}
         />
-        <Button type="submit" variant="outlined" className="buttons">
+        <Button type="submit" variant="contained">
           Add Player
         </Button>
       </form>
@@ -172,14 +174,13 @@ const BracketForm = ({ startTournament }) => {
             {playersInTournament.participants.map((player, i) => {
               return (
                 <Grid item xs={3} key={i}>
-                  <h4>{player.name}</h4>
-
-                  <DeleteForeverIcon
+                  <h4>{player.name} <DeleteForeverIcon
+                  className="delete"
                     fontSize="small"
                     onClick={(e) => {
                       deletePlayers(e, player.name);
                     }}
-                  />
+                  /></h4>
                 </Grid>
               );
             })}
@@ -187,15 +188,22 @@ const BracketForm = ({ startTournament }) => {
         </div>
       )}
       <form noValidate autoComplete="off" className="setup-form">
+        {playersInTournament.participants.length >= 4
+        ?
         <Button
           type="submit"
-          variant="outlined"
+          variant="contained"
           onClick={(event) => {
             handleTournament(event);
           }}
         >
           Start Tournament
         </Button>
+        :
+        <Button type="submit" variant="outlined" disabled>
+        Start Tournament
+        </Button>
+      }
       </form>
     </Container>
   );

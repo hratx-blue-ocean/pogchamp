@@ -28,6 +28,6 @@
   text-align: center;
 }
 
-.buttons {
-  justify-content: right;
+.delete {
+  vertical-align: text-bottom;
 }
