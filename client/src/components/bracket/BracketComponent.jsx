@@ -53,7 +53,7 @@ class BracketComponent extends React.Component {
     }
     axios.post("/api/createTournament", data)
       .then((res) => {
-        console.log(res.data.tournament, "Created tournament");
+        console.log(res.data.tournament, "Created tournament data");
         this.setState({
           liveUrl: res.data.tournament.url,
           currentTournament: res.data,
