@@ -44,6 +44,7 @@ const SwissController = (props) => {
       }
       setRoundWinners({...roundWinners, [playerName]: roundArray})
       setPlayerInfo({...playerInfo, [playerName]: 0})
+      setCurrentRoundScores({...currentRoundScores, [playerName]: 0})
     }
     players.current.value = '';
   }
@@ -66,6 +67,7 @@ const SwissController = (props) => {
         : secondPlayer;
 
       createArray(winner);
+      console.log('winner is', winner)
     }
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
@@ -90,6 +92,8 @@ const SwissController = (props) => {
 
   const revealWinner = () => {
     if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
+      // TO DO: Show who is tied instead of default "It's a tie"
+      // account for multiple player ties
       setGameDetails({...gameDetails, winner: 'tie'})
     } else {
       setGameDetails({...gameDetails, winner: pairs[0][0]})
@@ -99,7 +103,6 @@ const SwissController = (props) => {
   return (
     <Container maxWidth="lg" className="swissPairing">
       <h1>Swiss Pairing</h1>
-
       <div>
         <h4>Tournament Name: {gameDetails.tournamentName}</h4>
         <h4>Game Name: {gameDetails.gameName}</h4>
@@ -117,6 +120,7 @@ const SwissController = (props) => {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               <h2>Add the players:</h2>
+              <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 points for that round.</p>
               <TextField label="enter player name" variant="outlined" size="small" inputRef={players} />
               <Button variant="contained" type="submit">Submit</Button>
             </form>
@@ -130,18 +134,22 @@ const SwissController = (props) => {
                 color="primary"
                 className="create-pairings"
                 onClick={revealWinner}>Reveal Winner!</Button>
-              <Container maxWidth="sm" className="pairings-container">
+
                 {
                   gameDetails.winner !== '' && gameDetails.winner !== 'tie'
-                    ? <h2>{gameDetails.winner} wins!!</h2>
+                    ? <Container maxWidth="sm" className="pairings-container">
+                        <h2>{gameDetails.winner} wins!!</h2>
+                      </Container>
                     : ''
                 }
                 {
                   gameDetails.winner !== '' && gameDetails.winner === 'tie'
-                    ? <h2>It's a tie!</h2>
+                    ? <Container maxWidth="sm" className="pairings-container">
+                        <h2>It's a tie!</h2>
+                      </Container>
                     : ''
                 }
-              </Container>
+
             </div>
           : <div>
               { gameDetails.currentRound === 0
