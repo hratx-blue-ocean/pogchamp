@@ -19,7 +19,7 @@ class BracketComponent extends React.Component {
       liveUrl: '',
       currentTournament: {},
       tournamentId: undefined,
-      matchId : undefined,
+      matchId: undefined,
       participantId: undefined,
       showIframe: false,
     };
@@ -29,18 +29,18 @@ class BracketComponent extends React.Component {
   }
 
   participantNameList() {
-    return(
+    return (
       this.state.players.map((player, index) => {
-      return <Grid item xs={3} key={index}>
-        <Tooltip
-        title={
-          <React.Fragment>
-            <Typography color="inherit">player information</Typography>
-          </React.Fragment>
-        }
-      >
-      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}}>{player["participant"]["name"]}</Button>
-      </Tooltip>
+        return <Grid item xs={3} key={index}>
+          <Tooltip
+            title={
+              <React.Fragment>
+                <Typography color="inherit">player information</Typography>
+              </React.Fragment>
+            }
+          >
+            <Button onClick={() => { this.updateMatchWinner(player["participant"]["id"]) }} fullWidth>{player["participant"]["name"]}</Button>
+          </Tooltip>
         </Grid>
       })
     )
@@ -85,25 +85,25 @@ class BracketComponent extends React.Component {
         console.log(err);
       });
   }
-  
+
   startMatch() {
     axios.post("/api/startTournament", { tournamentId: this.state.tournamentId })
-    .then((res) => {
-      this.setState({showIframe: true, view: 2})
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        this.setState({ showIframe: true, view: 2 })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  
+
   //on click handler when they start the tournament
-  startTournament( tournamentInfo, participantInfo ) {
+  startTournament(tournamentInfo, participantInfo) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
   }
-  
+
   updateMatchWinner(id = null) {
     //we need participantid to be called
     //this comes from active players list in state
@@ -124,7 +124,11 @@ class BracketComponent extends React.Component {
           this.finalizeTournament();
         }
         this.setState({
-          players: filteredPlayers
+          players: filteredPlayers,
+          showIframe: false
+        })
+        this.setState({
+          showIframe: true
         })
       })
       .catch((err) => {
@@ -136,61 +140,61 @@ class BracketComponent extends React.Component {
     //TO-DO
     console.log('calling finalize tournament');
     let id = this.state.tournamentId;
-    axios.put('/api/finalizeTournament', {"tournamentId" : id})
-    .then((res) => {
-      console.log("Finalized tournament");
-      this.setState({view: 2});
-    })
-    .catch((err) => {
-      console.log("error:", err);
-    })
+    axios.put('/api/finalizeTournament', { "tournamentId": id })
+      .then((res) => {
+        console.log("Finalized tournament");
+        this.setState({ view: 2 });
+      })
+      .catch((err) => {
+        console.log("error:", err);
+      })
 
   }
   changeView(view = null) {
     if (view === "form") {
-      this.setState({view: 0, showIframe: false});
+      this.setState({ view: 0, showIframe: false });
     } else {
-      this.setState({view: 2, showIframe: true});
+      this.setState({ view: 2, showIframe: true });
     }
   }
 
   iFrame() {
-   //TO-DO
+    //TO-DO
   }
 
   render() {
     return (
       <Container maxWidth="lg" className="bracketForm">
-      <div className="main">
-        <StaticView changeView={this.changeView}/>
-        {this.state.view === 0 && <BracketForm 
-        className="bracketForm"
-        startTournament={this.startTournament}
-        />}
-        {this.state.view === 1 && <MyTournaments />}
-        {this.state.view === 2 && <LiveTournament />}
-        <h1>Live Bracket Tournament</h1>
-        <div>
-          {this.state.players.length > 1 && (
-            <Grid container>
-              <Grid item xs={8}>
+        <div className="main">
+          <StaticView changeView={this.changeView} />
+          {this.state.view === 0 && <BracketForm
+            className="bracketForm"
+            startTournament={this.startTournament}
+          />}
+          {this.state.view === 1 && <MyTournaments />}
+          {this.state.view === 2 && <LiveTournament />}
+          <h1>Live Bracket Tournament</h1>
+          <div>
+            {this.state.players.length > 1 && (
+              <Grid container>
+                <Grid item xs={5}>
                 </Grid>
-                <Grid container item xs={4} direction="row">
-              {this.participantNameList()}
+                <Grid container item xs={7} direction="row">
+                  {this.participantNameList()}
                 </Grid>
-            </Grid>
-          )}
+              </Grid>
+            )}
+          </div>
+          {this.state.showIframe && this.state.liveUrl ? (
+            <iframe
+              src={`https://challonge.com/${this.state.liveUrl}/module${iframeoptions}`}
+              width="100%"
+              height="500"
+              frameBorder="0"
+              scrolling="auto"
+            ></iframe>
+          ) : null}
         </div>
-        {this.state.showIframe && this.state.liveUrl ? (
-          <iframe
-            src={`https://challonge.com/${this.state.liveUrl}/module${iframeoptions}`}
-            width="100%"
-            height="500"
-            frameBorder="0"
-            scrolling="auto"
-          ></iframe>
-        ) : null}
-      </div>
       </Container>
     );
   }
