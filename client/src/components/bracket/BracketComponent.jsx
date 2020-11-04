@@ -2,13 +2,12 @@ import React from "react";
 import axios from "axios";
 import { Container, Grid, Button, Tooltip, Typography } from '@material-ui/core';
 
-import MyTournaments from './MyTournaments.jsx';
 import BracketForm from './BracketForm.jsx';
 import StaticView from './StaticView.jsx';
 import LiveTournament from './LiveTournament.jsx';
 import './BracketForm.css';
 import { TurnedInTwoTone } from "@material-ui/icons";
-const iframeoptions = '?multiplier=1.1&show_tournament_name=1&show_final_results=1&show_standings=1';
+const iframeoptions = '?show_tournament_name=1&show_final_results=1&show_standings=1&scale_to_fit=1';
 
 class BracketComponent extends React.Component {
   constructor() {
@@ -63,13 +62,12 @@ class BracketComponent extends React.Component {
         //post new participants
         this.postNewParticipants(players);
         setTimeout(() => {
-          //save to database here
+          console.log('Saving to database');
         }, 5000)
       })
       .catch((err) => {
         console.log("Error", err);
       });
-    //tournament[tournament_type] Single elimination (default), double_elimination, round_robin, swiss
     //hold_third_place_match] // true or false
   }
 
@@ -78,7 +76,6 @@ class BracketComponent extends React.Component {
     axios.post("/api/postParticipant", participants)
       .then((res) => {
         this.setState({ players: res.data });
-        console.log("new players:", res.data);
         this.startMatch();
       })
       .catch((err) => {
@@ -105,8 +102,7 @@ class BracketComponent extends React.Component {
   }
   
   updateMatchWinner(id = null) {
-    //we need participantid to be called
-    //this comes from active players list in state
+    //we need participant id
     axios.post(`/api/updateMatch`, {
       tournament_id: this.state.tournamentId,
       participant_id: id,
@@ -122,10 +118,12 @@ class BracketComponent extends React.Component {
         if (filteredPlayers.length === 1) {
           //call the finalize tournament function
           this.finalizeTournament();
+          this.setState({players: filteredPlayers , showIframe: false});
+        } else {
+          this.setState({
+            players: filteredPlayers, 
+          })
         }
-        this.setState({
-          players: filteredPlayers
-        })
       })
       .catch((err) => {
         console.log(err)
@@ -133,19 +131,18 @@ class BracketComponent extends React.Component {
   }
 
   finalizeTournament() {
-    //TO-DO
-    console.log('calling finalize tournament');
     let id = this.state.tournamentId;
     axios.put('/api/finalizeTournament', {"tournamentId" : id})
     .then((res) => {
       console.log("Finalized tournament");
-      this.setState({view: 2});
+      this.setState({view: 2, showIframe: true});
     })
     .catch((err) => {
       console.log("error:", err);
     })
 
   }
+
   changeView(view = null) {
     if (view === "form") {
       this.setState({view: 0, showIframe: false});
@@ -154,24 +151,17 @@ class BracketComponent extends React.Component {
     }
   }
 
-  iFrame() {
-   //TO-DO
-  }
-
   render() {
     return (
       <Container maxWidth="lg" className="bracketForm">
-      <div className="main">
         <StaticView changeView={this.changeView}/>
         {this.state.view === 0 && <BracketForm 
         className="bracketForm"
         startTournament={this.startTournament}
         />}
-        {this.state.view === 1 && <MyTournaments />}
-        {this.state.view === 2 && <LiveTournament />}
-        <h1>Live Bracket Tournament</h1>
+        {this.state.view === 2 && <LiveTournament players={this.state.players}/>}
         <div>
-          {this.state.players.length > 1 && (
+          {this.state.players.length > 1 && this.state.view === 2 && (
             <Grid container>
               <Grid item xs={8}>
                 </Grid>
@@ -183,14 +173,14 @@ class BracketComponent extends React.Component {
         </div>
         {this.state.showIframe && this.state.liveUrl ? (
           <iframe
-            src={`https://challonge.com/${this.state.liveUrl}/module${iframeoptions}`}
+            src={`http://challonge.com/${this.state.liveUrl}/module${iframeoptions}`}
             width="100%"
-            height="500"
+            height="550"
             frameBorder="0"
             scrolling="auto"
           ></iframe>
         ) : null}
-      </div>
+
       </Container>
     );
   }
