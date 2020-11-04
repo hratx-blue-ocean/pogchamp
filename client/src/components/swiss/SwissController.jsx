@@ -16,6 +16,7 @@ const SwissController = (props) => {
   const [roundWinners, setRoundWinners] = useState({});
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
+  const [firstPairing, setFirstPairing] = useState(true);
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
@@ -67,23 +68,36 @@ const SwissController = (props) => {
         : secondPlayer;
 
       createArray(winner);
-      console.log('winner is', winner)
     }
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
 
   const handlePairings = (e) => {
-    checkWinners();
     e.preventDefault();
-
+    checkWinners();
     let newPairs = [];
-    const sorted =
-      Object.entries(playerInfo)
-      .sort((a, b) => b[1] - a[1])
 
-    for(let i = 0; i < sorted.length; i+=2) {
-      newPairs.push([sorted[i][0], sorted[i+1][0]]);
+    let randomized =
+      Object.entries(playerInfo)
+      .sort(() => Math.random() - 0.5);
+
+    let sorted =
+      Object.entries(playerInfo)
+      .sort((a, b) => b[1] - a[1]);
+
+    let transformedArray;
+
+    if(firstPairing === true) {
+      setFirstPairing(false)
+      transformedArray = randomized;
+    } else {
+      transformedArray = sorted;
     }
+
+    for(let i = 0; i < transformedArray.length; i+=2) {
+      newPairs.push([transformedArray[i][0], transformedArray[i+1][0]]);
+    }
+
     setPairs(newPairs);
     if(gameDetails.currentRound <= Number(gameDetails.rounds)) {
       gameDetails.currentRound ++;
@@ -91,31 +105,20 @@ const SwissController = (props) => {
   }
 
   const revealWinner = () => {
-    // playerInfo = {
-    //   'leslie': 6,
-    //   'rose': 5,
-    //   'grant': 3,
-    //   'alec': 2
-    // }
-    // pairs = [['leslie', 'rose'], ['grant', 'alec']]
-    // playerInfo[pairs[0][0]] <-- highest score earned
-    // let highestScore = playerInfo[pairs[0][0]];
-    // // iterate over pairs
-    // pairs.forEach(pair => {
-    //   // check if either player has score equal to highest score
-    //   // pair[0]
-    //   // pair[1]
-    // })
+    let highestScore = playerInfo[pairs[0][0]];
+    let tiedArray = [];
 
-    // set winner to array with all tied winners
-    // in return if winner is array, iterate over array and list all winners
+    pairs.forEach(pair => {
+      if(playerInfo[pair[0]] >= highestScore) {
+        tiedArray.push(pair[0]);
+      }
+      if(playerInfo[pair[1]] >= highestScore) {
+        tiedArray.push(pair[1]);
+      }
+    })
 
-    if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
-      // TO DO: Show who is tied instead of default "It's a tie"
-      // account for multiple player ties
-
-      // build array with all winners
-      setGameDetails({...gameDetails, winner: 'tie'})
+    if(tiedArray.length > 1) {
+      setGameDetails({...gameDetails, winner: tiedArray})
     } else {
       setGameDetails({...gameDetails, winner: pairs[0][0]})
     }
@@ -154,22 +157,23 @@ const SwissController = (props) => {
                 color="primary"
                 className="create-pairings"
                 onClick={revealWinner}>Reveal Winner!</Button>
-
                 {
-                  gameDetails.winner !== '' && gameDetails.winner !== 'tie'
+                  gameDetails.winner !== '' && !Array.isArray(gameDetails.winner)
                     ? <Container maxWidth="sm" className="pairings-container">
                         <h2>{gameDetails.winner} wins!!</h2>
                       </Container>
                     : ''
                 }
                 {
-                  gameDetails.winner !== '' && gameDetails.winner === 'tie'
+                  gameDetails.winner !== '' && Array.isArray(gameDetails.winner)
                     ? <Container maxWidth="sm" className="pairings-container">
-                        <h2>It's a tie!</h2>
+                      <h2>It's a tie!</h2>
+                        { gameDetails.winner.map(player => {
+                          return <p>{player}</p>
+                        }) }
                       </Container>
                     : ''
                 }
-
             </div>
           : <div>
               { gameDetails.currentRound === 0
