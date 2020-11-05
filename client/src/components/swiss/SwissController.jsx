@@ -47,12 +47,14 @@ const SwissController = (props) => {
       setRoundWinners({...roundWinners, [playerName]: roundArray})
       setPlayerInfo({...playerInfo, [playerName]: 0})
       setCurrentRoundScores({...currentRoundScores, [playerName]: 0})
+      setRoundsWon({...roundsWon, [playerName]: 0})
     }
     players.current.value = '';
   }
 
   const checkWinners = () => {
     let newRoundWinners = {};
+    let roundsWonObj = {};
 
     let createArray = (roundWinner) => {
       let roundArray = [...roundWinners[roundWinner]];
@@ -69,20 +71,13 @@ const SwissController = (props) => {
         ? firstPlayer
         : secondPlayer;
 
-      console.log(`\n
-      Current round score for ${firstPlayer} is ${currentRoundScores[firstPlayer]} \n
-      Current round score for ${secondPlayer} is ${currentRoundScores[secondPlayer]}\n
-      Winner is ${winner} with ${currentRoundScores[winner]} points. \n\n`)
+      let newTotalRoundsWon = roundsWon[winner] + 1;
+      setRoundsWon({...roundsWon, [winner]: newTotalRoundsWon});
 
-      let newRoundsTotal =
-        roundsWon[winner] ? roundsWon[winner]++ : roundsWon[winner] = 1;
-
-      setRoundsWon({
-        ...roundsWon,
-        [winner]: newRoundsTotal
-      })
       createArray(winner);
     }
+
+
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
 
@@ -113,7 +108,7 @@ const SwissController = (props) => {
       setCurrentRoundScores({
         ...currentRoundScores,
         [transformedArray[i][0]]: 0,
-        [transformedArray[i][1]]: 0
+        [transformedArray[i+1][0]]: 0
       })
     }
 
@@ -137,9 +132,6 @@ const SwissController = (props) => {
       }
     })
 
-    // if tiedArray has length, there are tied players
-    // first player : 1
-    // second player : 4
     if(tiedArray.length) {
       let highestRoundsWon = roundsWon[tiedArray[0]]; // number of rounds won
       console.log('initial value at', highestRoundsWon);
@@ -149,15 +141,20 @@ const SwissController = (props) => {
         if(roundsWon[player] >= highestRoundsWon) {
           console.log(`${player} has more or equal rounds won at ${roundsWon[player]} rounds`)
           highestRoundsWon = roundsWon[player];
-          console.log('winnersArr after winner is added:', winnersArr);
         }
       })
 
+      console.log('tiedArray', tiedArray)
+
       tiedArray.forEach(player => {
+        console.log('roundsWon[player]', roundsWon[player])
+        console.log('highestRoundsWon', highestRoundsWon)
         if(roundsWon[player] >= highestRoundsWon) {
           winnersArr.push(player);
         }
       })
+
+      console.log('winnersArr after players with most rounds won get added: ', winnersArr);
 
     }
 

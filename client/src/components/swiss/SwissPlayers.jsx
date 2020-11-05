@@ -17,7 +17,6 @@ const SwissPlayers = (props) => {
       let newScore = props.playerInfo[player] + currentScore;
       props.setPlayerInfo({...props.playerInfo, [player]: newScore});
     }
-    // need to reset rounds to 0 or push 0 to any inputs not touched. old score is being saved if score is not manually added
     props.setCurrentRoundScores({...props.currentRoundScores, [player]: currentScore})
     listRefs.get(player).current.value = '';
   }
