@@ -169,6 +169,10 @@ const SwissController = (props) => {
       <h2>Swiss Tournament</h2>
         <div className="game-details">
           {gameDetails.tournamentName ? <h2>{gameDetails.tournamentName}</h2> : ''}
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
         </div>
