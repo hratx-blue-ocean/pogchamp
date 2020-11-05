@@ -63,13 +63,16 @@ const SwissController = (props) => {
     for(let i = 0; i < pairs.length; i++) {
       let firstPlayer = pairs[i][0];
       let secondPlayer = pairs[i][1];
-      console.log('current round score for', firstPlayer, 'is', currentRoundScores[firstPlayer])
-      console.log('current round score for', secondPlayer, 'is', currentRoundScores[secondPlayer])
+
       let winner =
         currentRoundScores[firstPlayer] > currentRoundScores[secondPlayer]
         ? firstPlayer
         : secondPlayer;
-      console.log('winner is', winner, 'with', currentRoundScores[winner], 'points');
+
+      console.log(`\n
+      Current round score for ${firstPlayer} is ${currentRoundScores[firstPlayer]} \n
+      Current round score for ${secondPlayer} is ${currentRoundScores[secondPlayer]}\n
+      Winner is ${winner} with ${currentRoundScores[winner]} points. \n\n`)
 
       let newRoundsTotal =
         roundsWon[winner] ? roundsWon[winner]++ : roundsWon[winner] = 1;
@@ -78,7 +81,6 @@ const SwissController = (props) => {
         ...roundsWon,
         [winner]: newRoundsTotal
       })
-      console.log('winner of the round is:', winner)
       createArray(winner);
     }
     setRoundWinners({...roundWinners, ...newRoundWinners});
@@ -108,6 +110,11 @@ const SwissController = (props) => {
 
     for(let i = 0; i < transformedArray.length; i+=2) {
       newPairs.push([transformedArray[i][0], transformedArray[i+1][0]]);
+      setCurrentRoundScores({
+        ...currentRoundScores,
+        [transformedArray[i][0]]: 0,
+        [transformedArray[i][1]]: 0
+      })
     }
 
     setPairs(newPairs);
@@ -169,10 +176,6 @@ const SwissController = (props) => {
       <h2>Swiss Tournament</h2>
         <div className="game-details">
           {gameDetails.tournamentName ? <h2>{gameDetails.tournamentName}</h2> : ''}
-<<<<<<< HEAD
-=======
-
->>>>>>> main
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
         </div>

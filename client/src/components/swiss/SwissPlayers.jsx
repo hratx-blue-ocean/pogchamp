@@ -1,11 +1,6 @@
 import React, { useRef } from 'react';
 import { Grid, Button, TextField } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 
@@ -16,10 +11,13 @@ const SwissPlayers = (props) => {
   const handleScoreUpdate = (e, player) => {
     e.preventDefault();
     let currentScore = Number(listRefs.get(player).current.value);
+    console.log(`\n
+    The score entered for ${player} was ${currentScore}\n`)
     if(currentScore) {
       let newScore = props.playerInfo[player] + currentScore;
       props.setPlayerInfo({...props.playerInfo, [player]: newScore});
     }
+    // need to reset rounds to 0 or push 0 to any inputs not touched. old score is being saved if score is not manually added
     props.setCurrentRoundScores({...props.currentRoundScores, [player]: currentScore})
     listRefs.get(player).current.value = '';
   }
@@ -78,16 +76,9 @@ const SwissPlayers = (props) => {
                     player.toLowerCase() === 'bye'
                       ? ''
                       : <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-<<<<<<< HEAD
                           <TextField
                             label="Score"
                             type="text"
-=======
-                          {/* <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} /> */}
-                          <TextField
-                            label="Score"
-                            type="number"
->>>>>>> main
                             InputLabelProps={{
                               shrink: true,
                             }}
@@ -97,12 +88,8 @@ const SwissPlayers = (props) => {
                             className="submit-score"
                             color="primary"
                             type="submit"
-<<<<<<< HEAD
                             size="small"
                             variant="outlined">add to score</Button>
-=======
-                            size="small">add to score</Button>
->>>>>>> main
                         </form>
                   }
                 </Grid>
