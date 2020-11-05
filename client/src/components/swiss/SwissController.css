@@ -46,3 +46,17 @@
 .MuiSvgIcon-root.lost {
     color: #a00000;
 }
+.swiss-player.bye-player {
+  background: #bdbdbd;
+}
+.game-details {
+  text-align: center;
+}
+.game-details h2 {
+  border-bottom: 2px solid #677bf1;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.game-details h4, .game-details p {
+  margin: 8px 0;
+}
