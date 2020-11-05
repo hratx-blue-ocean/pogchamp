@@ -16,6 +16,7 @@ const SwissController = (props) => {
   const [roundWinners, setRoundWinners] = useState({});
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
+  const [firstPairing, setFirstPairing] = useState(true);
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
@@ -67,23 +68,36 @@ const SwissController = (props) => {
         : secondPlayer;
 
       createArray(winner);
-      console.log('winner is', winner)
     }
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
 
   const handlePairings = (e) => {
-    checkWinners();
     e.preventDefault();
-
+    checkWinners();
     let newPairs = [];
-    const sorted =
-      Object.entries(playerInfo)
-      .sort((a, b) => b[1] - a[1])
 
-    for(let i = 0; i < sorted.length; i+=2) {
-      newPairs.push([sorted[i][0], sorted[i+1][0]]);
+    let randomized =
+      Object.entries(playerInfo)
+      .sort(() => Math.random() - 0.5);
+
+    let sorted =
+      Object.entries(playerInfo)
+      .sort((a, b) => b[1] - a[1]);
+
+    let transformedArray;
+
+    if(firstPairing === true) {
+      setFirstPairing(false)
+      transformedArray = randomized;
+    } else {
+      transformedArray = sorted;
     }
+
+    for(let i = 0; i < transformedArray.length; i+=2) {
+      newPairs.push([transformedArray[i][0], transformedArray[i+1][0]]);
+    }
+
     setPairs(newPairs);
     if(gameDetails.currentRound <= Number(gameDetails.rounds)) {
       gameDetails.currentRound ++;
@@ -91,10 +105,20 @@ const SwissController = (props) => {
   }
 
   const revealWinner = () => {
-    if(playerInfo[pairs[0][0]] === playerInfo[pairs[0][1]]) {
-      // TO DO: Show who is tied instead of default "It's a tie"
-      // account for multiple player ties
-      setGameDetails({...gameDetails, winner: 'tie'})
+    let highestScore = playerInfo[pairs[0][0]];
+    let tiedArray = [];
+
+    pairs.forEach(pair => {
+      if(playerInfo[pair[0]] >= highestScore) {
+        tiedArray.push(pair[0]);
+      }
+      if(playerInfo[pair[1]] >= highestScore) {
+        tiedArray.push(pair[1]);
+      }
+    })
+
+    if(tiedArray.length > 1) {
+      setGameDetails({...gameDetails, winner: tiedArray})
     } else {
       setGameDetails({...gameDetails, winner: pairs[0][0]})
     }
@@ -102,12 +126,11 @@ const SwissController = (props) => {
 
   return (
     <Container maxWidth="lg" className="swissPairing">
-      <h1>Swiss Pairing</h1>
-      <div>
-        <h4>Tournament Name: {gameDetails.tournamentName}</h4>
-        <h4>Game Name: {gameDetails.gameName}</h4>
-        <h4>Total Rounds: {gameDetails.rounds}</h4>
-      </div>
+        <div className="game-details">
+          <h2>{gameDetails.tournamentName}</h2>
+          <h4>{gameDetails.gameName}</h4>
+          <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
+        </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h2>Add your tournament details:</h2>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
@@ -120,7 +143,7 @@ const SwissController = (props) => {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               <h2>Add the players:</h2>
-              <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 points for that round.</p>
+              <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
               <TextField label="enter player name" variant="outlined" size="small" inputRef={players} />
               <Button variant="contained" type="submit">Submit</Button>
             </form>
@@ -134,22 +157,23 @@ const SwissController = (props) => {
                 color="primary"
                 className="create-pairings"
                 onClick={revealWinner}>Reveal Winner!</Button>
-
                 {
-                  gameDetails.winner !== '' && gameDetails.winner !== 'tie'
+                  gameDetails.winner !== '' && !Array.isArray(gameDetails.winner)
                     ? <Container maxWidth="sm" className="pairings-container">
                         <h2>{gameDetails.winner} wins!!</h2>
                       </Container>
                     : ''
                 }
                 {
-                  gameDetails.winner !== '' && gameDetails.winner === 'tie'
+                  gameDetails.winner !== '' && Array.isArray(gameDetails.winner)
                     ? <Container maxWidth="sm" className="pairings-container">
-                        <h2>It's a tie!</h2>
+                      <h2>It's a tie!</h2>
+                        { gameDetails.winner.map(player => {
+                          return <p>{player}</p>
+                        }) }
                       </Container>
                     : ''
                 }
-
             </div>
           : <div>
               { gameDetails.currentRound === 0
