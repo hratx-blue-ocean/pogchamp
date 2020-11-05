@@ -108,7 +108,9 @@ class BracketComponent extends React.Component {
       third: tournamentInfo.prizeAmount * .20
     }
 
-    this.setState({prizeAmount: prize});
+    this.setState({prizeAmount: prize}, () => {
+      console.log('prizeAmount:', this.state.prizeAmount);
+    });
   }
 
   updateMatchWinner(id = null) {

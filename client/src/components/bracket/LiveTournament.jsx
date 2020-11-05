@@ -6,6 +6,7 @@ function LiveTournament({players, prizes}) {
       <h1 className="title">Bracket Tournament</h1>
 
       { players.length === 1 ?
+
         <div>
          <h3>First Place ${prizes.first}</h3>
          <h3>Second Place ${prizes.second}</h3>
