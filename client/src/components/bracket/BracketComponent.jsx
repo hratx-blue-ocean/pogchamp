@@ -23,6 +23,7 @@ class BracketComponent extends React.Component {
       showIframe: false,
       prizeAmount: {},
       winners: {"first" : {}, "second" : {}, "third": []},
+      live_image_url: '',
     };
 
     this.postNewParticipants = this.postNewParticipants.bind(this);
@@ -56,11 +57,12 @@ class BracketComponent extends React.Component {
     }
     axios.post("/api/createTournament", data)
       .then((res) => {
-        console.log(res.data.tournament, "Created tournament data");
+        // console.log(res.data.tournament, "Created tournament data");
         this.setState({
           liveUrl: res.data.tournament.url,
           currentTournament: res.data,
           tournamentId: res.data.tournament.id,
+          live_image_url: res.data.tournament.live_image_url,
         });
         //post new participants
         this.postNewParticipants(players);
@@ -184,16 +186,24 @@ class BracketComponent extends React.Component {
   }
 
   render() {
+    let players = this.state.players;
+    let view = this.state.view;
     return (
       <Container maxWidth="lg" className="bracketForm">
         <StaticView changeView={this.changeView}/>
-        {this.state.view === 0 && <BracketForm
+
+        {view === 0 && <BracketForm
         className="bracketForm"
         startTournament={this.startTournament}
         />}
         {this.state.view === 2 && <LiveTournament players={this.state.players} prizes={this.state.prizeAmount} winners={this.state.winners}/>}
+        startTournament={this.startTournament}/>}
+
+        {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
+        live_image_url={this.state.live_image_url}/>}
+
         <div>
-          {this.state.players.length > 1 && this.state.view === 2 && (
+          {players.length > 1 && view === 2 && (
             <Grid container>
               <Grid item xs={5}>
                 </Grid>
@@ -215,7 +225,6 @@ class BracketComponent extends React.Component {
 
       </Container>
     );
-  }
 }
 
 export default BracketComponent;
