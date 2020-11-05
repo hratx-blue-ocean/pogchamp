@@ -1,1 +1,3 @@
-qgTPawy7NEkqDzkJ4cuykTJaJkRaNVkweRZEr8d7
+module.exports = {
+  api_key: ''
+}
