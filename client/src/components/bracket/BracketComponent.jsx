@@ -21,7 +21,9 @@ class BracketComponent extends React.Component {
       matchId : undefined,
       participantId: undefined,
       showIframe: false,
+      prizeAmount: {}
     };
+
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
     this.changeView = this.changeView.bind(this);
@@ -99,6 +101,14 @@ class BracketComponent extends React.Component {
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
+
+    let prize = {
+      first: tournamentInfo.prizeAmount * .50,
+      second: tournamentInfo.prizeAmount * .30,
+      third: tournamentInfo.prizeAmount * .20
+    }
+
+    this.setState({prizeAmount: prize});
   }
 
   updateMatchWinner(id = null) {
@@ -159,7 +169,7 @@ class BracketComponent extends React.Component {
         className="bracketForm"
         startTournament={this.startTournament}
         />}
-        {this.state.view === 2 && <LiveTournament players={this.state.players}/>}
+        {this.state.view === 2 && <LiveTournament players={this.state.players} prizes={this.state.prizeAmount}/>}
         <div>
           {this.state.players.length > 1 && this.state.view === 2 && (
             <Grid container>
