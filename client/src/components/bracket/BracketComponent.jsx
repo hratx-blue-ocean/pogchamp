@@ -21,6 +21,11 @@ class BracketComponent extends React.Component {
       matchId : undefined,
       participantId: undefined,
       showIframe: false,
+      prize: {
+        first: 0,
+        second: 0,
+        third: 0
+      }
     };
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
@@ -82,7 +87,7 @@ class BracketComponent extends React.Component {
         console.log(err);
       });
   }
-  
+
   startMatch() {
     axios.post("/api/startTournament", { tournamentId: this.state.tournamentId })
     .then((res) => {
@@ -92,15 +97,28 @@ class BracketComponent extends React.Component {
       console.log(err);
     });
   }
-  
+
   //on click handler when they start the tournament
   startTournament( tournamentInfo, participantInfo ) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
+
+    this.setState({prize: {first: tournamentInfo.prizeAmount * .50}}, () => {
+      console.log('new first prize state:', this.state.prize)
+    })
+
+    this.setState({prize: {second: tournamentInfo.prizeAmount * .30}}, () => {
+      console.log('new second prize state:', this.state.prize)
+    })
+
+    this.setState({prize: {third: tournamentInfo.prizeAmount * .20}}, () => {
+      console.log('new third prize state:', this.state.prize)
+    })
+
   }
-  
+
   updateMatchWinner(id = null) {
     //we need participant id
     axios.post(`/api/updateMatch`, {
@@ -121,7 +139,7 @@ class BracketComponent extends React.Component {
           this.setState({players: filteredPlayers , showIframe: false});
         } else {
           this.setState({
-            players: filteredPlayers, 
+            players: filteredPlayers,
           })
         }
       })
@@ -155,7 +173,7 @@ class BracketComponent extends React.Component {
     return (
       <Container maxWidth="lg" className="bracketForm">
         <StaticView changeView={this.changeView}/>
-        {this.state.view === 0 && <BracketForm 
+        {this.state.view === 0 && <BracketForm
         className="bracketForm"
         startTournament={this.startTournament}
         />}

@@ -6,21 +6,8 @@ function LiveTournament({players}) {
       <h3>Tournament View</h3>
 
       {/* Money prize here */}
-      {players.length === 1 ?
-      '' :
-        <div>
-          <p>First Place:</p>
-          <p>Second Place:</p>
-          <p>Third Place:</p>
-        </div>
-      }
-
       <h1>Live Bracket Tournament</h1>
-<<<<<<< HEAD
-      {players.length === 0 || players.length === 1 ?
-=======
-      {players.length === 0 ?  
->>>>>>> main
+      {players.length === 0 ?
         <div style={{height: 550}}>
         <h4 style={{color: "grey"}}>Will show tournament here</h4>
       </div> : null}
