@@ -18,6 +18,31 @@ const SwissController = (props) => {
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
   const [firstPairing, setFirstPairing] = useState(true);
+  const [matchedStatus, setMatchedStatus] = useState({});
+
+
+
+
+    /**opponents = {
+   *   leslie: {'alec': true,
+   *            'rose': true,
+   *            'grant': false,
+   *            'brandon': true,
+   *            'daniel': false,
+   *            'leslie': false
+   *            },
+   * }
+   *
+   * create object of all players, set to false
+   * assign that object to each player in 'opponents' state object
+   *
+   * leslie & grant
+   * if leslie.grant === false
+   *   we're good
+   *   set leslie.grant = true
+   * otherwise
+   *   find next possible opponent
+   */
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
@@ -33,6 +58,8 @@ const SwissController = (props) => {
       rounds: rounds.current.value
     })
   }
+
+
 
   const handleAddPlayer = (e) => {
     e.preventDefault();
@@ -76,14 +103,34 @@ const SwissController = (props) => {
 
       createArray(winner);
     }
-
     setRoundWinners({...roundWinners, ...newRoundWinners});
+  }
+
+  const populateOpponentList = () => {
+    let opponents = {};
+    let fullOpponents = {};
+
+    for(let player in playerInfo) {
+      opponents[player] = false;
+    }
+    for(let player in playerInfo) {
+      fullOpponents[player] = opponents;
+    }
+    setMatchedStatus(fullOpponents);
   }
 
   const handlePairings = (e) => {
     e.preventDefault();
+
+    if(firstPairing) {
+      populateOpponentList();
+    }
+
     checkWinners();
+
     let newPairs = [];
+    let matchedStatusCopy = {...matchedStatus};
+    console.log('matchedStatusCopy before making any changes', matchedStatusCopy);
 
     let randomized =
       Object.entries(playerInfo)
@@ -103,12 +150,23 @@ const SwissController = (props) => {
     }
 
     for(let i = 0; i < transformedArray.length; i+=2) {
-      newPairs.push([transformedArray[i][0], transformedArray[i+1][0]]);
+      let firstOpponent = transformedArray[i][0];
+      let secondOpponent = transformedArray[i+1][0];
+
+      newPairs.push([firstOpponent, secondOpponent]);
       setCurrentRoundScores({
         ...currentRoundScores,
-        [transformedArray[i][0]]: 0,
-        [transformedArray[i+1][0]]: 0
+        [firstOpponent]: 0,
+        [secondOpponent]: 0
       })
+
+      if(matchedStatusCopy[firstOpponent]) {
+        // console.log(matchedStatusCopy[firstOpponent][secondOpponent])
+        console.log('firstOpponent', firstOpponent)
+        console.log('secondOpponent', secondOpponent)
+        matchedStatusCopy[firstOpponent][secondOpponent] = true;
+        console.log(matchedStatusCopy);
+      }
     }
 
     setPairs(newPairs);

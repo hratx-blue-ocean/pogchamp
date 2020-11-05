@@ -49,7 +49,7 @@ const SwissPlayers = (props) => {
                       <TableRow>
                         <TableCell>Rounds</TableCell>
                         { props.roundWinners[player].map((round, index) => {
-                          return <TableCell align="center">{index + 1}</TableCell>
+                          return <TableCell align="center" key={index}>{index + 1}</TableCell>
                         })}
                       </TableRow>
                     </TableHead>
@@ -60,8 +60,8 @@ const SwissPlayers = (props) => {
                           </TableCell>
                           { props.roundWinners[player].map((round, index) => {
                             return round === true
-                              ? <TableCell align="center"><CheckCircleOutlineIcon className="won"/></TableCell>
-                              : <TableCell align="center"><NotInterestedIcon className="lost"/></TableCell>
+                              ? <TableCell align="center" key={index}><CheckCircleOutlineIcon className="won"/></TableCell>
+                              : <TableCell align="center" key={index}><NotInterestedIcon className="lost"/></TableCell>
                           })}
                         </TableRow>
                       </TableBody>
@@ -94,7 +94,8 @@ const SwissPlayers = (props) => {
               )
             })}
             {
-              props.gameDetails.currentRound > 0 && props.gameDetails.currentRound !== (parseInt(props.gameDetails.rounds) + 1)
+              props.gameDetails.currentRound > 0
+              && props.gameDetails.currentRound !== (parseInt(props.gameDetails.rounds) + 1)
                 ? <Button onClick={props.handlePairings}
                     variant="outlined"
                     className="round-progress">
