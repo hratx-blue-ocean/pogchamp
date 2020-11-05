@@ -21,11 +21,9 @@ class BracketComponent extends React.Component {
       matchId : undefined,
       participantId: undefined,
       showIframe: false,
-      prize: {
-        first: 0,
-        second: 0,
-        third: 0
-      }
+      first: 0,
+      second: 0,
+      third: 0
     };
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
@@ -105,18 +103,17 @@ class BracketComponent extends React.Component {
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
 
-    this.setState({prize: {first: tournamentInfo.prizeAmount * .50}}, () => {
-      console.log('new first prize state:', this.state.prize)
+    this.setState({first: tournamentInfo.prizeAmount * .50}, () => {
+      console.log('new first prize state:', this.state.first)
     })
 
-    this.setState({prize: {second: tournamentInfo.prizeAmount * .30}}, () => {
-      console.log('new second prize state:', this.state.prize)
+    this.setState({second: tournamentInfo.prizeAmount * .30}, () => {
+      console.log('new second prize state:', this.state.second)
     })
 
-    this.setState({prize: {third: tournamentInfo.prizeAmount * .20}}, () => {
-      console.log('new third prize state:', this.state.prize)
+    this.setState({third: tournamentInfo.prizeAmount * .20}, () => {
+      console.log('new third prize state:', this.state.third)
     })
-
   }
 
   updateMatchWinner(id = null) {
