@@ -38,7 +38,7 @@ class BracketComponent extends React.Component {
           </React.Fragment>
         }
       >
-      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}}>{player["participant"]["name"]}</Button>
+      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}} fullWidth>{player["participant"]["name"]}</Button>
       </Tooltip>
         </Grid>
       })
@@ -82,7 +82,7 @@ class BracketComponent extends React.Component {
         console.log(err);
       });
   }
-  
+
   startMatch() {
     axios.post("/api/startTournament", { tournamentId: this.state.tournamentId })
     .then((res) => {
@@ -92,7 +92,7 @@ class BracketComponent extends React.Component {
       console.log(err);
     });
   }
-  
+
   //on click handler when they start the tournament
   startTournament( tournamentInfo, participantInfo ) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
@@ -100,7 +100,7 @@ class BracketComponent extends React.Component {
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
   }
-  
+
   updateMatchWinner(id = null) {
     //we need participant id
     axios.post(`/api/updateMatch`, {
@@ -121,7 +121,7 @@ class BracketComponent extends React.Component {
           this.setState({players: filteredPlayers , showIframe: false});
         } else {
           this.setState({
-            players: filteredPlayers, 
+            players: filteredPlayers,
           })
         }
       })
@@ -155,7 +155,7 @@ class BracketComponent extends React.Component {
     return (
       <Container maxWidth="lg" className="bracketForm">
         <StaticView changeView={this.changeView}/>
-        {this.state.view === 0 && <BracketForm 
+        {this.state.view === 0 && <BracketForm
         className="bracketForm"
         startTournament={this.startTournament}
         />}
@@ -163,9 +163,9 @@ class BracketComponent extends React.Component {
         <div>
           {this.state.players.length > 1 && this.state.view === 2 && (
             <Grid container>
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 </Grid>
-                <Grid container item xs={4} direction="row">
+                <Grid container item xs={7} direction="row">
               {this.participantNameList()}
                 </Grid>
             </Grid>
