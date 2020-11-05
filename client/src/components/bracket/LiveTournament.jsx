@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React from 'react';
 
 function LiveTournament({players}) {
@@ -5,7 +6,7 @@ function LiveTournament({players}) {
     <React.Fragment>
       <h3>Tournament View</h3>
       {/* Money prize here */}
-      <h1>Live Bracket Tournament</h1>
+      <h1>Live Bracket Tournament</h1>      
       {players.length === 0 ?  
         <div style={{height: 550}}>
         <h4 style={{color: "grey"}}>Will show tournament here</h4>

@@ -7,6 +7,7 @@ import StaticView from './StaticView.jsx';
 import LiveTournament from './LiveTournament.jsx';
 import './BracketForm.css';
 import { TurnedInTwoTone } from "@material-ui/icons";
+import ThirdPlace from "./ThirdPlace.jsx";
 const iframeoptions = '?show_tournament_name=1&show_final_results=1&show_standings=1&scale_to_fit=1';
 
 class BracketComponent extends React.Component {
@@ -16,11 +17,13 @@ class BracketComponent extends React.Component {
       view: 0,
       players: [],
       liveUrl: '',
-      currentTournament: {},
+      // currentTournament: {},
       tournamentId: undefined,
       matchId : undefined,
       participantId: undefined,
       showIframe: false,
+      live_image_url : undefined,
+      third_place : [],
     };
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
@@ -53,11 +56,12 @@ class BracketComponent extends React.Component {
     }
     axios.post("/api/createTournament", data)
       .then((res) => {
-        console.log(res.data.tournament, "Created tournament data");
+        let result = res.data;
         this.setState({
-          liveUrl: res.data.tournament.url,
-          currentTournament: res.data,
-          tournamentId: res.data.tournament.id,
+          liveUrl: result.tournament.url,
+          // currentTournament: res.data,
+          tournamentId: result.tournament.id,
+          live_image_url: result.tournament.live_image_url,
         });
         //post new participants
         this.postNewParticipants(players);
@@ -68,7 +72,6 @@ class BracketComponent extends React.Component {
       .catch((err) => {
         console.log("Error", err);
       });
-    //hold_third_place_match] // true or false
   }
 
   postNewParticipants(participants) {
@@ -93,12 +96,10 @@ class BracketComponent extends React.Component {
     });
   }
   
-  //on click handler when they start the tournament
+  //handler when they start the tournament
   startTournament( tournamentInfo, participantInfo ) {
-    console.log("Start Tournament:", tournamentInfo, participantInfo);
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
-    //do extra stuff afterwards
   }
   
   updateMatchWinner(id = null) {
@@ -109,7 +110,15 @@ class BracketComponent extends React.Component {
     })
       .then((res) => {
         let deletePlayer = res.data.loserId;
-        let filteredPlayers = this.state.players.filter(function (
+        let players = this.state.players;
+        //getting third place here
+        if (players.length === 4 || players.length === 3) {
+          let thirdPlace = players.find((player) => 
+          player["participant"]["id"] === deletePlayer);
+          let obj = [...this.state.third_place, thirdPlace];
+          this.setState({third_place: obj});
+        } 
+        let filteredPlayers = players.filter(function (
           player
         ) {
           return player["participant"]["id"] !== deletePlayer;
@@ -135,12 +144,20 @@ class BracketComponent extends React.Component {
     axios.put('/api/finalizeTournament', {"tournamentId" : id})
     .then((res) => {
       console.log("Finalized tournament");
-      this.setState({view: 2, showIframe: true});
+      this.setState({view: 2, showIframe: true}, () => {
+        console.log(this.state.third_place, "<--third place");
+      });
     })
     .catch((err) => {
       console.log("error:", err);
     })
+  }
 
+  openInNewTab(e) {
+    e.preventDefault()
+    let url = this.state.live_image_url;
+    const newWindow = window.open(url, '_blank', 'noopener, noreferrer')
+    if (newWindow) newWindow.opener = null
   }
 
   changeView(view = null) {
@@ -152,38 +169,47 @@ class BracketComponent extends React.Component {
   }
 
   render() {
+    let view = this.state.view;
+    let players = this.state.players;
+    let third = this.state.third_place;
     return (
       <Container maxWidth="lg" className="bracketForm">
-        <StaticView changeView={this.changeView}/>
-        {this.state.view === 0 && <BracketForm 
+        <StaticView changeView={this.changeView} 
+        />
+        {view === 0 && <BracketForm 
         className="bracketForm"
         startTournament={this.startTournament}
         />}
-        {this.state.view === 2 && <LiveTournament players={this.state.players}/>}
         <div>
-          {this.state.players.length > 1 && this.state.view === 2 && (
-            <Grid container>
-              <Grid item xs={8}>
-                </Grid>
-                <Grid container item xs={4} direction="row">
-              {this.participantNameList()}
-                </Grid>
-            </Grid>
-          )}
+        {view === 2 && players.length === 1 ? <Button onClick={() => window.print()}>Print Results</Button> : null}
+        {view === 2 && this.state.live_image_url ? <Button onClick={(e) => this.openInNewTab(e)}>Print Bracket</Button> : null}
         </div>
-        {this.state.showIframe && this.state.liveUrl ? (
-          <iframe
+        {view === 2 && <LiveTournament players={players}/>}
+        
+        <div>
+        {players.length > 1 && view === 2 && (
+          <Grid container>
+          <Grid item xs={8}>
+          </Grid>
+          <Grid container item xs={4} direction="row">
+          {this.participantNameList()}
+          </Grid>
+          </Grid>
+          )}
+          </div>
+          {this.state.showIframe && this.state.liveUrl ? (
+            <iframe
             src={`http://challonge.com/${this.state.liveUrl}/module${iframeoptions}`}
             width="100%"
             height="550"
             frameBorder="0"
             scrolling="auto"
-          ></iframe>
-        ) : null}
-
-      </Container>
-    );
-  }
-}
+            ></iframe>
+            ) : null}
+            {third.length === 2 && <ThirdPlace third_place={third}/>}
+            </Container>
+            );
+          }
+        }
 
 export default BracketComponent;
