@@ -41,7 +41,7 @@ class BracketComponent extends React.Component {
           </React.Fragment>
         }
       >
-      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}}>{player["participant"]["name"]}</Button>
+      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}} fullWidth>{player["participant"]["name"]}</Button>
       </Tooltip>
         </Grid>
       })
@@ -85,7 +85,7 @@ class BracketComponent extends React.Component {
         console.log(err);
       });
   }
-  
+
   startMatch() {
     axios.post("/api/startTournament", { tournamentId: this.state.tournamentId })
     .then((res) => {
@@ -95,13 +95,12 @@ class BracketComponent extends React.Component {
       console.log(err);
     });
   }
-  
-  //handler when they start the tournament
+
   startTournament( tournamentInfo, participantInfo ) {
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
   }
-  
+
   updateMatchWinner(id = null) {
     //we need participant id
     axios.post(`/api/updateMatch`, {
@@ -130,7 +129,7 @@ class BracketComponent extends React.Component {
           this.setState({players: filteredPlayers , showIframe: false});
         } else {
           this.setState({
-            players: filteredPlayers, 
+            players: filteredPlayers,
           })
         }
       })
