@@ -127,7 +127,8 @@ const SwissController = (props) => {
   return (
     <Container maxWidth="lg" className="swissPairing">
         <div className="game-details">
-          <h2>{gameDetails.tournamentName}</h2>
+          {gameDetails.tournamentName ? <h2>{gameDetails.tournamentName}</h2> : ''}
+
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
         </div>

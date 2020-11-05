@@ -78,8 +78,20 @@ const SwissPlayers = (props) => {
                     player.toLowerCase() === 'bye'
                       ? ''
                       : <form onSubmit={(e) => handleScoreUpdate(e, player)}>
-                          <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} />
-                          <Button variant="contained" type="submit">add to score</Button>
+                          {/* <TextField label="add to score" variant="outlined" size="small" inputRef={listRefs.get(player)} /> */}
+                          <TextField
+                            label="Score"
+                            type="number"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            inputRef={listRefs.get(player)}
+                          />
+                          <Button
+                            className="submit-score"
+                            color="primary"
+                            type="submit"
+                            size="small">add to score</Button>
                         </form>
                   }
                 </Grid>
