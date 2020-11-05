@@ -60,7 +60,7 @@ const BracketForm = ({ startTournament }) => {
       return player.name === incomingPlayer;
     });
 
-    console.log("these are the repeats", repeats);
+    // console.log("these are the repeats", repeats);
 
     if(repeats.length === 1) {
       //make a pop to appear
