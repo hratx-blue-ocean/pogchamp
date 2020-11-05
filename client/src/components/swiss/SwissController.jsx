@@ -13,6 +13,7 @@ const SwissController = (props) => {
   });
 
   const [playerInfo, setPlayerInfo] = useState({});
+  const [roundsWon, setRoundsWon] = useState({});
   const [roundWinners, setRoundWinners] = useState({});
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
@@ -53,20 +54,31 @@ const SwissController = (props) => {
   const checkWinners = () => {
     let newRoundWinners = {};
 
-    let createArray = (winner) => {
-      let roundArray = [...roundWinners[winner]];
+    let createArray = (roundWinner) => {
+      let roundArray = [...roundWinners[roundWinner]];
       roundArray.splice((Number(gameDetails.currentRound) - 1), 1, true);
-      newRoundWinners[winner] = roundArray;
+      newRoundWinners[roundWinner] = roundArray;
     }
 
     for(let i = 0; i < pairs.length; i++) {
       let firstPlayer = pairs[i][0];
       let secondPlayer = pairs[i][1];
+      console.log('current round score for', firstPlayer, 'is', currentRoundScores[firstPlayer])
+      console.log('current round score for', secondPlayer, 'is', currentRoundScores[secondPlayer])
       let winner =
         currentRoundScores[firstPlayer] > currentRoundScores[secondPlayer]
         ? firstPlayer
         : secondPlayer;
+      console.log('winner is', winner, 'with', currentRoundScores[winner], 'points');
 
+      let newRoundsTotal =
+        roundsWon[winner] ? roundsWon[winner]++ : roundsWon[winner] = 1;
+
+      setRoundsWon({
+        ...roundsWon,
+        [winner]: newRoundsTotal
+      })
+      console.log('winner of the round is:', winner)
       createArray(winner);
     }
     setRoundWinners({...roundWinners, ...newRoundWinners});
@@ -107,32 +119,61 @@ const SwissController = (props) => {
   const revealWinner = () => {
     let highestScore = playerInfo[pairs[0][0]];
     let tiedArray = [];
+    let winnersArr = [];
 
     pairs.forEach(pair => {
-      if(playerInfo[pair[0]] >= highestScore) {
+      if(playerInfo[pair[0]] === highestScore) {
         tiedArray.push(pair[0]);
       }
-      if(playerInfo[pair[1]] >= highestScore) {
+      if(playerInfo[pair[1]] === highestScore) {
         tiedArray.push(pair[1]);
       }
     })
 
-    if(tiedArray.length > 1) {
-      setGameDetails({...gameDetails, winner: tiedArray})
+    // if tiedArray has length, there are tied players
+    // first player : 1
+    // second player : 4
+    if(tiedArray.length) {
+      let highestRoundsWon = roundsWon[tiedArray[0]]; // number of rounds won
+      console.log('initial value at', highestRoundsWon);
+
+      tiedArray.forEach(player => {
+        // find highest number of roundsWon
+        if(roundsWon[player] >= highestRoundsWon) {
+          console.log(`${player} has more or equal rounds won at ${roundsWon[player]} rounds`)
+          highestRoundsWon = roundsWon[player];
+          console.log('winnersArr after winner is added:', winnersArr);
+        }
+      })
+
+      tiedArray.forEach(player => {
+        if(roundsWon[player] >= highestRoundsWon) {
+          winnersArr.push(player);
+        }
+      })
+
+    }
+
+    // setGameDetails with new winner
+    if(winnersArr.length > 1) {
+      setGameDetails({ ...gameDetails, winner: winnersArr })
+    } else if (winnersArr.length === 1) {
+      setGameDetails({ ...gameDetails, winner: winnersArr[0] })
     } else {
-      setGameDetails({...gameDetails, winner: pairs[0][0]})
+      setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
   }
 
   return (
     <Container maxWidth="lg" className="swissPairing">
+      <h2>Swiss Tournament</h2>
         <div className="game-details">
-          <h2>{gameDetails.tournamentName}</h2>
+          {gameDetails.tournamentName ? <h2>{gameDetails.tournamentName}</h2> : ''}
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
-        <h2>Add your tournament details:</h2>
+        <h3>Add your tournament details:</h3>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
         <TextField label="game name" variant="outlined" size="small" inputRef={game} />
         <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
@@ -149,6 +190,7 @@ const SwissController = (props) => {
             </form>
           : ''
       }
+
       {
         gameDetails.currentRound === (parseInt(gameDetails.rounds) + 1)
           ? <div>
