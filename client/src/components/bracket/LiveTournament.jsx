@@ -3,8 +3,7 @@ import React from 'react';
 function LiveTournament({players, prizes}) {
   return (
     <React.Fragment>
-      {/* <h3>Tournament View</h3> */}
-      <h1 className="title">Live Bracket Tournament</h1>
+      <h1 className="title">Bracket Tournament</h1>
 
       { players.length === 1 ?
         <div>
@@ -16,7 +15,7 @@ function LiveTournament({players, prizes}) {
 
       { players.length === 0 ?
         <div style={{height: 550}}>
-          <h4 style={{color: "grey"}}>Will show tournament here</h4>
+          <h4 style={{color: "grey"}}>Click "Create New Tournament" to begin</h4>
         </div> : null
       }
     </React.Fragment>
