@@ -122,7 +122,6 @@ class BracketComponent extends React.Component {
     })
       .then((res) => {
         let deletePlayer = res.data.loserId;
-        //function to find second, third
         let players = this.state.players;
         let winnersObj = this.state.winners;
         if (players.length === 3 || players.length === 2 ||
