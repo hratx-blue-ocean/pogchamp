@@ -8,9 +8,9 @@ function LiveTournament({players, prizes}) {
 
       { players.length === 1 ?
         <div>
-         <h2>First Place ${prizes.first}</h2>
-         <h2>Second Place ${prizes.second}</h2>
-         <h2>Third Place ${prizes.third}</h2>
+         <h3>First Place ${prizes.first}</h3>
+         <h3>Second Place ${prizes.second}</h3>
+         <h3>Third Place ${prizes.third}</h3>
         </div> : null
       }
 
