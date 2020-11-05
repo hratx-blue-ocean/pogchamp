@@ -32,27 +32,33 @@ const db = client.db(dbName);
 
 
 // get new tournament id
-const getNewTournamentId = () => {
-  const utils = db.collection('utility').find({}, (cursor) => {
-    return cursor.toArray()[0].tournamentId;
+const getNewTournamentId = (callback) => {
+  db.collection('utility').find({}).toArray((err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      callback(result[0].tournamentId);
+    }
   });
-  // let current = utils[0].tournamentId;
-  // db.collection('utility').updateOne({}, {$inc: {tournamentId: 1}});
-  // return current;
 }
 
-// get new user id
-const getNewUserId = () => {
-  let utils = db.collection('utility').find({})[0];
-  let current = utils.userId;
-  db.collection('utility').updateOne({}, {$inc: {userId: 1}});
-  return current;
+const incrementTournamentId = (callback) => {
+  db.collection('utility').updateOne({}, {$inc: {tournamentId: 1}})
+  .then((res) => {callback(res.result);})
+  .catch((err) => {callback(err);});
 }
 
 // create new tournament
-const createNewTournament = (name, hostName, date, location, city, type, playerLimit, rounds, totalPrize, callback) => {
-  let id = getNewTournamentId();
-  db.collection('tournaments').insertOne({name: name, tournamentId: id, hostName: hostName, date: date, location: location, city: city, type: type, playerLimit: playerLimit, rounds: rounds, totalPrize: totalPrize});
+const createNewTournament = (name, hostName, date, location, vity, type, playerLimit, rounds, totalPrize, callback) => {
+  getNewTournamentId((res) => {
+    let datea = new Date (date);
+    db.collection('tournaments').insertOne({name: name, tournamentId: res, hostName: hostName, date: datea, location: location, city: city, type: type, playerLimit: playerLimit, rounds: rounds, registered: [], pairings: [], scores: {}, totalPrize: totalPrize})
+    .then((res) => {
+      incrementTournamentId(callback);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  });
 }
 
-console.log(getNewTournamentId());
