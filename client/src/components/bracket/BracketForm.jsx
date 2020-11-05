@@ -52,10 +52,24 @@ const BracketForm = ({ startTournament }) => {
   const handleAddingPlayers = (e) => {
     e.preventDefault();
 
-    let player = playerName.current.value;
-    setPlayers({
-      participants: [...playersInTournament.participants, { name: player }],
+    let incomingPlayer = playerName.current.value;
+    //go through the array of playersInTournament and make sure that name is not already used
+    let repeats = playersInTournament.participants.filter(function (
+      player
+    ) {
+      return player.name === incomingPlayer;
     });
+
+    console.log("these are the repeats", repeats);
+
+    if(repeats.length === 1) {
+      //make a pop to appear
+      window.alert('Player is already in the list!')
+    } else {
+      setPlayers({
+        participants: [...playersInTournament.participants, { name: incomingPlayer }],
+      });
+    }
     playerName.current.value = "";
   };
 
