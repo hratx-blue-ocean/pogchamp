@@ -11,8 +11,6 @@ const SwissPlayers = (props) => {
   const handleScoreUpdate = (e, player) => {
     e.preventDefault();
     let currentScore = Number(listRefs.get(player).current.value);
-    console.log(`\n
-    The score entered for ${player} was ${currentScore}\n`)
     if(currentScore) {
       let newScore = props.playerInfo[player] + currentScore;
       props.setPlayerInfo({...props.playerInfo, [player]: newScore});

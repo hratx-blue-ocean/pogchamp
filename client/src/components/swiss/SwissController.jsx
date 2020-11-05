@@ -77,7 +77,6 @@ const SwissController = (props) => {
       createArray(winner);
     }
 
-
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
 
@@ -133,32 +132,22 @@ const SwissController = (props) => {
     })
 
     if(tiedArray.length) {
-      let highestRoundsWon = roundsWon[tiedArray[0]]; // number of rounds won
-      console.log('initial value at', highestRoundsWon);
+      let highestRoundsWon = roundsWon[tiedArray[0]];
 
       tiedArray.forEach(player => {
-        // find highest number of roundsWon
         if(roundsWon[player] >= highestRoundsWon) {
-          console.log(`${player} has more or equal rounds won at ${roundsWon[player]} rounds`)
           highestRoundsWon = roundsWon[player];
         }
       })
 
-      console.log('tiedArray', tiedArray)
-
       tiedArray.forEach(player => {
-        console.log('roundsWon[player]', roundsWon[player])
-        console.log('highestRoundsWon', highestRoundsWon)
         if(roundsWon[player] >= highestRoundsWon) {
           winnersArr.push(player);
         }
       })
 
-      console.log('winnersArr after players with most rounds won get added: ', winnersArr);
-
     }
 
-    // setGameDetails with new winner
     if(winnersArr.length > 1) {
       setGameDetails({ ...gameDetails, winner: winnersArr })
     } else if (winnersArr.length === 1) {
