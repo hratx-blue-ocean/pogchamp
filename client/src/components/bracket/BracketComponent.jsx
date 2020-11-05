@@ -186,24 +186,22 @@ class BracketComponent extends React.Component {
   }
 
   render() {
-    let players = this.state.players;
-    let view = this.state.view;
     return (
       <Container maxWidth="lg" className="bracketForm">
         <StaticView changeView={this.changeView}/>
 
-        {view === 0 && <BracketForm
+        {this.state.view === 0 && <BracketForm
         className="bracketForm"
         startTournament={this.startTournament}
         />}
         {this.state.view === 2 && <LiveTournament players={this.state.players} prizes={this.state.prizeAmount} winners={this.state.winners}/>}
-        startTournament={this.startTournament}/>}
+        {/* startTournament={this.startTournament}}/> */}
 
-        {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
-        live_image_url={this.state.live_image_url}/>}
+        {/* {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
+        live_image_url={this.state.live_image_url}/>} */}
 
         <div>
-          {players.length > 1 && view === 2 && (
+          {this.state.players.length > 1 && this.state.view === 2 && (
             <Grid container>
               <Grid item xs={5}>
                 </Grid>
@@ -224,7 +222,8 @@ class BracketComponent extends React.Component {
         ) : null}
 
       </Container>
-    );
+   );
+  }
 }
 
 export default BracketComponent;
