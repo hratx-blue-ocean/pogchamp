@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Formik} from 'formik';
 
 const SignIn = (props) => {
@@ -7,6 +7,10 @@ const SignIn = (props) => {
     "username": "",
     "password": ""
   })
+
+  useEffect(() => {
+    console.log(data)
+  }, Object.values(data))
 
   const encrypt = (password) => {
     return password.split('').reverse().join('');
