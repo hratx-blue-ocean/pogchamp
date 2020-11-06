@@ -1,18 +1,15 @@
 import React from 'react';
 // import { PrintIcon } from '@material-ui/icons';
 
-function LiveTournament({players, prizes, live_image_url}) {
+function LiveTournament({players, prizes, live_image_url, winners}) {
   const openInNewTab = (e) => {
     e.preventDefault()
     let url = live_image_url;
     const newWindow = window.open(url, '_blank', 'noopener, noreferrer')
     if (newWindow) newWindow.opener = null
   }
-
-function LiveTournament({players, prizes, winners}) {
   return (
     <React.Fragment>
-      {/* <h3>Tournament View</h3> */}
       <h1 className="title">Bracket Tournament</h1>
       {live_image_url && players.length >= 1 &&
       <span>
