@@ -7,6 +7,7 @@ import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
 import Navigation from './Navigation.jsx';
 import Footer from './Footer.jsx';
 import SignIn from './SignIn.jsx';
+import SignUp from './SignUp.jsx';
 import { Grid, Paper, Modal } from '@material-ui/core';
 
 import {
@@ -55,6 +56,9 @@ const App = () => {
         </Route>
         <Route path="/player-dashboard">
           <PlayerDashboard />
+        </Route>
+        <Route path="/signup">
+          <SignUp handleModal={showLogin}/>
         </Route>
         <Route path="/">
           <LandingPage />
