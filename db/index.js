@@ -17,7 +17,6 @@ client.connect((err, result) => {
   console.log("Connected successfully to server");
 });
 
-<<<<<<< HEAD
 // reference the db
 const db = client.db(dbName);
 
