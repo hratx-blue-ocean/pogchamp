@@ -6,7 +6,7 @@ const NavBar = ({ handleLogin }) => {
   return (
     <div id="navigation" className="navBar">
         <Link to="/"><img id="logo" height={"50px"} src={Logo} /></Link>
-        <button id="signup" onClick={() => handleLogin(true)}>sign in/sign up</button>
+        <button id="signinButton" onClick={() => handleLogin(true)}>sign in/sign up</button>
     </div>
   )
 }
