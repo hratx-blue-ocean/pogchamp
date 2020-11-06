@@ -17,6 +17,7 @@ client.connect((err, result) => {
   console.log("Connected successfully to server");
 });
 
+<<<<<<< HEAD
 // reference the db
 const db = client.db(dbName);
 
@@ -113,3 +114,128 @@ const issueWinnings = (name, purse, callback) => {
 
 
 // TODO: queries to update tournaments (check with LC about what specifically we want to update), queries to update user W/L (is this by points, by match, or by tournament?)
+
+
+//COLLECTION NAMES user and tournament
+//query to insert tournament info into tournament collection
+const insertTournamentInfo = (obj) => {
+  console.log(obj, "object to be inserted");
+  return new Promise((resolve, reject) => {
+    db.collection('tournament').insertOne(obj, (error, result) => {
+      if (error) {
+        console.log("error inserting", err);
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    })
+  })
+};
+
+
+//UPDATES TOURNAMENT REGISTERED AND WINNER KEY TO USER ID
+const updateTournament = (id, array) => {
+  console.log(array);
+  return new Promise((resolve, reject) => {
+    let tournamentCollection = db.collection('tournament');
+    tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "registered": array } }, (error, res) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+};
+
+//UPDATE USERS ATTENDED
+const updateUserInfo = (username, tournamentId) => {
+  return new Promise((resolve, reject) => {
+    let userCollection = db.collection('user');
+    findUserByName(username)
+      .then((data) => {
+        if (data !== null) {
+          userCollection.updateOne({ "name": username }, { $set: { "attended": [...data.attended, tournamentId] } }, (error, res) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(data);
+            }
+          })
+        } else {
+          resolve(data);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      })
+  })
+};
+
+
+//FIND TOURNAMENT BY ID
+const findTournament = (id) => {
+  return new Promise((resolve, reject) => {
+    db.collection('tournament', (err, collection) => {
+      if (err) {
+        reject(err);
+      } else {
+        collection.findOne({ "tournamentId": id }, (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        })
+      }
+    })
+  })
+};
+
+//FIND USER BY NAME
+const findUserByName = (str) => {
+  return new Promise((resolve, reject) => {
+    db.collection('user', (err, collection) => {
+      if (err) {
+        reject(err);
+      } else {
+        collection.findOne({ "name": str }, (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        })
+      }
+    })
+  })
+};
+
+
+//query to insert guest to own collection
+// const insertGuestInfo = (obj) => {
+//   console.log(obj);
+//   return new Promise ((resolve, reject) => {
+//     db.collection('guest', (err, collection) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         collection.insertOne(obj, (error, result) => {
+//           if (error) {
+//             reject(error)
+//           } else {
+//             resolve(result)
+//           }
+//         })
+//       }
+//     })
+//   })
+// };
+
+module.exports = {
+  insertTournamentInfo,
+  updateUserInfo,
+  updateTournament,
+  findTournament,
+  findUserByName
+}
