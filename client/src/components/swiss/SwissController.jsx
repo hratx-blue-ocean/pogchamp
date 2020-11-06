@@ -18,7 +18,6 @@ const SwissController = (props) => {
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
   const [firstPairing, setFirstPairing] = useState(true);
-  // const [matchedStatus, setMatchedStatus] = useState({});
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
@@ -80,28 +79,8 @@ const SwissController = (props) => {
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
 
-
-  // const populateOpponentList = () => {
-  //   let opponents = {};
-  //   let fullOpponents = {};
-
-  //   for(let player in playerInfo) {
-  //     opponents[player] = false;
-  //   }
-  //   for(let player in playerInfo) {
-  //     fullOpponents[player] = opponents;
-  //   }
-  //   setMatchedStatus(fullOpponents);
-  // }
-
-
   const handlePairings = (e) => {
     e.preventDefault();
-
-    // if(firstPairing) {
-    //   populateOpponentList();
-    //   console.log('matched status', matchedStatus)
-    // }
 
     checkWinners();
 
@@ -129,16 +108,6 @@ const SwissController = (props) => {
       let firstOpponent = transformedArray[i][0];
       let secondOpponent = transformedArray[i+1][0];
 
-      // before pushing to newPairs array,
-      // check opponent's matched status to see if player has been matched with opponent before
-      // firstOpponent to secondOpponent
-      // if true, find another opponent
-
-      // if(matchedStatus[firstOpponent][secondOpponent] === true) {
-      //   console.log(`${firstOpponent} has been matched with ${secondOpponent} before. Find a new opponent for ${firstOpponent}`)
-      // }
-
-
       newPairs.push([firstOpponent, secondOpponent]);
       setCurrentRoundScores({
         ...currentRoundScores,
@@ -150,37 +119,10 @@ const SwissController = (props) => {
 
     setPairs(newPairs);
 
-    // updateMatchedStatus();
-
     if(gameDetails.currentRound <= Number(gameDetails.rounds)) {
       gameDetails.currentRound ++;
     }
   }
-
-
-  // const updateMatchedStatus = () => {
-
-  //   let matchedStatusCopy = JSON.parse(JSON.stringify(matchedStatus));
-
-  //   for(let i = 0; i < pairs.length; i++) {
-  //     let currentPair = pairs[i];
-  //     let firstPlayer = currentPair[0];
-  //     let secondPlayer = currentPair[1];
-
-  //     matchedStatusCopy[firstPlayer][secondPlayer] = true;
-  //     matchedStatusCopy[secondPlayer][firstPlayer] = true;
-  //   }
-  //   setMatchedStatus(matchedStatusCopy)
-
-  //   console.log('new matched status: ', matchedStatus)
-  // }
-
-  // useEffect(() => {
-  //   updateMatchedStatus()
-  //   console.log('matched status has been updated for the first time')
-  //   console.log('matched status', matchedStatus)
-  // }, []);
-
 
   const revealWinner = () => {
     let highestScore = playerInfo[pairs[0][0]];
