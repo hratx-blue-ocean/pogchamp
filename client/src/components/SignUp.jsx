@@ -13,6 +13,7 @@ const SignUp = ({ handleModal }) => {
 
   useEffect(() => {
     console.log(data);
+    //
   })
 
   return (
