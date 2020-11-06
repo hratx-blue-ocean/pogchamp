@@ -51,10 +51,22 @@ class BracketComponent extends React.Component {
 
   createTournament(tournamentInfo = null, players = null) {
     let data = {
-      name: tournamentInfo.tournamentName,
-      description: tournamentInfo.description,
-      private: "false",
+      data: {
+       name: tournamentInfo.tournamentName,
+       description: tournamentInfo.description,
+       private: "false",
+    },
+    form: {
+      date: new Date().toString(),
+      type: 'bracket',
+      hostName: this.state.username,
+      playerLimit: tournamentInfo.numberOfPlayers,
+      registered: [],
+      totalPrize: tournamentInfo.prizeAmount,
+      winner: null
     }
+    };
+
     axios.post("/api/createTournament", data)
       .then((res) => {
         // console.log(res.data.tournament, "Created tournament data");
@@ -66,9 +78,7 @@ class BracketComponent extends React.Component {
         });
         //post new participants
         this.postNewParticipants(players);
-        setTimeout(() => {
-          console.log('Saving to database');
-        }, 5000)
+
       })
       .catch((err) => {
         console.log("Error", err);
