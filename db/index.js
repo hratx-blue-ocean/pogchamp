@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert').strict;
-import {saltNhash, compareHashes} from '../server/security/index.js'
+const {saltNhash } = require ('../server/security/index.js')
 
 // connection url -- TODO: update with deployed url
 const url = 'mongodb://localhost:27017';
@@ -67,10 +67,10 @@ const incrementUserId = (callback) => {
 }
 
 // create new tournament
-const createNewTournament = (name, hostName, date, location, vity, type, playerLimit, rounds, totalPrize, callback) => {
+const createNewTournament = (name, hostName, gameName, location, vity, type, playerLimit, rounds, totalPrize, callback) => {
   getNewTournamentId((res) => {
-    let datea = new Date (date);
-    db.collection('tournaments').insertOne({name: name, tournamentId: res, hostName: hostName, date: datea, location: location, city: city, type: type, playerLimit: playerLimit, rounds: rounds, registered: [], pairings: [], scores: {}, totalPrize: totalPrize})
+    let date = new Date ();
+    db.collection('tournaments').insertOne({name: name, tournamentId: res, hostName: hostName, date: date, location: location, city: city, type: type, playerLimit: playerLimit, rounds: rounds, registered: [], pairings: [], scores: {}, totalPrize: totalPrize})
     .then((res) => {
       incrementTournamentId(callback);
     })
@@ -111,9 +111,21 @@ const issueWinnings = (name, purse, callback) => {
   .catch((err) => {callback(err);});
 }
 
-
 // TODO: queries to update tournaments (check with LC about what specifically we want to update), queries to update user W/L (is this by points, by match, or by tournament?)
 
+
+// handle winner
+const handleWinner = (id, winner, callback) => {
+  db.collection('tournaments').updateOne({tournamentId: id}, {$set: {winner: winner}})
+  .then((res) => {callback(res.result);})
+  .catch((err) => {callback(err);});
+}
+
+const upWins = (winner, callback) => {
+  db.collection('users').updateOne({name: winner}, {$inc: {wins: 1}})
+  .then((res) => {callback(res.result);})
+  .catch((err) => {callback(err);});
+}
 
 //COLLECTION NAMES user and tournament
 //query to insert tournament info into tournament collection
@@ -236,5 +248,10 @@ module.exports = {
   updateUserInfo,
   updateTournament,
   findTournament,
-  findUserByName
+  findUserByName,
+  createNewTournament,
+  createNewUser,
+  issueWinnings,
+  upWins,
+  handleWinner
 }
