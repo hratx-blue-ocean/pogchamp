@@ -67,10 +67,10 @@ const incrementUserId = (callback) => {
 }
 
 // create new tournament
-const createNewTournament = (name, hostName, gameName, location, vity, type, playerLimit, rounds, totalPrize, callback) => {
+const createNewTournament = (name, hostName, gameName, location, city, type, playerLimit, rounds, totalPrize, players, callback) => {
   getNewTournamentId((res) => {
     let date = new Date ();
-    db.collection('tournaments').insertOne({name: name, tournamentId: res, hostName: hostName, date: date, location: location, city: city, type: type, playerLimit: playerLimit, rounds: rounds, registered: [], pairings: [], scores: {}, totalPrize: totalPrize})
+    db.collection('tournaments').insertOne({name: name, tournamentId: res, hostName: hostName, gameName: gameName, date: date, location: location, city: city, type: type, rounds: rounds, , totalPrize: totalPrize, players: players})
     .then((res) => {
       incrementTournamentId(callback);
     })
