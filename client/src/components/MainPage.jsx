@@ -22,36 +22,36 @@ const description = [
 
 const tournaments = [
   {
-    name: "Tournament 1",
+    name: "Scrabble",
     location: "Buck's Game Shop"
   },
   {
-    name: "Tournament 2",
+    name: "LoL - Winter Split",
     location: "Card Den"
   },
   {
-    name: "Tournament 3",
+    name: "Smash Championship",
     location: "Josh's Basement"
   },
   {
-    name: "Tournament 4",
-    location: "HR - Senior Open Classroom"
+    name: "Magic the Gathering",
+    location: "Zilker Park"
   },
   {
-    name: "Tournament 5",
+    name: "Hearthstone",
     location: "Buck's Game Shop"
   },
   {
-    name: "Tournament 6",
+    name: "Poker",
     location: "Card Den"
   },
   {
-    name: "Tournament 7",
+    name: "???",
     location: "Josh's Basement"
   },
   {
-    name: "Tournament 8",
-    location: "HR - Senior Open Classroom"
+    name: "Among Us",
+    location: "Discord"
   }
 ]
 

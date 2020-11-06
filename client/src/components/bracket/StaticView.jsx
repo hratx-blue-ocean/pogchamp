@@ -9,15 +9,12 @@ const StaticView = ( {changeView} ) => {
     <Tabs
     value={false}
     style={{backgroundColor: "#e8e8e8"}}
-    onChange={ (e, value) => { e.preventDefault(); changeView(value) }} 
+    onChange={ (e, value) => { e.preventDefault(); changeView(value) }}
     centered
     >
     <Tab label="Create New Tournament" value={"form"}/>
-    <Tab label="Live-Tournament" value={"liveview"}/>
-
-    
+    <Tab label="Bracket View" value={"liveview"}/>
     </Tabs>
-            
     </React.Fragment>
   )
 }
