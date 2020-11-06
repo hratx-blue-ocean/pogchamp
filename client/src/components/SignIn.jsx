@@ -82,7 +82,7 @@ const SignIn = (props) => {
             </form>
           )}
       </Formik>
-      <Link to="signup">Sign up for an account</Link>
+      <Link to="sign-up">Don't have an account? Sign up!</Link>
     </div>
   )
 }
