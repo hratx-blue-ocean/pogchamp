@@ -2,6 +2,8 @@ import React from 'react';
 // import { PrintIcon } from '@material-ui/icons';
 
 function LiveTournament({players, prizes, live_image_url, winners}) {
+  let styles = {backgroundColor: "orange", height: 25, margin: 3.5};
+  let thirdPlaceAmount = Math.floor(prizes.third / 2);
   const openInNewTab = (e) => {
     e.preventDefault()
     let url = live_image_url;
@@ -13,8 +15,8 @@ function LiveTournament({players, prizes, live_image_url, winners}) {
       <h1 className="title">Bracket Tournament</h1>
       {live_image_url && players.length >= 1 &&
       <span>
-      <button onClick={() => window.print()} >Print Page</button>
-      <button onClick={(e) => openInNewTab(e) } >Print Bracket</button>
+      <button style={styles} onClick={() => window.print()} >Print Page</button>
+      <button style={styles} onClick={(e) => openInNewTab(e) } >Print Bracket</button>
       </span>
       }
 
@@ -23,7 +25,7 @@ function LiveTournament({players, prizes, live_image_url, winners}) {
         <div>
          <h3>{winners.first.participant.name} ${prizes.first}</h3>
          <h3>{winners.second.participant.name} ${prizes.second}</h3>
-         <h3>{winners.third[0].participant.name}, {winners.third[1].participant.name} ${prizes.third}</h3>
+         <h3>{winners.third[0].participant.name} ${thirdPlaceAmount} AND {winners.third[1].participant.name} ${thirdPlaceAmount}</h3>
         </div> : null
       }
 
