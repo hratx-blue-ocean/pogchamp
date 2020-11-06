@@ -99,7 +99,6 @@ const BracketForm = ({ startTournament }) => {
 
   return (
     <Container maxWidth="lg" className="bracketForm">
-      <h1 className="title">Bracket</h1>
       {bracketDetails.show === false ? (
         ""
       ) : (
@@ -112,7 +111,7 @@ const BracketForm = ({ startTournament }) => {
       )}
 
       <form autoComplete="off" onSubmit={handleSubmit} className="setup-form">
-      <h3>Enter Tournament Information</h3>
+      <h3 className="title">Enter Bracket Information</h3>
         <TextField
           required
           label="tournament name"

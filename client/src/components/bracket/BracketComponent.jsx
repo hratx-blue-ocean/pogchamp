@@ -21,7 +21,9 @@ class BracketComponent extends React.Component {
       matchId : undefined,
       participantId: undefined,
       showIframe: false,
+      prizeAmount: {}
     };
+
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
     this.changeView = this.changeView.bind(this);
@@ -38,7 +40,7 @@ class BracketComponent extends React.Component {
           </React.Fragment>
         }
       >
-      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}}>{player["participant"]["name"]}</Button>
+      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}} fullWidth>{player["participant"]["name"]}</Button>
       </Tooltip>
         </Grid>
       })
@@ -82,7 +84,7 @@ class BracketComponent extends React.Component {
         console.log(err);
       });
   }
-  
+
   startMatch() {
     axios.post("/api/startTournament", { tournamentId: this.state.tournamentId })
     .then((res) => {
@@ -92,15 +94,23 @@ class BracketComponent extends React.Component {
       console.log(err);
     });
   }
-  
+
   //on click handler when they start the tournament
   startTournament( tournamentInfo, participantInfo ) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
+
+    let prize = {
+      first: tournamentInfo.prizeAmount * .50,
+      second: tournamentInfo.prizeAmount * .30,
+      third: tournamentInfo.prizeAmount * .20
+    }
+
+    this.setState({prizeAmount: prize});
   }
-  
+
   updateMatchWinner(id = null) {
     //we need participant id
     axios.post(`/api/updateMatch`, {
@@ -121,7 +131,7 @@ class BracketComponent extends React.Component {
           this.setState({players: filteredPlayers , showIframe: false});
         } else {
           this.setState({
-            players: filteredPlayers, 
+            players: filteredPlayers,
           })
         }
       })
@@ -155,17 +165,17 @@ class BracketComponent extends React.Component {
     return (
       <Container maxWidth="lg" className="bracketForm">
         <StaticView changeView={this.changeView}/>
-        {this.state.view === 0 && <BracketForm 
+        {this.state.view === 0 && <BracketForm
         className="bracketForm"
         startTournament={this.startTournament}
         />}
-        {this.state.view === 2 && <LiveTournament players={this.state.players}/>}
+        {this.state.view === 2 && <LiveTournament players={this.state.players} prizes={this.state.prizeAmount}/>}
         <div>
           {this.state.players.length > 1 && this.state.view === 2 && (
             <Grid container>
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 </Grid>
-                <Grid container item xs={4} direction="row">
+                <Grid container item xs={7} direction="row">
               {this.participantNameList()}
                 </Grid>
             </Grid>
