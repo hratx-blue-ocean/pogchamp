@@ -19,4 +19,11 @@ const saltNhash = (password) => {
   return getHash(password, salt);
 }
 
-module.exports = saltNhash;
+const compareHash = (password, salt, hash) => {
+  let hasher = crypto.createHmac('sha512', salt);
+  hasher.update(password);
+  let hashed = hasher.digest('hex');
+  return (hashed === hash ? true : false);
+}
+
+module.exports = {saltNhash, compareHash};
