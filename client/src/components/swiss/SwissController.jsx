@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Container, Grid, Button, TextField } from '@material-ui/core';
 import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
@@ -18,7 +18,7 @@ const SwissController = (props) => {
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
   const [firstPairing, setFirstPairing] = useState(true);
-  const [matchedStatus, setMatchedStatus] = useState({});
+  // const [matchedStatus, setMatchedStatus] = useState({});
 
   const tournamentRef = useRef(null);
   const game = useRef(null);
@@ -80,25 +80,28 @@ const SwissController = (props) => {
     setRoundWinners({...roundWinners, ...newRoundWinners});
   }
 
-  const populateOpponentList = () => {
-    let opponents = {};
-    let fullOpponents = {};
 
-    for(let player in playerInfo) {
-      opponents[player] = false;
-    }
-    for(let player in playerInfo) {
-      fullOpponents[player] = opponents;
-    }
-    setMatchedStatus(fullOpponents);
-  }
+  // const populateOpponentList = () => {
+  //   let opponents = {};
+  //   let fullOpponents = {};
+
+  //   for(let player in playerInfo) {
+  //     opponents[player] = false;
+  //   }
+  //   for(let player in playerInfo) {
+  //     fullOpponents[player] = opponents;
+  //   }
+  //   setMatchedStatus(fullOpponents);
+  // }
+
 
   const handlePairings = (e) => {
     e.preventDefault();
 
-    if(firstPairing) {
-      populateOpponentList();
-    }
+    // if(firstPairing) {
+    //   populateOpponentList();
+    //   console.log('matched status', matchedStatus)
+    // }
 
     checkWinners();
 
@@ -131,6 +134,11 @@ const SwissController = (props) => {
       // firstOpponent to secondOpponent
       // if true, find another opponent
 
+      // if(matchedStatus[firstOpponent][secondOpponent] === true) {
+      //   console.log(`${firstOpponent} has been matched with ${secondOpponent} before. Find a new opponent for ${firstOpponent}`)
+      // }
+
+
       newPairs.push([firstOpponent, secondOpponent]);
       setCurrentRoundScores({
         ...currentRoundScores,
@@ -142,9 +150,7 @@ const SwissController = (props) => {
 
     setPairs(newPairs);
 
-    if(!firstPairing) {
-      updateMatchedStatus();
-    }
+    // updateMatchedStatus();
 
     if(gameDetails.currentRound <= Number(gameDetails.rounds)) {
       gameDetails.currentRound ++;
@@ -152,26 +158,28 @@ const SwissController = (props) => {
   }
 
 
-  const updateMatchedStatus = () => {
+  // const updateMatchedStatus = () => {
 
-    let matchedStatusCopy = JSON.parse(JSON.stringify(matchedStatus));
+  //   let matchedStatusCopy = JSON.parse(JSON.stringify(matchedStatus));
 
-    for(let i = 0; i < pairs.length; i++) {
-      let currentPair = pairs[i];
-      let firstPlayer = currentPair[0];
-      let secondPlayer = currentPair[1];
+  //   for(let i = 0; i < pairs.length; i++) {
+  //     let currentPair = pairs[i];
+  //     let firstPlayer = currentPair[0];
+  //     let secondPlayer = currentPair[1];
 
-      matchedStatusCopy[firstPlayer][secondPlayer] = true;
-      matchedStatusCopy[secondPlayer][firstPlayer] = true;
-    }
+  //     matchedStatusCopy[firstPlayer][secondPlayer] = true;
+  //     matchedStatusCopy[secondPlayer][firstPlayer] = true;
+  //   }
+  //   setMatchedStatus(matchedStatusCopy)
 
-    setMatchedStatus(matchedStatusCopy)
-  }
+  //   console.log('new matched status: ', matchedStatus)
+  // }
 
-  useEffect(() => {
-    updateMatchedStatus();
-  }, [setMatchedStatus]);
-
+  // useEffect(() => {
+  //   updateMatchedStatus()
+  //   console.log('matched status has been updated for the first time')
+  //   console.log('matched status', matchedStatus)
+  // }, []);
 
 
   const revealWinner = () => {
