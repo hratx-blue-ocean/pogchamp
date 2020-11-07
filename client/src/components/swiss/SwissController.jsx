@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Container, Grid, Button, TextField } from '@material-ui/core';
 import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
@@ -13,6 +13,7 @@ const SwissController = (props) => {
   });
 
   const [playerInfo, setPlayerInfo] = useState({});
+  const [roundsWon, setRoundsWon] = useState({});
   const [roundWinners, setRoundWinners] = useState({});
   const [pairs, setPairs] = useState([]);
   const [currentRoundScores, setCurrentRoundScores] = useState({});
@@ -46,26 +47,32 @@ const SwissController = (props) => {
       setRoundWinners({...roundWinners, [playerName]: roundArray})
       setPlayerInfo({...playerInfo, [playerName]: 0})
       setCurrentRoundScores({...currentRoundScores, [playerName]: 0})
+      setRoundsWon({...roundsWon, [playerName]: 0})
     }
     players.current.value = '';
   }
 
   const checkWinners = () => {
     let newRoundWinners = {};
+    let roundsWonObj = {};
 
-    let createArray = (winner) => {
-      let roundArray = [...roundWinners[winner]];
+    let createArray = (roundWinner) => {
+      let roundArray = [...roundWinners[roundWinner]];
       roundArray.splice((Number(gameDetails.currentRound) - 1), 1, true);
-      newRoundWinners[winner] = roundArray;
+      newRoundWinners[roundWinner] = roundArray;
     }
 
     for(let i = 0; i < pairs.length; i++) {
       let firstPlayer = pairs[i][0];
       let secondPlayer = pairs[i][1];
+
       let winner =
         currentRoundScores[firstPlayer] > currentRoundScores[secondPlayer]
         ? firstPlayer
         : secondPlayer;
+
+      let newTotalRoundsWon = roundsWon[winner] + 1;
+      setRoundsWon({...roundsWon, [winner]: newTotalRoundsWon});
 
       createArray(winner);
     }
@@ -75,17 +82,16 @@ const SwissController = (props) => {
   const handlePairings = (e) => {
     e.preventDefault();
     checkWinners();
+
     let newPairs = [];
+    let transformedArray;
 
     let randomized =
       Object.entries(playerInfo)
       .sort(() => Math.random() - 0.5);
-
     let sorted =
       Object.entries(playerInfo)
       .sort((a, b) => b[1] - a[1]);
-
-    let transformedArray;
 
     if(firstPairing === true) {
       setFirstPairing(false)
@@ -95,10 +101,19 @@ const SwissController = (props) => {
     }
 
     for(let i = 0; i < transformedArray.length; i+=2) {
-      newPairs.push([transformedArray[i][0], transformedArray[i+1][0]]);
+      let firstOpponent = transformedArray[i][0];
+      let secondOpponent = transformedArray[i+1][0];
+
+      newPairs.push([firstOpponent, secondOpponent]);
+      setCurrentRoundScores({
+        ...currentRoundScores,
+        [firstOpponent]: 0,
+        [secondOpponent]: 0
+      })
     }
 
     setPairs(newPairs);
+
     if(gameDetails.currentRound <= Number(gameDetails.rounds)) {
       gameDetails.currentRound ++;
     }
@@ -107,38 +122,58 @@ const SwissController = (props) => {
   const revealWinner = () => {
     let highestScore = playerInfo[pairs[0][0]];
     let tiedArray = [];
+    let winnersArr = [];
 
     pairs.forEach(pair => {
-      if(playerInfo[pair[0]] >= highestScore) {
+      if(playerInfo[pair[0]] === highestScore) {
         tiedArray.push(pair[0]);
       }
-      if(playerInfo[pair[1]] >= highestScore) {
+      if(playerInfo[pair[1]] === highestScore) {
         tiedArray.push(pair[1]);
       }
     })
 
-    if(tiedArray.length > 1) {
-      setGameDetails({...gameDetails, winner: tiedArray})
+    if(tiedArray.length) {
+      let highestRoundsWon = roundsWon[tiedArray[0]];
+
+      tiedArray.forEach(player => {
+        if(roundsWon[player] >= highestRoundsWon) {
+          highestRoundsWon = roundsWon[player];
+        }
+      })
+
+      tiedArray.forEach(player => {
+        if(roundsWon[player] >= highestRoundsWon) {
+          winnersArr.push(player);
+        }
+      })
+    }
+
+    if(winnersArr.length > 1) {
+      setGameDetails({ ...gameDetails, winner: winnersArr })
+    } else if (winnersArr.length === 1) {
+      setGameDetails({ ...gameDetails, winner: winnersArr[0] })
     } else {
-      setGameDetails({...gameDetails, winner: pairs[0][0]})
+      setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
   }
 
+
   return (
     <Container maxWidth="lg" className="swissPairing">
+      <h2>Swiss Tournament</h2>
         <div className="game-details">
-          <h2>{gameDetails.tournamentName}</h2>
+          {gameDetails.tournamentName ? <h2>{gameDetails.tournamentName}</h2> : ''}
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
-        <h2>Add your tournament details:</h2>
+        <h3>Add your tournament details:</h3>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
         <TextField label="game name" variant="outlined" size="small" inputRef={game} />
         <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
         <Button variant="contained" type="submit">Submit</Button>
       </form>
-
       {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
