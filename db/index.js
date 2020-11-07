@@ -1,3 +1,5 @@
+const { call } = require('file-loader');
+
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert').strict;
 
@@ -18,8 +20,8 @@ client.connect((err, result) => {
 
 const db = client.db(dbName);
 
-//COLLECTION NAMES user and tournament
-//query to insert tournament info into tournament collection
+// COLLECTION NAMES user and tournament
+// query to insert tournament info into tournament collection
 const insertTournamentInfo = (obj) => {
   console.log(obj, "object to be inserted");
   return new Promise((resolve, reject) => {
@@ -35,7 +37,7 @@ const insertTournamentInfo = (obj) => {
 };
 
 
-//UPDATES TOURNAMENT REGISTERED AND WINNER KEY TO USER ID
+// UPDATES TOURNAMENT REGISTERED AND WINNER KEY TO USER ID
 const updateTournament = (id, array) => {
   console.log(array);
   return new Promise((resolve, reject) => {
@@ -50,7 +52,7 @@ const updateTournament = (id, array) => {
   })
 };
 
-//UPDATE USERS ATTENDED
+// UPDATE USERS ATTENDED
 const updateUserInfo = (username, tournamentId) => {
   return new Promise((resolve, reject) => {
     let userCollection = db.collection('user');
@@ -75,7 +77,7 @@ const updateUserInfo = (username, tournamentId) => {
 };
 
 
-//FIND TOURNAMENT BY ID
+// FIND TOURNAMENT BY ID
 const findTournament = (id) => {
   return new Promise((resolve, reject) => {
     db.collection('tournament', (err, collection) => {
@@ -94,7 +96,7 @@ const findTournament = (id) => {
   })
 };
 
-//FIND USER BY NAME
+// FIND USER BY NAME
 const findUserByName = (str) => {
   return new Promise((resolve, reject) => {
     db.collection('user', (err, collection) => {
@@ -134,11 +136,28 @@ const findUserByName = (str) => {
 //   })
 // };
 
+
+
+// Query for userDashboard for both Player and Organizer
+const getUserData = (username, callback) => {
+  console.log(username,  "username receieved")
+  db.collection('users').findOne({name: username}, (err, res)=> {
+    if (err) {
+      console.log("error:", err);
+      callback(err, null);
+    } else {
+      console.log("query result", res)
+      callback(null, res);
+    }
+  })
+}
+
 module.exports = {
   insertTournamentInfo,
   updateUserInfo,
   updateTournament,
   findTournament,
-  findUserByName
+  findUserByName,
+  getUserData,
 }
 
