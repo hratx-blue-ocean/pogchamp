@@ -34,6 +34,9 @@ div#footer {
   padding: 20px;
   margin-top: 40px;
 }
+.content {
+  min-height: calc(100vh - 70px);
+}
 
 a:visited {
   color: #ff7f28
