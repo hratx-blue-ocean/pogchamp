@@ -2,7 +2,7 @@
 
 
 ## About exPWNent
-exPWNent is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="https://expwnent.com/">HERE</a> to start your collection! 
+*exPWNent* is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="https://expwnent.com/">HERE</a> to start your collection! 
 
 This application was built with pride by a team of eight full stack software engineers from the Hack Reactor Austin campus, 51st Cohort (HRATX51).
 
