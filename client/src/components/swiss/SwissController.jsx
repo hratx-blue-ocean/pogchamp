@@ -9,6 +9,7 @@ const SwissController = (props) => {
     gameName: '',
     rounds: '',
     currentRound: 0,
+    prizeAmount: 0,
     winner: ''
   });
 
@@ -53,6 +54,7 @@ const SwissController = (props) => {
   const game = useRef(null);
   const rounds = useRef(null);
   const players = useRef(null);
+  const prize = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +62,8 @@ const SwissController = (props) => {
     setGameDetails({...gameDetails,
       tournamentName: tournamentRef.current.value,
       gameName: game.current.value,
-      rounds: rounds.current.value
+      rounds: rounds.current.value,
+      prizeAmount: prize.current.value
     })
   }
 
@@ -189,10 +192,13 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
+<<<<<<< HEAD
 
     // PUT request for winner and latest scores
+=======
+    // add first(.50), second(.30), third(.20) place winners with their prize amount
+>>>>>>> 9c1f48d1249972078e8604001743bab2609118fb
   }
-
 
   return (
     <Container maxWidth="lg" className="swissPairing">
@@ -201,12 +207,15 @@ const SwissController = (props) => {
           {gameDetails.tournamentName ? <h2>{gameDetails.tournamentName}</h2> : ''}
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
+          <h4>{gameDetails.prizeAmount ? `$${gameDetails.prizeAmount}` : ''} </h4>
+          {console.log('prizeAmount:', gameDetails.prizeAmount)}
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
         <TextField label="game name" variant="outlined" size="small" inputRef={game} />
         <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
+        <TextField label="prize amount" variant="outlined" size="small" inputRef={prize} />
         <Button variant="contained" type="submit">Submit</Button>
       </form>
       {
