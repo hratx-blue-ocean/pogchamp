@@ -1,51 +1,55 @@
 import React from 'react';
+import axios from 'axios';
 
-const SideBar = () => {
+const SideBar = (props) => {
+
+
+
   return (
     <div id='sideBar'>
-      <Earners />
-      <Winners />
-      <Players />
+      <Earners earners={props.topInfo.earners}/>
+      <Winners winners={props.topInfo.winners}/>
+      <Players players={props.topInfo.ratio}/>
     </div>
   )
 }
 
-const Earners = () => {
+const Earners = (props) => {
   return (
     <div id="earners" className="sideBarItem">
       <h2 className="sideBarHeader">Top five earners:</h2>
       <hr></hr>
-      {earners.map((earner, i) => {
+      {props.earners.map((earner, i) => {
         return (
-          <p key={i}>{earner}</p>
+        <p key={i}>{earner.name}: ${earner.winnings}</p>
         )
       })}
     </div>
   )
 }
 
-const Winners = () => {
+const Winners = (props) => {
   return (
     <div id="winners" className="sideBarItem">
       <h2 className="sideBarHeader">Top Five Winners:</h2>
       <hr></hr>
-      {winners.map((winner, i) => {
+      {props.winners.map((winner, i) => {
         return (
-          <p key={i}>{winner}</p>
+        <p key={i}>{winner.name}: {winner.wins}</p>
         )
       })}
     </div>
   )
 }
 
-const Players = () => {
+const Players = (props) => {
   return (
     <div id="topplayers" className="sideBarItem">
       <h2 className="sideBarHeader">Top Five Players:</h2>
       <hr></hr>
-      {players.map((player, i) => {
+      {props.players.map((player, i) => {
         return (
-          <p key={i}>{player}</p>
+        <p key={i}>{player.name}: {player.wins}/{player.losses}</p>
         )
       })}
     </div>

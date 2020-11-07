@@ -22,6 +22,8 @@ const BracketForm = ({ startTournament }) => {
     participants: [],
   });
 
+  const [repeat, setRepeat] = useState({repeat: false});
+
   const playerName = useRef(null);
   const tournament = useRef(null);
   const game = useRef(null);
@@ -59,8 +61,10 @@ const BracketForm = ({ startTournament }) => {
     });
 
     if(repeats.length === 1) {
-      window.alert('Player is already in the list!')
+      // alert('Player is already in the list!')
+      setRepeat({repeat: true})
     } else {
+      setRepeat({repeat: false});
       setPlayers({
         participants: [...playersInTournament.participants, { name: incomingPlayer }],
       });
@@ -150,7 +154,8 @@ const BracketForm = ({ startTournament }) => {
         autoComplete="off"
         onSubmit={handleAddingPlayers}
         className="setup-form"
-      >
+        >
+        {repeat.repeat === false ? null : <div>This player is already in the list!</div>}
         <TextField
           required
           label="player name"

@@ -38,9 +38,9 @@ class BracketComponent extends React.Component {
     this.updateMatchWinner = this.updateMatchWinner.bind(this);
   }
 
-  componentDidMount() {
-    this.showTopFive();
-  }
+  // componentDidMount() {
+  //   this.showTopFive();
+  // }
 
   participantNameList() {
     return (
@@ -202,15 +202,15 @@ class BracketComponent extends React.Component {
       })
   }
 
-  showTopFive() {
-    axios.get('/api/top')
-    .then(results => {
-      console.log(results);
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
+  // showTopFive() {
+  //   axios.get('/api/top')
+  //   .then(results => {
+  //     console.log(results);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   })
+  // };
 
   changeView(view = null) {
     if (view === "form") {
