@@ -21,6 +21,7 @@ const App = () => {
 
   return (
     <Router>
+      <div className="content">
       <div className="header">
         <Navigation handleLogin={showLogin} />
         <Login show={login} handleShow={showLogin} />
@@ -33,12 +34,6 @@ const App = () => {
           </li>
           <li>
             <Link to="/organizer-dashboard">Organizer Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/swiss">Swiss</Link>
-          </li>
-          <li>
-            <Link to="/bracket">Bracket</Link>
           </li>
         </ul>
       </div>
@@ -64,15 +59,16 @@ const App = () => {
         </Route>
 
       </Switch>
+      </div>
       <Footer />
     </Router>
   );
 }
 
 const Login = ({ show, handleShow }) => {
+
   const body = (
     <div id="loginModal">
-      <h2>Login</h2>
       <SignIn />
     </div>
   );

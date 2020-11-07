@@ -1,19 +1,19 @@
 .swissPairing {
   margin: 30px 0;
-  background: #f3f3f3;
   padding: 10px 20px;
 }
 .setup-form {
-  border: 1px solid #d0d0d0;
+  border: #191b21;
   padding: 20px;
   margin-bottom: 20px;
+  background: #191b21;
 }
 .setup-form h2 {
   margin-top: 0;
 }
 .swiss-player {
   padding: 10px;
-  background: #e8e8e8;
+  background: #272a33;
   margin: 5px 0;
 }
 .setup-form .MuiFormControl-root, .setup-form .MuiButton-contained {
@@ -21,11 +21,10 @@
 }
 .pairings-container {
   padding: 20px;
-  background: #000000;
+  background: #15171d;
   color: #f3f3f3;
   text-align: center;
-  outline: 2px solid #677cf1;
-  outline-offset: -8px;
+  outline: 2px solid #3166c7;
 }
 .MuiButton-containedPrimary.create-pairings {
   color: #fff;
@@ -44,7 +43,7 @@
   color: #08ca08;
 }
 .MuiSvgIcon-root.lost {
-    color: #a00000;
+    color: #555967;
 }
 .swiss-player.bye-player {
   background: #bdbdbd;
@@ -53,7 +52,7 @@
   text-align: center;
 }
 .game-details h2 {
-  border-bottom: 2px solid #677bf1;
+  border-bottom: 2px solid #eb772a;
   padding-bottom: 5px;
   margin-bottom: 10px;
 }
@@ -62,4 +61,11 @@
 }
 .MuiButton-outlinedSizeSmall.submit-score {
   vertical-align: bottom;
+  margin-left: 5px;
+}
+form.input-score .MuiTextField-root {
+  max-width: 63px;
+}
+.swiss-players .MuiTableCell-root {
+  border-bottom: 1px solid rgb(76 76 76);
 }

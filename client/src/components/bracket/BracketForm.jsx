@@ -112,7 +112,7 @@ const BracketForm = ({ startTournament }) => {
         <TextField
           required
           label="tournament name"
-          variant="outlined"
+          variant="filled"
           size="small"
           helperText="* required field"
           inputRef={tournament}
@@ -120,28 +120,28 @@ const BracketForm = ({ startTournament }) => {
         <TextField
           required
           label="game name"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={game}
         />
         <TextField
           required
           label="number of players"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={players}
         />
         <TextField
           required
           label="prize amount"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={prize}
         />
         <TextField
           required
           label="description"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={description}
         />
@@ -159,7 +159,7 @@ const BracketForm = ({ startTournament }) => {
         <TextField
           required
           label="player name"
-          variant="outlined"
+          variant="filled"
           size="small"
           helperText="Minimum of 4 Players Required"
           inputRef={playerName}
