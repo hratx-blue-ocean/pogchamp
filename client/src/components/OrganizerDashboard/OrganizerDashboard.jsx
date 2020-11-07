@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import {
-  // InputLabel,
-  // MenuItem,
-  // FormHelperText,
-  // FormControl,
-  // Select,
   Button,
-  Container,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  Container,
   Grid,
-  Typography,
+  Typography
 } from '@material-ui/core';
-import TournamentHistory from './TournamentHistory/TournamentHistory.jsx';
-import './OrganizerDashboard.css';
-import './TournamentHistory/TournamentHistory.css';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   BrowserRouter as Router,
   Link
 } from "react-router-dom";
-
-//PAGE ELEMENTS TO INCLUDE
-// Organizer Avatar
-// Create Tournament Selector
-// Organizer's Tournament History (Tournament Name, Game Name, Winner)
+import TournamentHistory from './TournamentHistory/TournamentHistory.jsx';
+import './OrganizerDashboard.css';
+import './TournamentHistory/TournamentHistory.css';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -61,7 +51,7 @@ const OrganizerDashboard = (props) => {
   const handleTournamentStyleChange = (event) => {
     setTournamentStyle(event.target.value);
   };
-  
+
   const getUserData = () => {
     axios.get('/dashboard/player')
     .then((res) => {
@@ -72,10 +62,6 @@ const OrganizerDashboard = (props) => {
       console.log('Error geting player data', err)
     })
   }
-  // <h2>Choose Tournament Style</h2>
-  // <Button variant="outlined" className="select-style"><Link to="/bracket">Bracket</Link></Button>
-  // <Button variant="outlined" className="select-style"><Link to="/swiss">Swiss</Link></Button>
-  // <TournamentHistory />
 
   return (
     <Container>
@@ -114,10 +100,10 @@ const OrganizerDashboard = (props) => {
         <Grid item xs={4}>
           <Card className={classes.root}>
 
-            {userData.name ? 
+            {userData.name ?
               <CardContent>
                 <h2>Upcoming Tournaments</h2>
-                {userData.upcoming.map((tournament, index) => 
+                {userData.upcoming.map((tournament, index) =>
                   <Typography key={index} gutterBottom variant="h5" component="h2">
                     {tournament.name} {tournament.date} {tournament.location}
                   </Typography>

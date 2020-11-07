@@ -1,9 +1,11 @@
 import React from 'react';
-import { Grid, Tabs, Tab } from '@material-ui/core';
+import {
+  Grid,
+  Tab,
+  Tabs
+} from '@material-ui/core';
 
 const StaticView = ( {changeView} ) => {
-  //create newtournament, showmytournaments, liveview
-
   return (
     <React.Fragment>
     <Tabs
