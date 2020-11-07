@@ -1,4 +1,4 @@
-# Pogchamp
+# Expwnent - Create Your Next Esports Tournament
 
 # Development
   1. npm install
