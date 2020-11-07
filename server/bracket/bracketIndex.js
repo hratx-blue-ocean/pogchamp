@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const baseUrl = 'https://api.challonge.com/v1/tournaments';
 const { api_key } = require('./config.js');
-const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName } = require('../../db/index.js');
+const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner } = require('../../db/index.js');
 // console.log('api key:', api_key);
 
 
@@ -62,7 +62,7 @@ router.post('/postParticipant', (req, res) => {
 router.post('/createTournament', (req, res) => {
   let body = req.body.data;
   let obj = { "name": body.name, "description": body.description };
-  console.log(obj, 'THIS IS THE OBJJJJJJJ');
+  // console.log(obj, 'THIS IS THE OBJJJJJJJ');
   let tournamentId = null;
   let Url = null;
   axios.post(`${baseUrl}.json?api_key=${api_key}`, obj)
@@ -101,7 +101,7 @@ router.post('/startTournament', (req, res) => {
 })
 
 router.post('/updateMatch', (req, res) => {
-  console.log("Updating Winner");
+  // console.log("Updating Winner");
   let { participant_id, tournament_id } = req.body;
 
   axios.get(`${baseUrl}/${tournament_id}/matches.json?api_key=${api_key}&state=open&participant_id=${participant_id}`)
@@ -145,14 +145,16 @@ router.put('/finalizeTournament', (req, res) => {
     })
 })
 
-router.post('/postUser', (req, res) => {
-  insertUserInfo()
-    .then((res) => {
-
-    })
-    .catch((err) => {
-
-    })
+router.post('/declareWinner', (req, res) => {
+  console.log(req.body, 'this is on declare winner');
+  let { tournamentId, username, winnings } = req.body;
+  updateWinner(tournamentId, username, winnings)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((error) => {
+    console.log('this is the error', error);
+  })
 })
 
 module.exports = router;

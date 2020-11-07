@@ -18,32 +18,33 @@ class BracketComponent extends React.Component {
       liveUrl: '',
       currentTournament: {},
       tournamentId: undefined,
-      matchId : undefined,
+      matchId: undefined,
       participantId: undefined,
       showIframe: false,
       prizeAmount: {},
-      winners: {"first" : {}, "second" : {}, "third": []},
+      winners: { "first": {}, "second": {}, "third": [] },
       live_image_url: '',
     };
 
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.updateMatchWinner = this.updateMatchWinner.bind(this);
   }
 
   participantNameList() {
-    return(
+    return (
       this.state.players.map((player, index) => {
-      return <Grid item xs={3} key={index}>
-        <Tooltip
-        title={
-          <React.Fragment>
-            <Typography color="inherit">player information</Typography>
-          </React.Fragment>
-        }
-      >
-      <Button onClick={() => {this.updateMatchWinner(player["participant"]["id"])}} fullWidth>{player["participant"]["name"]}</Button>
-      </Tooltip>
+        return <Grid item xs={3} key={index}>
+          <Tooltip
+            title={
+              <React.Fragment>
+                <Typography color="inherit">player information</Typography>
+              </React.Fragment>
+            }
+          >
+            <Button onClick={() => { this.updateMatchWinner(player["participant"]["id"]) }} fullWidth>{player["participant"]["name"]}</Button>
+          </Tooltip>
         </Grid>
       })
     )
@@ -52,19 +53,19 @@ class BracketComponent extends React.Component {
   createTournament(tournamentInfo = null, players = null) {
     let data = {
       data: {
-       name: tournamentInfo.tournamentName,
-       description: tournamentInfo.description,
-       private: "false",
-    },
-    form: {
-      date: new Date().toString(),
-      type: 'bracket',
-      hostName: this.state.username,
-      playerLimit: tournamentInfo.numberOfPlayers,
-      registered: [],
-      totalPrize: tournamentInfo.prizeAmount,
-      winner: null
-    }
+        name: tournamentInfo.tournamentName,
+        description: tournamentInfo.description,
+        private: "false",
+      },
+      form: {
+        date: new Date().toString(),
+        type: 'bracket',
+        hostName: this.state.username,
+        playerLimit: tournamentInfo.numberOfPlayers,
+        registered: [],
+        totalPrize: tournamentInfo.prizeAmount,
+        winner: null
+      }
     };
 
     axios.post("/api/createTournament", data)
@@ -100,28 +101,28 @@ class BracketComponent extends React.Component {
 
   startMatch() {
     axios.post("/api/startTournament", { tournamentId: this.state.tournamentId })
-    .then((res) => {
-      this.setState({showIframe: true, view: 2})
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        this.setState({ showIframe: true, view: 2 })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   //on click handler when they start the tournament
-  startTournament( tournamentInfo, participantInfo ) {
+  startTournament(tournamentInfo, participantInfo) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
     //Call this function
     this.createTournament(tournamentInfo, participantInfo)
     //do extra stuff afterwards
 
     let prize = {
-      first: tournamentInfo.prizeAmount * .50,
-      second: tournamentInfo.prizeAmount * .30,
-      third: tournamentInfo.prizeAmount * .20,
+      first: Math.floor(tournamentInfo.prizeAmount * .50),
+      second: Math.floor(tournamentInfo.prizeAmount * .30),
+      third: Math.floor(tournamentInfo.prizeAmount * .20),
     }
 
-    this.setState({prizeAmount: prize}, () => {
+    this.setState({ prizeAmount: prize }, () => {
       console.log('prizeAmount:', this.state.prizeAmount);
     });
   }
@@ -139,13 +140,13 @@ class BracketComponent extends React.Component {
         if (players.length === 3 || players.length === 2 ||
           players.length === 4) {
           let playerObj = players.find((player) =>
-          player["participant"]["id"] === deletePlayer);
+            player["participant"]["id"] === deletePlayer);
           if (players.length === 2) {
             winnersObj["second"] = playerObj;
           } else {
             winnersObj["third"] = [...this.state.winners.third, playerObj];
           }
-          this.setState({winners: winnersObj});
+          this.setState({ winners: winnersObj });
         }
         console.log("Nothing broke so far");
 
@@ -160,7 +161,7 @@ class BracketComponent extends React.Component {
           let firstPlace = filteredPlayers[0];
           winnersObj["first"] = firstPlace;
           this.finalizeTournament();
-          this.setState({players: filteredPlayers , showIframe: false, winners: winnersObj});
+          this.setState({ players: filteredPlayers, showIframe: false, winners: winnersObj });
         } else {
           this.setState({
             players: filteredPlayers,
@@ -174,37 +175,50 @@ class BracketComponent extends React.Component {
 
   finalizeTournament() {
     let id = this.state.tournamentId;
-    axios.put('/api/finalizeTournament', {"tournamentId" : id})
-    .then((res) => {
-      // console.log("Finalized tournament");
-      this.setState({view: 2, showIframe: true}, () => {
-        console.log(this.state.winners, this.state.prizeAmount, "new");
-      });
-    })
-    .catch((err) => {
-      console.log("error:", err);
-    })
+    axios.put('/api/finalizeTournament', { "tournamentId": id })
+      .then((res) => {
+        // console.log("Finalized tournament");
+        this.setState({ view: 2, showIframe: true }, () => {
+          console.log(this.state.winners, this.state.prizeAmount, "new");
+        });
 
+        let money = this.state.prizeAmount;
+        let winnings = {};
+        winnings[this.state.winners.first.participant.name] = money.first;
+        winnings[this.state.winners.second.participant.name] = money.second;
+        winnings[this.state.winners.third[0].participant.name] = money.third;
+
+        axios.post('/api/declareWinner', { tournamentId: this.state.tournamentId, username: this.state.players[0]["participant"]["name"], winnings: winnings })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      })
+      .catch((err) => {
+        console.log("error:", err);
+      })
   }
 
   changeView(view = null) {
     if (view === "form") {
-      this.setState({view: 0, showIframe: false});
+      this.setState({ view: 0, showIframe: false });
     } else {
-      this.setState({view: 2, showIframe: true});
+      this.setState({ view: 2, showIframe: true });
     }
   }
 
   render() {
     return (
       <Container maxWidth="lg" className="bracketForm">
-        <StaticView changeView={this.changeView}/>
+        <StaticView changeView={this.changeView} />
 
         {this.state.view === 0 && <BracketForm
-        className="bracketForm"
-        startTournament={this.startTournament}
+          className="bracketForm"
+          startTournament={this.startTournament}
         />}
-        {this.state.view === 2 && <LiveTournament players={this.state.players} prizes={this.state.prizeAmount} winners={this.state.winners}/>}
+        {this.state.view === 2 && <LiveTournament players={this.state.players} prizes={this.state.prizeAmount} winners={this.state.winners} />}
         {/* startTournament={this.startTournament}}/> */}
 
         {/* {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
@@ -214,10 +228,10 @@ class BracketComponent extends React.Component {
           {this.state.players.length > 1 && this.state.view === 2 && (
             <Grid container>
               <Grid item xs={5}>
-                </Grid>
-                <Grid container item xs={7} direction="row">
-              {this.participantNameList()}
-                </Grid>
+              </Grid>
+              <Grid container item xs={7} direction="row">
+                {this.participantNameList()}
+              </Grid>
             </Grid>
           )}
         </div>
@@ -232,7 +246,7 @@ class BracketComponent extends React.Component {
         ) : null}
 
       </Container>
-   );
+    );
   }
 }
 
