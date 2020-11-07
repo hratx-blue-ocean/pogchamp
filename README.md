@@ -1,4 +1,3 @@
-# Expwnent #
 <p align="center"><img width=40% src=https://github.com/hratx-blue-ocean/pogchamp/blob/main/client/src/EXPWNENT.png></p>
 
 ## About Expwnent
