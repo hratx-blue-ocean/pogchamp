@@ -10,10 +10,6 @@ import {
 } from '@material-ui/core';
 // import Title from './Title';
 
-// Generate Order Data
-// const createData = (id, game, date, location, cityAndState, style, result) => {
-//   return { id, game, date, location, cityAndState, style , result};
-// }
 //tournament name, game, date, location, city/state, type, outcome
 // const rows = [
 //   createData(0, 'Magic, The Gathering', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Swiss', 'Win'),
@@ -22,10 +18,6 @@ import {
 //   createData(3, 'Warhammer 40k', '16 Mar, 2019', 'Dragon\'s Lair', 'Austin, TX', 'Bracket', 'Win'),
 //   createData(4, 'Super Smash Bros', '16 Mar, 2019', 'Josh\'s Couch', 'Austin, TX', 'Swiss', 'Win'),
 // ];
-
-// const preventDefault = (event) => {
-//   event.preventDefault();
-// }
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -49,7 +41,6 @@ const PlayerTournamentHistory = ({userData}) => {
             <TableCell>Game</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Location</TableCell>
-            {/* <TableCell>City/State</TableCell> */}
             <TableCell>Tournament Style</TableCell>
             <TableCell align="right">Result</TableCell> 
           </TableRow>
@@ -61,7 +52,6 @@ const PlayerTournamentHistory = ({userData}) => {
               <TableCell>{tournament.game}</TableCell>
               <TableCell>{tournament.date}</TableCell>
               <TableCell>{tournament.location}</TableCell>
-              {/* <TableCell>{tournament.cityAndState}</TableCell> */}
               <TableCell>{tournament.type}</TableCell>
               <TableCell align="right">{tournament.result ? "Won" : "Lost"}</TableCell>
             </TableRow>
