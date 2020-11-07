@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Link,
   Table,
@@ -8,7 +7,7 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core';
-// import Title from './Title';
+import { makeStyles } from '@material-ui/core/styles';
 
 //tournament name, game, date, location, city/state, type, outcome
 // const rows = [
@@ -30,7 +29,7 @@ const PlayerTournamentHistory = ({userData}) => {
 
   const [playerName, setPlayerName] = useState('Grantalf');
   const classes = useStyles();
-  
+
   return (
     <React.Fragment>
       <h2 className="title">{userData.name}'s Tournament History</h2>
@@ -42,11 +41,11 @@ const PlayerTournamentHistory = ({userData}) => {
             <TableCell>Date</TableCell>
             <TableCell>Location</TableCell>
             <TableCell>Tournament Style</TableCell>
-            <TableCell align="right">Result</TableCell> 
+            <TableCell align="right">Result</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {userData.name ? userData.attended.map((tournament, index) => 
+          {userData.name ? userData.attended.map((tournament, index) =>
             <TableRow key={index}>
               <TableCell>{tournament.name}</TableCell>
               <TableCell>{tournament.game}</TableCell>
@@ -55,7 +54,7 @@ const PlayerTournamentHistory = ({userData}) => {
               <TableCell>{tournament.type}</TableCell>
               <TableCell align="right">{tournament.result ? "Won" : "Lost"}</TableCell>
             </TableRow>
-          ) 
+          )
           : null}
         </TableBody>
       </Table>
