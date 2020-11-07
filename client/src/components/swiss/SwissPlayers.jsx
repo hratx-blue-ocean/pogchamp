@@ -72,7 +72,7 @@ const SwissPlayers = (props) => {
                   {
                     player.toLowerCase() === 'bye'
                       ? ''
-                      : <form onSubmit={(e) => handleScoreUpdate(e, player)}>
+                      : <form onSubmit={(e) => handleScoreUpdate(e, player)} className="input-score">
                           <TextField
                             label="Score"
                             type="text"

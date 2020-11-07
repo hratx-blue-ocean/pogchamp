@@ -10,7 +10,7 @@ const StaticView = ( {changeView} ) => {
     <React.Fragment>
     <Tabs
     value={false}
-    style={{backgroundColor: "#e8e8e8"}}
+    style={{backgroundColor: "#272a33"}}
     onChange={ (e, value) => { e.preventDefault(); changeView(value) }}
     centered
     >

@@ -13,6 +13,36 @@ const SwissController = (props) => {
     winner: ''
   });
 
+  /** Initial POST
+   * {
+   *   Tournament Type: 'Swiss'
+   *   Game Name: '',
+   *   Players: {
+   *     Leslie: 0,
+   *     Rose: 0,
+   *     Alec: 0,
+   *     Brandon: 0
+   *   },
+   *   Location: 'Dragon's Lair',
+   *   City: 'Austin, TX',
+   *   Number of rounds: 6,
+   *   winner: '',
+   *   total prize money: 100
+   * }
+   *
+   * Final PUT req:
+   *
+   * winner: 'Brandon'
+   *
+   * playerInfo = {
+   *   Leslie: 5,
+   *   Rose: 7,
+   *   Alec: 8,
+   *   Brandon: 9
+   * }
+   *
+   */
+
   const [playerInfo, setPlayerInfo] = useState({});
   const [roundsWon, setRoundsWon] = useState({});
   const [roundWinners, setRoundWinners] = useState({});
@@ -97,6 +127,9 @@ const SwissController = (props) => {
       .sort((a, b) => b[1] - a[1]);
 
     if(firstPairing === true) {
+
+      // POST request with initial tournament document
+
       setFirstPairing(false)
       transformedArray = randomized;
     } else {
@@ -159,7 +192,9 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
+    // PUT request for winner and latest scores
     // add first(.50), second(.30), third(.20) place winners with their prize amount
+
   }
 
   return (
@@ -174,10 +209,9 @@ const SwissController = (props) => {
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
-        <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
-        <TextField label="game name" variant="outlined" size="small" inputRef={game} />
-        <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
-        <TextField label="prize amount" variant="outlined" size="small" inputRef={prize} />
+        <TextField label="tournament name" size="small" inputRef={tournamentRef} variant="filled" />
+        <TextField label="game name" size="small" inputRef={game} variant="filled" />
+        <TextField label="number of rounds" size="small" inputRef={rounds} variant="filled" />
         <Button variant="contained" type="submit">Submit</Button>
       </form>
       {
@@ -185,7 +219,7 @@ const SwissController = (props) => {
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               <h2>Add the players:</h2>
               <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
-              <TextField label="enter player name" variant="outlined" size="small" inputRef={players} />
+              <TextField label="enter player name" variant="filled" size="small" inputRef={players} />
               <Button variant="contained" type="submit">Submit</Button>
             </form>
           : ''

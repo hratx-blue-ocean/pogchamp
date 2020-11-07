@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../PogChamp.png';
+import { Button } from '@material-ui/core';
 
 const NavBar = ({ handleLogin }) => {
   return (
     <div id="navigation" className="navBar">
         <Link to="/"><img id="logo" height={"50px"} src={Logo} /></Link>
-        <button id="signinButton" onClick={() => handleLogin(true)}>sign in/sign up</button>
+        <Button id="signinButton" onClick={() => handleLogin(true)} variant="contained">sign in/sign up</Button>
     </div>
   )
 }
