@@ -19,7 +19,7 @@ const description = [
     url: "https://cdn.gamer-network.net/2019/usgamer/Smash-Ultimate-Header-10.jpg/EG11/thumbnail/1920x1080/format/jpg/quality/65/super-smash-bros-ultimate-review-12072018.jpg"
   }
 ]
-client/src/components/MainPage.jsx
+
 const tournaments = [
   {
     name: "Scrabble",
