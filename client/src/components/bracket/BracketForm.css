@@ -1,22 +1,22 @@
 .bracketForm {
   margin: 30px 0;
-  background: #f3f3f3;
+  /* background: #f3f3f3; */
   padding: 10px 20px;
 }
 
 .setup-form {
-  border: 1px solid #d0d0d0;
+  border: #191b21;
   padding: 20px;
   margin-bottom: 20px;
+  background: #191b21;
 }
-
 .setup-form h2 {
   margin-top: 0;
 }
 
 .bracket-player {
   padding: 10px;
-  background: #e8e8e8;
+  background: #272a33;
   margin: 5px 0;
 }
 

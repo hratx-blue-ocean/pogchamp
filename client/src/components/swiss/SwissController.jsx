@@ -209,10 +209,9 @@ const SwissController = (props) => {
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
-        <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
-        <TextField label="game name" variant="outlined" size="small" inputRef={game} />
-        <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
-        <TextField label="prize amount" variant="outlined" size="small" inputRef={prize} />
+        <TextField label="tournament name" size="small" inputRef={tournamentRef} variant="filled" />
+        <TextField label="game name" size="small" inputRef={game} variant="filled" />
+        <TextField label="number of rounds" size="small" inputRef={rounds} variant="filled" />
         <Button variant="contained" type="submit">Submit</Button>
       </form>
       {
@@ -220,7 +219,7 @@ const SwissController = (props) => {
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               <h2>Add the players:</h2>
               <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
-              <TextField label="enter player name" variant="outlined" size="small" inputRef={players} />
+              <TextField label="enter player name" variant="filled" size="small" inputRef={players} />
               <Button variant="contained" type="submit">Submit</Button>
             </form>
           : ''
