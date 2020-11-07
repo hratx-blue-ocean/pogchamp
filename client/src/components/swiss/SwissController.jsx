@@ -12,6 +12,36 @@ const SwissController = (props) => {
     winner: ''
   });
 
+  /** Initial POST
+   * {
+   *   Tournament Type: 'Swiss'
+   *   Game Name: '',
+   *   Players: {
+   *     Leslie: 0,
+   *     Rose: 0,
+   *     Alec: 0,
+   *     Brandon: 0
+   *   },
+   *   Location: 'Dragon's Lair',
+   *   City: 'Austin, TX',
+   *   Number of rounds: 6,
+   *   winner: '',
+   *   total prize money: 100
+   * }
+   *
+   * Final PUT req:
+   *
+   * winner: 'Brandon'
+   *
+   * playerInfo = {
+   *   Leslie: 5,
+   *   Rose: 7,
+   *   Alec: 8,
+   *   Brandon: 9
+   * }
+   *
+   */
+
   const [playerInfo, setPlayerInfo] = useState({});
   const [roundsWon, setRoundsWon] = useState({});
   const [roundWinners, setRoundWinners] = useState({});
@@ -94,6 +124,9 @@ const SwissController = (props) => {
       .sort((a, b) => b[1] - a[1]);
 
     if(firstPairing === true) {
+
+      // POST request with initial tournament document
+
       setFirstPairing(false)
       transformedArray = randomized;
     } else {
@@ -156,6 +189,8 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
+
+    // PUT request for winner and latest scores
   }
 
 
