@@ -109,7 +109,6 @@ class BracketComponent extends React.Component {
       });
   }
 
-  //on click handler when they start the tournament
   startTournament(tournamentInfo, participantInfo) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
     //Call this function
