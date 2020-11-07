@@ -1,5 +1,4 @@
 import React from 'react';
-// import { PrintIcon } from '@material-ui/icons';
 
 function LiveTournament({players, prizes, live_image_url, winners}) {
   let styles = {backgroundColor: "orange", height: 25, margin: 3.5};
@@ -21,7 +20,6 @@ function LiveTournament({players, prizes, live_image_url, winners}) {
       }
 
       { players.length === 1 ?
-
         <div>
          <h3>{winners.first.participant.name} ${prizes.first}</h3>
          <h3>{winners.second.participant.name} ${prizes.second}</h3>

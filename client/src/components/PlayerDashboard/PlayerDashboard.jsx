@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import {
   Card,
   CardActionArea,
@@ -9,11 +7,12 @@ import {
   CardMedia,
   Container,
   Grid,
-  Typography,
+  Typography
 } from '@material-ui/core';
-import './PlayerDashboard.css';
+import { makeStyles } from '@material-ui/core/styles';
 import PlayerTournamentHistory from './PlayerTournamentHistory/PlayerTournamentHistory.jsx';
-// import { CompassCalibrationOutlined } from '@material-ui/icons';
+import './PlayerDashboard.css';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -34,7 +33,7 @@ const PlayerDashboard = () => {
     getUserData()
   }, []);
   const classes = useStyles();
-  
+
   const getUserData = () => {
     axios.get('/dashboard/player')
     .then((res) => {
@@ -88,10 +87,10 @@ const PlayerDashboard = () => {
         <Grid item xs={4}>
           <Card className={classes.root}>
 
-            {userData.name ? 
+            {userData.name ?
               <CardContent>
                 <h2>Upcoming Tournaments</h2>
-                {userData.upcoming.map((tournament, index) => 
+                {userData.upcoming.map((tournament, index) =>
                   <Typography key={index} gutterBottom variant="h5" component="h2">
                     {tournament.name ? tournament.name : null} {tournament.date ? tournament.date : null} {tournament.location ? tournament.location : null}
                   </Typography>

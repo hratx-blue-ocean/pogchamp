@@ -1,21 +1,20 @@
 import React from 'react';
-import LandingPage from './LandingPage.jsx';
-import SwissController from './swiss/SwissController.jsx';
-import BracketComponent from './bracket/BracketComponent.jsx';
-import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
-import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
-import Navigation from './Navigation.jsx';
-import Footer from './Footer.jsx';
-import SignIn from './SignIn.jsx';
-import SignUp from './SignUp.jsx';
-import { Grid, Paper, Modal } from '@material-ui/core';
-
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+import { Grid, Paper, Modal } from '@material-ui/core';
+import BracketComponent from './bracket/BracketComponent.jsx';
+import Footer from './Footer.jsx';
+import LandingPage from './LandingPage.jsx';
+import Navigation from './Navigation.jsx';
+import OrganizerDashboard from './OrganizerDashboard/OrganizerDashboard.jsx';
+import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
+import SignIn from './SignIn.jsx';
+import SignUp from './SignUp.jsx';
+import SwissController from './swiss/SwissController.jsx';
 
 const App = () => {
   const [login, showLogin] = React.useState(false);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Link,
   Table,
@@ -8,7 +7,7 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core';
-// import Title from './Title';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -32,14 +31,14 @@ const TournamentHistory = ({userData}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-        {userData.name ? userData.attended.map((tournament, index) => 
+        {userData.name ? userData.attended.map((tournament, index) =>
           <TableRow key={index}>
             <TableCell>{tournament.name}</TableCell>
             <TableCell>{tournament.game}</TableCell>
             <TableCell>{tournament.type}</TableCell>
             <TableCell align="right">{tournament.winner ? tournament.winner : "unknown"}</TableCell>
           </TableRow>
-        ) 
+        )
         : null}
         </TableBody>
       </Table>
