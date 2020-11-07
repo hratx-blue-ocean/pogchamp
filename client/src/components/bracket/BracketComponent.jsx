@@ -1,12 +1,18 @@
 import React from "react";
-import axios from "axios";
-import { Container, Grid, Button, Tooltip, Typography } from '@material-ui/core';
-
-import BracketForm from './BracketForm.jsx';
-import StaticView from './StaticView.jsx';
-import LiveTournament from './LiveTournament.jsx';
-import './BracketForm.css';
+import {
+  Button,
+  Container,
+  Grid,
+  Tooltip,
+  Typography
+} from '@material-ui/core';
 import { TurnedInTwoTone } from "@material-ui/icons";
+import BracketForm from './BracketForm.jsx';
+import LiveTournament from './LiveTournament.jsx';
+import StaticView from './StaticView.jsx';
+import axios from "axios";
+import './BracketForm.css';
+
 const iframeoptions = '?show_tournament_name=1&show_final_results=1&show_standings=1&scale_to_fit=1';
 
 class BracketComponent extends React.Component {
@@ -69,21 +75,17 @@ class BracketComponent extends React.Component {
 
     axios.post("/api/createTournament", data)
       .then((res) => {
-        // console.log(res.data.tournament, "Created tournament data");
         this.setState({
           liveUrl: res.data.tournament.url,
           currentTournament: res.data,
           tournamentId: res.data.tournament.id,
           live_image_url: res.data.tournament.live_image_url,
         });
-        //post new participants
         this.postNewParticipants(players);
-
       })
       .catch((err) => {
         console.log("Error", err);
       });
-    //hold_third_place_match] // true or false
   }
 
   postNewParticipants(participants) {
@@ -108,12 +110,9 @@ class BracketComponent extends React.Component {
     });
   }
 
-  //on click handler when they start the tournament
   startTournament( tournamentInfo, participantInfo ) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
-    //Call this function
     this.createTournament(tournamentInfo, participantInfo)
-    //do extra stuff afterwards
 
     let prize = {
       first: tournamentInfo.prizeAmount * .50,
@@ -127,7 +126,6 @@ class BracketComponent extends React.Component {
   }
 
   updateMatchWinner(id = null) {
-    //we need participant id
     axios.post(`/api/updateMatch`, {
       tournament_id: this.state.tournamentId,
       participant_id: id,
@@ -154,9 +152,7 @@ class BracketComponent extends React.Component {
         ) {
           return player["participant"]["id"] !== deletePlayer;
         });
-        //if we got our winner
         if (filteredPlayers.length === 1) {
-          //call the finalize tournament function
           let firstPlace = filteredPlayers[0];
           winnersObj["first"] = firstPlace;
           this.finalizeTournament();
@@ -176,7 +172,6 @@ class BracketComponent extends React.Component {
     let id = this.state.tournamentId;
     axios.put('/api/finalizeTournament', {"tournamentId" : id})
     .then((res) => {
-      // console.log("Finalized tournament");
       this.setState({view: 2, showIframe: true}, () => {
         console.log(this.state.winners, this.state.prizeAmount, "new");
       });
@@ -184,7 +179,6 @@ class BracketComponent extends React.Component {
     .catch((err) => {
       console.log("error:", err);
     })
-
   }
 
   changeView(view = null) {
@@ -206,12 +200,8 @@ class BracketComponent extends React.Component {
         className="bracketForm"
         startTournament={this.startTournament}
         />}
-        {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount} 
+        {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
         winners={this.state.winners} live_image_url={this.state.live_image_url}/>}
-        {/* startTournament={this.startTournament}}/> */}
-
-        {/* {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
-        live_image_url={this.state.live_image_url}/>} */}
 
         <div>
           {players.length > 1 && view === 2 && (
@@ -233,7 +223,6 @@ class BracketComponent extends React.Component {
             scrolling="auto"
           ></iframe>
         ) : null}
-
       </Container>
    );
   }
