@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const baseUrl = 'https://api.challonge.com/v1/tournaments';
 const { api_key } = require('./config.js');
-const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner } = require('../../db/index.js');
+const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner, topFiveEarners, topFiveWinners, topFiveRatio } = require('../../db/index.js');
 // console.log('api key:', api_key);
 
 
@@ -149,12 +149,41 @@ router.post('/declareWinner', (req, res) => {
   console.log(req.body, 'this is on declare winner');
   let { tournamentId, username, winnings } = req.body;
   updateWinner(tournamentId, username, winnings)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((error) => {
+      console.log('this is the error', error);
+    })
+})
+
+router.get('/top', (req, res) => {
+  topFiveEarners()
   .then((data) => {
-    res.send(data);
+    console.log(data);
   })
-  .catch((error) => {
-    console.log('this is the error', error);
+  .then(() => {
+    topFiveWinners()
+    .then((data2) => {
+      console.log(data2)
+    })
+    .catch((err2) => {
+      console.log(err2)
+    })
+  })
+  .then(() => {
+    topFiveRatio()
+    .then((data3) => {
+      console.log('this is the ratio data', data3);
+    })
+    .catch((err3) => {
+      console.log(err3)
+    })
+  })
+  .catch((err) => {
+    console.log(err);
   })
 })
+
 
 module.exports = router;

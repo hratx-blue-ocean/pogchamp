@@ -38,6 +38,10 @@ class BracketComponent extends React.Component {
     this.updateMatchWinner = this.updateMatchWinner.bind(this);
   }
 
+  componentDidMount() {
+    this.showTopFive();
+  }
+
   participantNameList() {
     return (
       this.state.players.map((player, index) => {
@@ -197,6 +201,16 @@ class BracketComponent extends React.Component {
         console.log("error:", err);
       })
   }
+
+  showTopFive() {
+    axios.get('/api/top')
+    .then(results => {
+      console.log(results);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  };
 
   changeView(view = null) {
     if (view === "form") {
