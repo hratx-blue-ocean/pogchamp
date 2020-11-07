@@ -58,13 +58,6 @@ const SignIn = (props) => {
           /* and other goodies */
         }) => (
             <form onSubmit={handleSubmit}>
-              {/* <input
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              /> */}
               <TextField
                 type="email"
                 name="email"
@@ -86,13 +79,6 @@ const SignIn = (props) => {
                 size="small"
                 label="Password"
                 variant="filled" />
-              {/* <input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              /> */}
               <br />
               {errors.password && touched.password && errors.password}
               <br />

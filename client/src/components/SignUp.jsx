@@ -21,7 +21,6 @@ const SignUp = ({ handleModal }) => {
     <Container maxWidth="sm" className="signup-form-container">
       <h2>Sign up</h2>
       <form id="signup">
-        {/* <label>Select a username: </label> */}
         <TextField
           onChange={e => {
             useData({...data,
@@ -31,18 +30,7 @@ const SignUp = ({ handleModal }) => {
           size="small"
           label="Select a username"
           variant="filled" />
-
-        {/* <input placeholder='username' onChange={e => {
-          useData({...data,
-          username: e.target.value
-          })}
-        }></input> */}
         <br />
-        {/* <label>Enter a password: </label> */}
-        {/* <input type="password" placeholder='password' onChange={e => {
-          useData({...data,
-          password: window.btoa(e.target.value)
-          })}}></input> */}
         <TextField
           type="password"
           onChange={e => {
@@ -55,8 +43,6 @@ const SignUp = ({ handleModal }) => {
           label="Enter a password"
           variant="filled" />
         <br />
-        {/* <label>Retype password: </label>
-        <input type="password" placeholder='password again'></input> */}
         <TextField
           type="password"
           size="small"
@@ -65,28 +51,6 @@ const SignUp = ({ handleModal }) => {
         <br />
 
         <label>Player or Organizer: </label><br />
-        {/*
-        <input
-          type="radio"
-          id="Player"
-          onChange={e => {
-            useData({...data,
-              type: "Player"
-            })}}
-          name="type"
-          value="Player" />
-        <label for="Player">Player</label><br />
-
-        <input
-          type="radio"
-          name="type"
-          id="Organizer"
-          onChange={e => {
-            useData({...data,
-              type: "Organizer"
-            })}}
-          value="Organizer" />
-        <label for="Organizer">Organizer</label> */}
 
         <RadioGroup aria-label="type" name="type">
           <FormControlLabel
