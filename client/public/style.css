@@ -184,3 +184,10 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-contained:hover {
 #root .MuiButton-outlinedPrimary:hover, #root .MuiButton-outlined:hover {
   border-color: #f58805;
 }
+
+#root .setup-form button.MuiButtonBase-root.MuiButton-root.MuiButton-contained {
+  vertical-align: bottom;
+}
+#root .MuiFilledInput-root {
+  background: #34353e;
+}

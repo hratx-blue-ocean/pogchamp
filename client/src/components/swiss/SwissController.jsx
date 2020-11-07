@@ -204,9 +204,9 @@ const SwissController = (props) => {
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
-        <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
-        <TextField label="game name" variant="outlined" size="small" inputRef={game} />
-        <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
+        <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} variant="filled" />
+        <TextField label="game name" variant="outlined" size="small" inputRef={game} variant="filled" />
+        <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} variant="filled" />
         <Button variant="contained" type="submit">Submit</Button>
       </form>
       {
