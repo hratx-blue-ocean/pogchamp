@@ -60,3 +60,6 @@
 .game-details h4, .game-details p {
   margin: 8px 0;
 }
+.MuiButton-outlinedSizeSmall.submit-score {
+  vertical-align: bottom;
+}
