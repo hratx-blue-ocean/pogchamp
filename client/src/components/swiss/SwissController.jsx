@@ -192,12 +192,9 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
-<<<<<<< HEAD
 
     // PUT request for winner and latest scores
-=======
     // add first(.50), second(.30), third(.20) place winners with their prize amount
->>>>>>> 9c1f48d1249972078e8604001743bab2609118fb
   }
 
   return (
