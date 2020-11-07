@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../PogChamp.png';
+import Logo from '../EXPWNENT.png';
 import { Button } from '@material-ui/core';
 
 const NavBar = ({ handleLogin }) => {
