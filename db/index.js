@@ -187,7 +187,7 @@ const updateTournament = (id, array) => {
 // UPDATE USERS ATTENDED
 const updateUserInfo = (username, tournamentId) => {
   return new Promise((resolve, reject) => {
-    let userCollection = db.collection('user');
+    let userCollection = db.collection('users');
     findUserByName(username)
       .then((data) => {
         if (data !== null) {
@@ -230,7 +230,7 @@ const findTournament = (id) => {
 // FIND USER BY NAME
 const findUserByName = (str) => {
   return new Promise((resolve, reject) => {
-    db.collection('user', (err, collection) => {
+    db.collection('users', (err, collection) => {
       if (err) {
         reject(err);
       } else {
@@ -248,7 +248,7 @@ const findUserByName = (str) => {
 
 const findUserById = (id) => {
   return new Promise((resolve, reject) => {
-    db.collection('user', (err, collection) => {
+    db.collection('users', (err, collection) => {
       if (err) {
         reject(err);
       } else {
@@ -266,7 +266,7 @@ const findUserById = (id) => {
 
 const updateWinner = async (tournamentId, username, winnings) => {
   let tournament = await findTournament(tournamentId);
-  let userCollection = db.collection('user');
+  let userCollection = db.collection('users');
   let count = 0;
   // return new Promise((resolve, reject) => {
   const wait = async () => {
