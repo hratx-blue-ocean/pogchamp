@@ -15,6 +15,12 @@ p, span, h1, h2, h3, h4, h5 {
 #root .MuiTableCell-head, #root .MuiFormLabel-root, #root .MuiTableCell-body, #root .MuiInputBase-input {
   color: #eeeeee;
 }
+#root .MuiInput-underline:before {
+  border-bottom-color: #848484!important;
+}
+#root .MuiTableCell-root {
+  border-bottom-color: #47484c;
+}
 #root a:hover {
   color: #fb9e5e;
 }
@@ -85,6 +91,10 @@ a:visited {
 }
 #loginModal h2 {
   margin-top: 0;
+}
+#loginModal .MuiFilledInput-root {
+  background: white;
+  margin-bottom: 10px;
 }
 
 .carouselItem {
@@ -185,9 +195,10 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-contained:hover {
   border-color: #f58805;
 }
 
-#root .setup-form button.MuiButtonBase-root.MuiButton-root.MuiButton-contained {
-  vertical-align: bottom;
-}
 #root .MuiFilledInput-root {
   background: #34353e;
 }
+#root p.MuiFormHelperText-root {
+  color: #ababab;
+}
+

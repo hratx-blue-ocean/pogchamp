@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Container } from '@material-ui/core';
+import { Container, Button, TextField } from '@material-ui/core';
 
 const SignIn = (props) => {
 
@@ -58,30 +58,46 @@ const SignIn = (props) => {
           /* and other goodies */
         }) => (
             <form onSubmit={handleSubmit}>
-              <label>Email: </label>
-              <input
+              {/* <input
                 type="email"
                 name="email"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}
-              />
+              /> */}
+              <TextField
+                type="email"
+                name="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                size="small"
+                label="Email"
+                variant="filled" />
 
               {errors.email && touched.email && errors.email}
               <br />
-              <label>Password: </label>
-              <input
+              <TextField
                 type="password"
                 name="password"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
-              />
+                size="small"
+                label="Password"
+                variant="filled" />
+              {/* <input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              /> */}
               {errors.password && touched.password && errors.password}
               <br />
-              <button type="submit" disabled={isSubmitting}>
+              <Button type="submit" disabled={isSubmitting} variant="contained" >
                 Submit
-           </button>
+             </Button>
             </form>
           )}
       </Formik>

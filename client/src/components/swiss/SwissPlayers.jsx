@@ -79,7 +79,6 @@ const SwissPlayers = (props) => {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            variant="filled"
                             inputRef={listRefs.get(player)}
                           />
                           <Button
