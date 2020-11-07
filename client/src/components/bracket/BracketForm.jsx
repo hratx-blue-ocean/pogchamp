@@ -53,17 +53,13 @@ const BracketForm = ({ startTournament }) => {
     e.preventDefault();
 
     let incomingPlayer = playerName.current.value;
-    //go through the array of playersInTournament and make sure that name is not already used
     let repeats = playersInTournament.participants.filter(function (
       player
     ) {
       return player.name === incomingPlayer;
     });
 
-    // console.log("these are the repeats", repeats);
-
     if(repeats.length === 1) {
-      //make a pop to appear
       window.alert('Player is already in the list!')
     } else {
       setPlayers({
@@ -91,8 +87,6 @@ const BracketForm = ({ startTournament }) => {
     if (players.length <= 3) {
       alert("Need atleast 4 players to start tournament");
     } else {
-      //invoke the start function brackComponent
-      //get details, players
       startTournament(bracketDetails, playersInTournament);
     }
   };
@@ -188,7 +182,7 @@ const BracketForm = ({ startTournament }) => {
               return (
                 <Grid item xs={3} key={i}>
                   <h4>{player.name} <DeleteForeverIcon
-                  className="delete"
+                    className="delete"
                     fontSize="small"
                     onClick={(e) => {
                       deletePlayers(e, player.name);
