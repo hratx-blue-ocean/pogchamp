@@ -111,11 +111,7 @@ class BracketComponent extends React.Component {
       });
   }
 
-<<<<<<< HEAD
-  startTournament(tournamentInfo, participantInfo) {
-=======
   startTournament( tournamentInfo, participantInfo ) {
->>>>>>> main
     console.log("Start Tournament:", tournamentInfo, participantInfo);
     this.createTournament(tournamentInfo, participantInfo)
 
