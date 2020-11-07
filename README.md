@@ -12,10 +12,10 @@ This application was built with pride by a team of eight full stack software eng
 
 
 ### Bracket Tournament Demo
-![Bracket](https://github.com/hratx-blue-ocean/Gamestock/blob/master/Demo1.gif)
+
 
 ### Swiss Tournament Demo
-![Swiss](https://github.com/hratx-blue-ocean/Gamestock/blob/master/Demo2.gif)
+
 
 
 ## Dev Team
