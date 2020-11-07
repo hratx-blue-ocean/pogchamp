@@ -71,9 +71,9 @@ const App = () => {
 }
 
 const Login = ({ show, handleShow }) => {
+
   const body = (
     <div id="loginModal">
-      <h2>Login</h2>
       <SignIn />
     </div>
   );

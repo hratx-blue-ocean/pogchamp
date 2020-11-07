@@ -2,9 +2,19 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  /* background-color: #58595e; */
-  color: #272a33
+  color: #eeeeee;
+  background-color: #3c3d46;
 }
+p, span, h1, h2, h3, h4, h5 {
+  color: #eeeeee;
+}
+#root .MuiTableCell-head {
+  color: #eeeeee;
+}
+#root .MuiTypography-colorPrimary {
+  color: #ff7f28;
+}
+
 div#footer {
   background: #272a33;
   color: #fff;
@@ -43,18 +53,26 @@ a:visited {
 }
 
 .sideBarHeader {
-  color: #ff7f28
+  font-size: 18px;
+  color: #ff7f28;
+  margin: 0;
 }
 
 #loginModal {
-  margin: 50px;
-  background: rgba(255, 255, 255, 1.0);
+  padding: 30px;
+  margin-top: 100px;
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  background: #000;
   justify-items: center;
+  box-shadow: 1px 4px 27px 6px #ff7f29;
+  border: none;
+  outline: none;
 }
-
-#loginContainer {
-  margin: 50px;
-  width: 100px;
+#loginModal h2 {
+  margin-top: 0;
 }
 
 .carouselItem {
@@ -70,6 +88,7 @@ a:visited {
 
 .sideBarItem {
   height: auto;
+  margin-bottom: 36px;
 }
 
 .carouselImg {
@@ -89,7 +108,6 @@ a:visited {
 
 #logo {
   float: left;
-  /* margin: 15px; */
 }
 
 #signinButton {
@@ -99,7 +117,8 @@ a:visited {
 }
 
 #carouselText {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, .6);
+  color: #fff;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -118,4 +137,16 @@ ul.navigation {
 .navigation li {
   display: inline;
   margin: 0 6px;
+}
+ul.navigation a {
+  text-decoration: none;
+}
+.MuiCard-root, .MuiCard-root h2 {
+  color: #3c3d46;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-contained {
+  background: #a94505;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-contained:hover {
+  box-shadow: 2px 4px 27px -10px #ff9a56;
 }

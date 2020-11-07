@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 
 const SignIn = (props) => {
 
@@ -21,7 +22,8 @@ const SignIn = (props) => {
   }
 
   return (
-    <div id="loginContainer">
+    <Container id="loginContainer">
+      <h2>Login</h2>
       <Formik
         initialValues={{ email: '', password: '' }}
         validate={values => {
@@ -64,6 +66,7 @@ const SignIn = (props) => {
                 onBlur={handleBlur}
                 value={values.email}
               />
+
               {errors.email && touched.email && errors.email}
               <br />
               <label>Password: </label>
@@ -83,7 +86,7 @@ const SignIn = (props) => {
           )}
       </Formik>
       <Link to="signup">Don't have an account? Sign up!</Link>
-    </div>
+    </Container>
   )
 }
 
