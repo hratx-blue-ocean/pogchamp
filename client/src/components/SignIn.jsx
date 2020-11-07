@@ -74,7 +74,7 @@ const SignIn = (props) => {
                 size="small"
                 label="Email"
                 variant="filled" />
-
+              <br />
               {errors.email && touched.email && errors.email}
               <br />
               <TextField
@@ -93,6 +93,7 @@ const SignIn = (props) => {
                 onBlur={handleBlur}
                 value={values.password}
               /> */}
+              <br />
               {errors.password && touched.password && errors.password}
               <br />
               <Button type="submit" disabled={isSubmitting} variant="contained" >

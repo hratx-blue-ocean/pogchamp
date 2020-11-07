@@ -93,8 +93,11 @@ a:visited {
   margin-top: 0;
 }
 #loginModal .MuiFilledInput-root {
-  background: white;
-  margin-bottom: 10px;
+  background: #d0d0d0;
+}
+div#loginContainer a {
+  margin-top: 20px;
+  display: block;
 }
 
 .carouselItem {
@@ -194,11 +197,28 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-contained:hover {
 #root .MuiButton-outlinedPrimary:hover, #root .MuiButton-outlined:hover {
   border-color: #f58805;
 }
-
 #root .MuiFilledInput-root {
   background: #34353e;
+}
+#signup .MuiFilledInput-root {
+  background: #ababab;
+  margin-bottom: 20px;
+}
+#signup .MuiTableCell-head, #signup .MuiFormLabel-root, #signup .MuiTableCell-body, #signup .MuiInputBase-input {
+  color: #000;
 }
 #root p.MuiFormHelperText-root {
   color: #ababab;
 }
-
+.signup-form-container {
+  background: #272a33;
+  padding: 30px;
+  text-align: center;
+}
+.signup-form-container h2 {
+  margin-top: 0;
+}
+.MuiFormGroup-root {
+  max-width: 138px;
+  margin: 13px auto 0px;
+}
