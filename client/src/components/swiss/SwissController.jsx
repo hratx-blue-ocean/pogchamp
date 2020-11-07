@@ -170,6 +170,7 @@ const SwissController = (props) => {
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
           <h4>{gameDetails.prizeAmount ? `$${gameDetails.prizeAmount}` : ''} </h4>
+          {console.log('prizeAmount:', gameDetails.prizeAmount)}
         </div>
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
