@@ -67,7 +67,6 @@ const MainPage = (props) => {
           </Carousel>
         </Grid>
       </Grid>
-      <hr />
       <Grid container className="tournaments">
         <Grid item xs={12} spacing={1} className="tournamentCarousel">
           <Carousel animation="slide" interval={10000}>
@@ -88,9 +87,11 @@ function DescriptionItem(props) {
   return (
     <Grid container className="carouselItem" style={{ "backgroundImage": props.item.url }}>
       <Paper>
-        <Grid item xs={5} id='carouselText'>
-          {props.item.name}
-          <p>{props.item.description}</p>
+        <Grid item xs={12} id='carouselText'>
+          <div className="carousel-inner-text">
+            <h4>{props.item.name}</h4>
+            <p>{props.item.description}</p>
+          </div>
         </Grid>
         <img className="carouselImg" src={props.item.url} />
       </Paper>
@@ -103,7 +104,7 @@ function TournamentItem(props) {
     <Grid item xs={3}>
       <Paper>
         <div className="TournamentPaper">
-          {props.item.name}
+          <h5>{props.item.name}</h5>
           <p>{props.item.location}</p>
         </div>
       </Paper>
