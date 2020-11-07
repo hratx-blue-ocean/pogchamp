@@ -35,12 +35,6 @@ const App = () => {
           <li>
             <Link to="/organizer-dashboard">Organizer Dashboard</Link>
           </li>
-          <li>
-            <Link to="/swiss">Swiss</Link>
-          </li>
-          <li>
-            <Link to="/bracket">Bracket</Link>
-          </li>
         </ul>
       </div>
 
