@@ -329,7 +329,7 @@ module.exports = {
   findTournament,
   findUserByName,
   findUserById,
-  updateWinner
+  updateWinner,
   getUserData,
   createNewTournament,
   createNewUser,

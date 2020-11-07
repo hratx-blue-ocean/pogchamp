@@ -156,6 +156,8 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
+
+    // add prize amount for 1, 3 winners functionality is not done
   }
 
 
