@@ -20,11 +20,11 @@ const SwissPlayers = (props) => {
   }
 
   return (
-    <div>
+    <React.Fragment>
     {
       props.playerInfo === {}
         ? ''
-        : <div>
+        : <React.Fragment>
           <h4>Players:</h4>
             {Object.keys(props.playerInfo).map((player, index) => {
               listRefs.set(player, React.createRef())
@@ -102,10 +102,9 @@ const SwissPlayers = (props) => {
                     Round {props.gameDetails.currentRound} scoring complete</Button>
                 : ''
             }
-
-          </div>
+          </React.Fragment>
     }
-    </div>
+    </React.Fragment>
   )
 }
 

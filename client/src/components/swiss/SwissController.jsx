@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Container, Grid, Button, TextField } from '@material-ui/core';
 import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
@@ -81,20 +81,17 @@ const SwissController = (props) => {
 
   const handlePairings = (e) => {
     e.preventDefault();
-
     checkWinners();
 
     let newPairs = [];
+    let transformedArray;
 
     let randomized =
       Object.entries(playerInfo)
       .sort(() => Math.random() - 0.5);
-
     let sorted =
       Object.entries(playerInfo)
       .sort((a, b) => b[1] - a[1]);
-
-    let transformedArray;
 
     if(firstPairing === true) {
       setFirstPairing(false)
@@ -104,7 +101,6 @@ const SwissController = (props) => {
     }
 
     for(let i = 0; i < transformedArray.length; i+=2) {
-
       let firstOpponent = transformedArray[i][0];
       let secondOpponent = transformedArray[i+1][0];
 
@@ -114,7 +110,6 @@ const SwissController = (props) => {
         [firstOpponent]: 0,
         [secondOpponent]: 0
       })
-
     }
 
     setPairs(newPairs);
@@ -152,7 +147,6 @@ const SwissController = (props) => {
           winnersArr.push(player);
         }
       })
-
     }
 
     if(winnersArr.length > 1) {
@@ -163,6 +157,7 @@ const SwissController = (props) => {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
   }
+
 
   return (
     <Container maxWidth="lg" className="swissPairing">
@@ -179,7 +174,6 @@ const SwissController = (props) => {
         <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
         <Button variant="contained" type="submit">Submit</Button>
       </form>
-
       {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
@@ -190,7 +184,6 @@ const SwissController = (props) => {
             </form>
           : ''
       }
-
       {
         gameDetails.currentRound === (parseInt(gameDetails.rounds) + 1)
           ? <div>
