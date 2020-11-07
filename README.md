@@ -6,7 +6,7 @@
 This application was built with pride by a team of eight full stack software engineers from the Hack Reactor Austin campus, 51st Cohort (HRATX51).
 
 
-<a href="https://mygamestocks.com/"><h2>Expwnent.com</h2></a>
+<a href="https://mygamestocks.com/"><h2>expwnent.com</h2></a>
 
 
 ### Bracket Tournament Demo
