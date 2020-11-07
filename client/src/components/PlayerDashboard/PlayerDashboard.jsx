@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import {
-  Container,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  Container,
   Grid,
   Typography,
 } from '@material-ui/core';
@@ -27,9 +27,6 @@ const useStyles = makeStyles({
   },
 });
 
-// let userData = {};
-console.log("Reloading this Script");
-
 const PlayerDashboard = () => {
   const [userData, setUp] = useState({})
   useEffect(() => {
@@ -37,9 +34,6 @@ const PlayerDashboard = () => {
     getUserData()
   }, []);
   const classes = useStyles();
-
-  //Player Information reveived
-  // console.log('player dashboard')
   
   const getUserData = () => {
     axios.get('/dashboard/player')
@@ -65,7 +59,7 @@ const PlayerDashboard = () => {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2" className={classes.username}>
-                  {userData.name}
+                  {userData.name ? userData.name : null}
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -76,16 +70,16 @@ const PlayerDashboard = () => {
           <Card className={classes.root}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2" className={classes.username}>
-              {userData.name}'s Stats
+              {userData.name ? userData.name : null}'s Stats
               </Typography>
               <Typography gutterBottom variant="h5" component="h2">
-                Total Wins: {userData.wins}
+                Total Wins: {userData.wins ? userData.wins : null}
               </Typography>
               <Typography gutterBottom variant="h5" component="h2">
-                Total Losses: {userData.losses}
+                Total Losses: {userData.losses ? userData.losses : null}
               </Typography>
               <Typography gutterBottom variant="h5" component="h2">
-                Total Earnings: ${userData.winnings}
+                Total Earnings: ${userData.winnings ? userData.winnings : null}
               </Typography>
             </CardContent>
           </Card>
@@ -99,7 +93,7 @@ const PlayerDashboard = () => {
                 <h2>Upcoming Tournaments</h2>
                 {userData.upcoming.map((tournament, index) => 
                   <Typography key={index} gutterBottom variant="h5" component="h2">
-                    {tournament.name} {tournament.date} {tournament.location}
+                    {tournament.name ? tournament.name : null} {tournament.date ? tournament.date : null} {tournament.location ? tournament.location : null}
                   </Typography>
                 )}
               </CardContent>
