@@ -1,9 +1,8 @@
+# exPWNent #
 
-# Expwnent #
 
-
-## About Exponent
-MyGamestocks is Web Application for video game collectors, enthusiasts or anyone who wants to track their video game collection. With MyGamestock, users can add to their collections, track the value of their collections, and see how the value of their collection stacks up to other users. Click <a href="https://expwnent.com/">HERE</a> to start your collection! 
+## About exPWNent
+exPWNent is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="https://expwnent.com/">HERE</a> to start your collection! 
 
 This application was built with pride by a team of eight full stack software engineers from the Hack Reactor Austin campus, 51st Cohort (HRATX51).
 
@@ -12,10 +11,10 @@ This application was built with pride by a team of eight full stack software eng
 
 
 ### Bracket Tournament Demo
-
+![Bracket](https://github.com/hratx-blue-ocean/Gamestock/blob/master/Demo1.gif)
 
 ### Swiss Tournament Demo
-
+![Swiss](https://github.com/hratx-blue-ocean/Gamestock/blob/master/Demo2.gif)
 
 
 ## Dev Team
@@ -34,7 +33,7 @@ This application was built with pride by a team of eight full stack software eng
 * Add user stories
 
 ## Tech Stack 
-*Exponent* was built primarily with ReactJS on the front end and Node/Express/MongoDB on the backend. Other key technologies used are listed below: 
+*exPWNent* was built primarily with ReactJS on the front end and Node/Express/MongoDB on the backend. Other key technologies used are listed below: 
 
 ### Technologies
 
