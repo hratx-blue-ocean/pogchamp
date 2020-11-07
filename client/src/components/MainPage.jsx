@@ -6,7 +6,7 @@ const description = [
   {
     name: "Expwnent:  Up Your Game",
     description: "Battle in your favorite games to determine the champion!",
-    url: "https://images7.alphacoders.com/510/510173.jpg"
+    url: "https://nexus.leagueoflegends.com/wp-content/uploads/2019/06/Banner_T2_Image_tnp3w61gzna8r2n3rojp.jpg"
   },
   {
     name: "Organize Your Own Tournament",
@@ -19,7 +19,7 @@ const description = [
     url: "https://cdn.gamer-network.net/2019/usgamer/Smash-Ultimate-Header-10.jpg/EG11/thumbnail/1920x1080/format/jpg/quality/65/super-smash-bros-ultimate-review-12072018.jpg"
   }
 ]
-
+client/src/components/MainPage.jsx
 const tournaments = [
   {
     name: "Scrabble",
