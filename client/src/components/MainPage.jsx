@@ -4,7 +4,7 @@ import { Grid, Paper } from '@material-ui/core';
 
 const description = [
   {
-    name: "Expwnent:  Up Your Game",
+    name: "Expwnent: Up Your Game",
     description: "Battle in your favorite games to determine the champion!",
     url: "https://nexus.leagueoflegends.com/wp-content/uploads/2019/06/Banner_T2_Image_tnp3w61gzna8r2n3rojp.jpg"
   },

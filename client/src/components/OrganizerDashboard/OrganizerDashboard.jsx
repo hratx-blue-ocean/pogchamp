@@ -40,11 +40,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OrganizerDashboard = (props) => {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    "name": "Grantalf",
+    "upcoming": [{
+      "name": "Cool Fun Game Time",
+      "date": "11/18/2020",
+      "location": "The Basement"
+    },
+    {
+      "name": "Another Fun One",
+      "date": "11/25/2020",
+      "location": "The Basement II"
+    }],
+    "attended": [{
+      "name": "Super Fun Tournament",
+      "game": "Super Smash Bros",
+      "type": "Bracket",
+      "winner": "rapwnzel"
+    },
+    {
+      "name": "Big Words Tournament",
+      "game": "Scrabble",
+      "type": "Bracket",
+      "winner": "leSLAY"
+    }]
+  });
   const [tournamentStyle, setTournamentStyle] = useState('');
-  useEffect(() => {
-    getUserData();
-  }, [])
+  // useEffect(() => {
+  //   getUserData();
+  // }, [])
 
   const classes = useStyles();
 
@@ -71,7 +95,7 @@ const OrganizerDashboard = (props) => {
             <CardActionArea>
               <CardMedia
                 className={classes.media}
-                image="https://cdn.gamer-network.net/2019/usgamer/Smash-Ultimate-Header-10.jpg/EG11/thumbnail/1920x1080/format/jpg/quality/65/super-smash-bros-ultimate-review-12072018.jpg"
+                image="https://blog.playstation.com/tachyon/2019/11/ow2-featured.jpg?resize=1088,612&crop_strategy=smart&zoom=1"
                 title="Super Smash Bros"
               />
               <CardContent>
