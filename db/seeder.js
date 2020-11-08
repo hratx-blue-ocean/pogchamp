@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert').strict;
 
-const url = 'http://3.17.55.136/:27017';
+const url = 'mongodb://localhost:27017';
 
 const dbName = 'pogchamp';
 
@@ -21,8 +21,9 @@ const logger = (name) => {
 }
 
 const seeder = () => {
-  db.collection('utility').insertOne({userId: 1, tournamentId: 1});
-  createNewUser('leSLAY', 'insecurepassword', 'player', () => {
+  db.collection('utility').insertOne({userId: 1, tournamentId: 1})
+  .then((res) -> {
+    createNewUser('leSLAY', 'insecurepassword', 'player', () => {
     createNewUser('rapwnzel', 'insecurepassword', 'player', () => {
       createNewUser('grantalf', 'insecurepassword', 'player', () => {
         createNewUser('DannyPhantom', 'insecurepassword', 'player', () => {
@@ -38,6 +39,7 @@ const seeder = () => {
         });
       });
     });
+  });
   });
 };
 
