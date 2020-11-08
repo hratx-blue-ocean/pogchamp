@@ -2,28 +2,58 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  /* background-color: #58595e; */
-  color: #272a33
+  color: #eeeeee;
+  background-color: #34353e;
+  font-family: 'Roboto', sans-serif;
 }
+hr {
+  border-color: #ff7f28;
+}
+p, span, h1, h2, h3, h4, h5 {
+  color: #eeeeee;
+}
+#root .MuiTableCell-head, #root .MuiFormLabel-root, #root .MuiTableCell-body, #root .MuiInputBase-input {
+  color: #eeeeee;
+}
+#root .MuiInput-underline:before {
+  border-bottom-color: #848484!important;
+}
+#root .MuiTableCell-root {
+  border-bottom-color: #47484c;
+}
+#root a:hover {
+  color: #fb9e5e;
+}
+#root .MuiTypography-colorPrimary, #root a {
+  color: #ff7f28;
+}
+
 div#footer {
   background: #272a33;
   color: #fff;
   padding: 20px;
   margin-top: 40px;
 }
+.content {
+  min-height: calc(100vh - 70px);
+}
 
 a:visited {
   color: #ff7f28
 }
 
-.navBar, .sideBar, .mainPage, .sideBarItem, .footer, .tournaments {
-  /* border: 1px lightgray dotted; */
-}
-
 .TournamentPaper {
   background: #272a33;
-  color: #ff7f28;
-  padding: 5px;
+  color: #eeee;
+  padding: 12px;
+}
+.TournamentPaper h5 {
+  font-size: 18px;
+  font-weight: 900;
+  margin: 10px 0;
+}
+.tournaments {
+  margin-top: 40px;
 }
 
 .header {
@@ -35,7 +65,8 @@ a:visited {
   right: 0;
   position: sticky;
   z-index: 1000;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  box-shadow: 1px 1px 12px -5px #ff7f29;
 }
 
 .mainPage {
@@ -43,18 +74,33 @@ a:visited {
 }
 
 .sideBarHeader {
-  color: #ff7f28
+  font-size: 20px;
+  color: #ffffff;
+  margin: 0;
 }
 
 #loginModal {
-  margin: 50px;
-  background: rgba(255, 255, 255, 1.0);
+  padding: 30px;
+  margin-top: 100px;
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  background: #000;
   justify-items: center;
+  box-shadow: 1px 4px 18px -2px #ff7f29;
+  border: none;
+  outline: none;
 }
-
-#loginContainer {
-  margin: 50px;
-  width: 100px;
+#loginModal h2 {
+  margin-top: 0;
+}
+#loginModal .MuiFilledInput-root {
+  background: #d0d0d0;
+}
+div#loginContainer a {
+  margin-top: 20px;
+  display: block;
 }
 
 .carouselItem {
@@ -64,12 +110,20 @@ a:visited {
   z-index: 1;
 }
 
+.carousel-inner-text {
+  position: absolute;
+  bottom: 0;
+  padding: 20px 20px 40px;
+  max-width: 50%;
+}
+
 .static {
   position: fixed;
 }
 
 .sideBarItem {
   height: auto;
+  margin-bottom: 36px;
 }
 
 .carouselImg {
@@ -77,6 +131,12 @@ a:visited {
   height: auto;
   z-index: 2;
   position: relative;
+}
+.CarouselItem h4 {
+  color: #ff7f29;
+  font-size: 28px;
+  text-transform: uppercase;
+  margin-bottom: 0;
 }
 
 #container, #sideBar, #landing {
@@ -89,17 +149,18 @@ a:visited {
 
 #logo {
   float: left;
-  /* margin: 15px; */
 }
 
 #signinButton {
   display: inline;
   float: right;
-  margin: 15px;
+  margin: 7px;
 }
 
 #carouselText {
-  background-color: rgba(255, 255, 255, 0.5);
+  /* background-color: rgba(0, 0, 0, .5); */
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  color: #fff;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -115,7 +176,55 @@ ul.navigation {
   display: inline-block;
   padding-left: 0;
 }
+#navigation {
+  padding: 0 20px;
+}
 .navigation li {
   display: inline;
   margin: 0 6px;
+}
+ul.navigation a {
+  text-decoration: none;
+}
+.MuiCard-root, .MuiCard-root h2 {
+  color: #3c3d46;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-contained {
+  background: #a94505;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-contained:hover {
+  box-shadow: 2px 4px 27px -10px #ff9a56;
+  background: #f58805;
+}
+#root .MuiButton-outlinedPrimary, #root .MuiButton-outlined {
+  color: #aa4505;
+  border: 1px solid rgb(170 69 5);
+}
+#root .MuiButton-outlinedPrimary:hover, #root .MuiButton-outlined:hover {
+  border-color: #f58805;
+}
+#root .MuiFilledInput-root {
+  background: #34353e;
+}
+#signup .MuiFilledInput-root {
+  background: #ababab;
+  margin-bottom: 20px;
+}
+#signup .MuiTableCell-head, #signup .MuiFormLabel-root, #signup .MuiTableCell-body, #signup .MuiInputBase-input {
+  color: #000;
+}
+#root p.MuiFormHelperText-root {
+  color: #ababab;
+}
+.signup-form-container {
+  background: #272a33;
+  padding: 30px;
+  text-align: center;
+}
+.signup-form-container h2 {
+  margin-top: 0;
+}
+.MuiFormGroup-root {
+  max-width: 138px;
+  margin: 13px auto 0px;
 }

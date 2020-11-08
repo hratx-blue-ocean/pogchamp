@@ -22,6 +22,8 @@ const BracketForm = ({ startTournament }) => {
     participants: [],
   });
 
+  const [repeat, setRepeat] = useState({repeat: false});
+
   const playerName = useRef(null);
   const tournament = useRef(null);
   const game = useRef(null);
@@ -59,8 +61,10 @@ const BracketForm = ({ startTournament }) => {
     });
 
     if(repeats.length === 1) {
-      window.alert('Player is already in the list!')
+      // alert('Player is already in the list!')
+      setRepeat({repeat: true})
     } else {
+      setRepeat({repeat: false});
       setPlayers({
         participants: [...playersInTournament.participants, { name: incomingPlayer }],
       });
@@ -108,7 +112,7 @@ const BracketForm = ({ startTournament }) => {
         <TextField
           required
           label="tournament name"
-          variant="outlined"
+          variant="filled"
           size="small"
           helperText="* required field"
           inputRef={tournament}
@@ -116,28 +120,28 @@ const BracketForm = ({ startTournament }) => {
         <TextField
           required
           label="game name"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={game}
         />
         <TextField
           required
           label="number of players"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={players}
         />
         <TextField
           required
           label="prize amount"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={prize}
         />
         <TextField
           required
           label="description"
-          variant="outlined"
+          variant="filled"
           size="small"
           inputRef={description}
         />
@@ -150,11 +154,12 @@ const BracketForm = ({ startTournament }) => {
         autoComplete="off"
         onSubmit={handleAddingPlayers}
         className="setup-form"
-      >
+        >
+        {repeat.repeat === false ? null : <div>This player is already in the list!</div>}
         <TextField
           required
           label="player name"
-          variant="outlined"
+          variant="filled"
           size="small"
           helperText="Minimum of 4 Players Required"
           inputRef={playerName}

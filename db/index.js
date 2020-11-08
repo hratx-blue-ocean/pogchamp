@@ -324,6 +324,54 @@ const updateWinner = async (tournamentId, username, winnings) => {
   })
 };
 
+
+// QUERIES TO GET INFO FOR MAIN PAGE
+
+//RETURN TOP 5 BY WINNINGS
+const topFiveEarners = () => {
+  let userCollection = db.collection('users');
+  return new Promise((resolve, reject) => {
+    userCollection.find().sort({ "winnings": -1 }).limit(5).toArray((err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+};
+
+//RETURN TOP 5 BY WINS
+const topFiveWinners = () => {
+  let userCollection = db.collection('users');
+  return new Promise((resolve, reject) => {
+    userCollection.find().sort({ "wins": -1 }).limit(5).toArray((err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+};
+
+//RETURN TOP 5 BY WINS/LOSS RATIO
+const topFiveRatio = () => {
+  let userCollection = db.collection('users');
+  return new Promise((resolve, reject) => {
+    userCollection.find().sort({ "wins": -1, "losses": 1 }).limit(5).toArray((err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+};
+
+
+
+
 module.exports = {
   insertTournamentInfo,
   updateUserInfo,
@@ -337,5 +385,8 @@ module.exports = {
   createNewUser,
   issueWinnings,
   upWins,
-  handleWinner
+  handleWinner,
+  topFiveEarners,
+  topFiveWinners,
+  topFiveRatio
 }
