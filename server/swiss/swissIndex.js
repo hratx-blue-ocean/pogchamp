@@ -4,7 +4,6 @@ const { createNewTournament } = require('../../db/index.js');
 
 let count = 0;
 router.post('/tournament', (req, res) => {
-  console.log(count++, "<--count");
   let { gameDetails, playerInfo } = req.body;
   gameDetails.players = playerInfo;
   let {tournamentName, gameName, rounds } = gameDetails;
@@ -23,6 +22,11 @@ router.post('/tournament', (req, res) => {
          res.status(200).end();
        }
   })
+})
+
+router.post('/winners', (req, res) => {
+  console.log('posting winners', req.body);
+  
 })
 
 

@@ -37,7 +37,7 @@ const PlayerDashboard = () => {
   const getUserData = () => {
     axios.get('/dashboard/player')
     .then((res) => {
-      console.log('Player data', res.data);
+      console.log('Getting Player data from DB');
       setUp(res.data);
     })
     .catch((err)=> {

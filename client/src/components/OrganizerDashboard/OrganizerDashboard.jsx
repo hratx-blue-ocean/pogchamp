@@ -55,11 +55,11 @@ const OrganizerDashboard = (props) => {
   const getUserData = () => {
     axios.get('/dashboard/player')
     .then((res) => {
-      console.log('Player data', res.data);
+      console.log('Getting Organizer data from DB');
       setUserData(res.data);
     })
     .catch((err)=> {
-      console.log('Error geting player data', err)
+      console.log('Error geting organizer data', err)
     })
   }
 

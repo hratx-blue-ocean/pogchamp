@@ -5,6 +5,11 @@ import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
 
 const SwissController = (props) => {
+  
+  const [winners, setWinners] = useState({});
+  const [money, setAmount] = useState({});
+  
+  const [postedToDatabase, setPosted] = useState(false);
   const [gameDetails, setGameDetails] = useState({
     tournamentName: '',
     gameName: '',
@@ -29,7 +34,6 @@ const SwissController = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('posting data')
 
     setGameDetails({...gameDetails,
       tournamentName: tournamentRef.current.value,
@@ -37,9 +41,6 @@ const SwissController = (props) => {
       rounds: rounds.current.value,
       prizeAmount: prize.current.value
     })
-    setTimeout(() => {
-      console.log(gameDetails, "the posted game Details")
-    }, 2000)
   }
 
   const handleAddPlayer = (e) => {
@@ -118,8 +119,6 @@ const SwissController = (props) => {
         [firstOpponent]: 0,
         [secondOpponent]: 0
       })
-      //Posting tournament & player details
-      console.log("Starting Swiss Tournament", gameDetails, playerInfo);
     }
 
     setPairs(newPairs);
@@ -142,7 +141,7 @@ const SwissController = (props) => {
         tiedArray.push(pair[1]);
       }
     })
-
+    
     if(tiedArray.length) {
       let highestRoundsWon = roundsWon[tiedArray[0]];
 
@@ -166,12 +165,48 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
-    // add first(.50), second(.30), third(.20) place winners with their prize amount
+    //Get Winners First, Second, Third
+    let scores = Object.values(playerInfo);
+    let sorted = scores.sort((a, b) => b - a);
+    let places = {};
+    for (let x = 0; x < sorted.length; x++) {
+      for (let key in playerInfo) {
+        if (playerInfo[key] === sorted[x]) {
+          if (x === 0) {
+            places["first"] = key;
+          } else if (x === 1) {
+            places["second"] = key;
+          } else if (x === 2) {
+            places["third"] = key;
+          }
+        }
+      }
+    }
+    setWinners(places)
+    putWinners(places)
   }
 
-  const postToDatabase = (data) => {
+  const putWinners = (places) => {
+    axios.post('swiss/winners', places)
+    .then((res) => {
+      console.log('result', res);
+    })
+    .catch((err) => {
+      console.log('error winners', err);
+    })
+  }
+
+  const postTournament = () => {
     if (postedToDatabase === false)  {
-      console.log('this is what i am sending:', data)
+      setPosted(true)
+      let data = {gameDetails, playerInfo}
+      let moneyAmount = gameDetails.prizeAmount;
+      let prize = {
+        first: Math.floor( moneyAmount * .50),
+        second: Math.floor( moneyAmount * .30),
+        third: Math.floor( moneyAmount * .20),
+      }
+      setAmount(prize);
       axios.post('/swiss/tournament', data)
       .then((res) => {
         console.log(res);
@@ -181,6 +216,10 @@ const SwissController = (props) => {
       })
     }
   }
+  let allDetailsIn = gameDetails.tournamentName.length >= 1 && 
+  gameDetails.rounds.length >= 1 && gameDetails.prizeAmount.length >= 1 &&
+  gameDetails.gameName.length >= 1;
+
   return (
     <Container maxWidth="lg" className="swissPairing">
       <h2>Swiss Tournament</h2>
@@ -189,9 +228,8 @@ const SwissController = (props) => {
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
           <h4>{gameDetails.prizeAmount ? `$${gameDetails.prizeAmount}` : ''} </h4>
-          {console.log('prizeAmount:', gameDetails.prizeAmount)}
         </div>
-      {!gameDetails.tournamentName && !gameDetails.rounds ?
+      { allDetailsIn ? null : 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
         <TextField label="tournament name" variant="outlined" size="small" inputRef={tournamentRef} />
@@ -199,7 +237,7 @@ const SwissController = (props) => {
         <TextField label="number of rounds" variant="outlined" size="small" inputRef={rounds} />
         <TextField label="prize amount" variant="outlined" size="small" inputRef={prize} />
         <Button variant="contained" type="submit">Submit</Button>
-      </form> : null }
+      </form>}
 
       {
         gameDetails.rounds !== ''
@@ -222,7 +260,9 @@ const SwissController = (props) => {
                 {
                   gameDetails.winner !== '' && !Array.isArray(gameDetails.winner)
                     ? <Container maxWidth="sm" className="pairings-container">
-                        <h2>{gameDetails.winner} wins!!</h2>
+                        <h2>{gameDetails.winner} wins ${money.first}!</h2>
+                        {winners.second && <h2>{winners.second} ${money.second}!</h2> }
+                        {winners.third && <h2>{winners.third} ${money.third}!</h2>}
                       </Container>
                     : ''
                 }
@@ -242,7 +282,7 @@ const SwissController = (props) => {
                 ? <Button
                     variant="contained"
                     color="primary"
-                    onClick={handlePairings}
+                    onClick={(e) => { handlePairings(e); postTournament(); }}
                     className="create-pairings">Create Pairings</Button>
                 : ''
               }
