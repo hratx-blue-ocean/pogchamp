@@ -83,7 +83,7 @@ const createNewTournament = (name, hostName, gameName, location, city, type, pla
 }
 
 // create new user
-const createNewUser = (name, password, type) => {
+const createNewUser = (name, password, type, callback) => {
   getNewUserId((res) => {
     let passNhash = saltNhash(password);
     if (type === 'organizer') {
