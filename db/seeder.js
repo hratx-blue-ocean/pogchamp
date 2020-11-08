@@ -22,14 +22,23 @@ const logger = (name) => {
 
 const seeder = () => {
   db.collection('utility').insertOne({userId: 1, tournamentId: 1});
-  createNewUser('leSLAY', 'insecurepassword', 'player', logger);
-  createNewUser('rapwnzel', 'insecurepassword', 'player', logger);
-  createNewUser('grantalf', 'insecurepassword', 'player', logger);
-  createNewUser('DannyPhantom', 'insecurepassword', 'player', logger);
-  createNewUser('banjo1224', 'insecurepassword', 'player', logger);
-  createNewUser('emmanuelMiranda', 'insecurepassword', 'player', logger);
-  createNewUser('BrockLesnar', 'insecurepassword', 'player', logger);
-  createNewUser('emi1337', 'insecurepassword', 'player', logger);
+  createNewUser('leSLAY', 'insecurepassword', 'player', () => {
+    createNewUser('rapwnzel', 'insecurepassword', 'player', () => {
+      createNewUser('grantalf', 'insecurepassword', 'player', () => {
+        createNewUser('DannyPhantom', 'insecurepassword', 'player', () => {
+          createNewUser('DannyPhantom', 'insecurepassword', 'player', () => {
+            createNewUser('banjo1224', 'insecurepassword', 'player', () => {
+              createNewUser('emmanuelMiranda', 'insecurepassword', 'player', () => {
+                createNewUser('BrockLesnar', 'insecurepassword', 'player', () => {
+                  createNewUser('emi1337', 'insecurepassword', 'player', logger);
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 };
 
 seeder();
