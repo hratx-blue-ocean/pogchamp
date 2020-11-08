@@ -95,7 +95,7 @@ const createNewUser = (name, password, type, callback) => {
           callback(err);
         })
     } else if (type === 'player') {
-      db.collection('users').insertOne({ name: name, password: passNhash, attended: [], wins: 0, losses: 0, winnings: 0 })
+      db.collection('users').insertOne({ name: name, password: passNhash, userId: res, attended: [], wins: 0, losses: 0, winnings: 0 })
         .then((res) => {
           incrementUserId(callback);
         })
