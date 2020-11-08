@@ -5,10 +5,10 @@ import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
 
 const SwissController = (props) => {
-  
+
   const [winners, setWinners] = useState({});
   const [money, setAmount] = useState({});
-  
+
   const [postedToDatabase, setPosted] = useState(false);
   const [gameDetails, setGameDetails] = useState({
     tournamentName: '',
@@ -170,7 +170,7 @@ const SwissController = (props) => {
         tiedArray.push(pair[1]);
       }
     })
-    
+
     if(tiedArray.length) {
       let highestRoundsWon = roundsWon[tiedArray[0]];
 
@@ -237,15 +237,15 @@ const SwissController = (props) => {
       }
       setAmount(prize);
       axios.post('/swiss/tournament', data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("posting error", err);
-      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log("posting error", err);
+        })
     }
   }
-  let allDetailsIn = gameDetails.tournamentName.length >= 1 && 
+  let allDetailsIn = gameDetails.tournamentName.length >= 1 &&
   gameDetails.rounds.length >= 1 && gameDetails.prizeAmount.length >= 1 &&
   gameDetails.gameName.length >= 1;
 
@@ -258,7 +258,7 @@ const SwissController = (props) => {
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
           <h4>{gameDetails.prizeAmount ? `$${gameDetails.prizeAmount}` : ''} </h4>
         </div>
-      { allDetailsIn ? null : 
+      { allDetailsIn ? null :
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
         <TextField label="tournament name" size="small" inputRef={tournamentRef} variant="filled" />
@@ -273,8 +273,8 @@ const SwissController = (props) => {
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               {pairs.length === 0 && <h2>Add the players:</h2> }
               <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
-              {gameDetails.winner.length >= 1 && <Button variant="outlined" type="submit" onClick={() => window.print()} >Print Results</Button>}
-              {pairs.length === 0 && <TextField label="enter player name" variant="outlined" size="small" inputRef={players} /> }
+              {gameDetails.winner.length >= 1 && <Button variant="filled" type="submit" onClick={() => window.print()} >Print Results</Button>}
+              {pairs.length === 0 && <TextField label="enter player name" variant="filled" size="small" inputRef={players} /> }
               {pairs.length === 0 && <Button variant="contained" color="secondary" type="submit">Submit</Button>}
             </form>
           : ''
