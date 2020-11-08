@@ -22,7 +22,7 @@ const logger = (name) => {
 
 const seeder = () => {
   db.collection('utility').insertOne({userId: 1, tournamentId: 1})
-  .then((res) -> {
+  .then((res) => {
     createNewUser('leSLAY', 'insecurepassword', 'player', () => {
     createNewUser('rapwnzel', 'insecurepassword', 'player', () => {
       createNewUser('grantalf', 'insecurepassword', 'player', () => {
@@ -40,7 +40,8 @@ const seeder = () => {
       });
     });
   });
-  });
+  })
+  .catch((err) => {console.log(err)});
 };
 
 seeder();
