@@ -273,8 +273,9 @@ const SwissController = (props) => {
           ? <form onSubmit={handleAddPlayer} className="setup-form">
               {pairs.length === 0 && <h2>Add the players:</h2> }
               <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
+              {gameDetails.winner.length >= 1 && <Button variant="outlined" type="submit" onClick={() => window.print()} >Print Results</Button>}
               {pairs.length === 0 && <TextField label="enter player name" variant="outlined" size="small" inputRef={players} /> }
-              {pairs.length === 0 && <Button variant="contained" type="submit">Submit</Button>}
+              {pairs.length === 0 && <Button variant="contained" color="secondary" type="submit">Submit</Button>}
             </form>
           : ''
       }
