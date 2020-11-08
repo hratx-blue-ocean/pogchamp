@@ -14,16 +14,17 @@ function LiveTournament({players, prizes, live_image_url, winners}) {
       <h1 className="title">Bracket Tournament</h1>
       {live_image_url && players.length >= 1 &&
       <span>
-      <button style={styles} onClick={() => window.print()} >Print Page</button>
+      {players.length === 1 && <button style={styles} onClick={() => window.print()} >Print Results</button> }
+      
       <button style={styles} onClick={(e) => openInNewTab(e) } >Print Bracket</button>
       </span>
       }
 
       { players.length === 1 ?
         <div>
-         <h3>{winners.first.participant.name} ${prizes.first}</h3>
-         <h3>{winners.second.participant.name} ${prizes.second}</h3>
-         <h3>{winners.third[0].participant.name} ${thirdPlaceAmount} AND {winners.third[1].participant.name} ${thirdPlaceAmount}</h3>
+         <h3>1st: {winners.first.participant.name} ${prizes.first}</h3>
+         <h3>2nd: {winners.second.participant.name} ${prizes.second}</h3>
+         <h3>3rd: {winners.third[0].participant.name} ${thirdPlaceAmount} AND {winners.third[1].participant.name} ${thirdPlaceAmount}</h3>
         </div> : null
       }
 

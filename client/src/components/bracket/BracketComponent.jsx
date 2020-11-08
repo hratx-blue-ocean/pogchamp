@@ -179,7 +179,7 @@ class BracketComponent extends React.Component {
       .then((res) => {
         // console.log("Finalized tournament");
         this.setState({ view: 2, showIframe: true }, () => {
-          console.log(this.state.winners, this.state.prizeAmount, "new");
+          // console.log(this.state.winners, this.state.prizeAmount, "new");
         })
       })
       .then(() => {

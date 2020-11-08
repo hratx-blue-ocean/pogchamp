@@ -8,13 +8,13 @@ const Footer = () => {
   return (
     <div id="footer">
       <Button>
-        <FacebookIcon fontSize="medium"/>
+        <FacebookIcon fontSize="default"/>
       </Button>
       <Button>
-        <InstagramIcon fontSize="medium"/>
+        <InstagramIcon fontSize="default"/>
       </Button>
       <Button>
-        <TwitterIcon fontSize="medium"/>
+        <TwitterIcon fontSize="default"/>
       </Button>
     </div>
   )

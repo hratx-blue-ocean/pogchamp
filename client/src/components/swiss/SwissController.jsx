@@ -1,9 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { Container, Grid, Button, TextField } from '@material-ui/core';
 import SwissPlayers from './SwissPlayers.jsx';
 import './SwissController.css';
 
 const SwissController = (props) => {
+  
+  const [winners, setWinners] = useState({});
+  const [money, setAmount] = useState({});
+  
+  const [postedToDatabase, setPosted] = useState(false);
   const [gameDetails, setGameDetails] = useState({
     tournamentName: '',
     gameName: '',
@@ -29,18 +35,14 @@ const SwissController = (props) => {
    *   winner: '',
    *   total prize money: 100
    * }
-   *
    * Final PUT req:
-   *
    * winner: 'Brandon'
-   *
    * playerInfo = {
    *   Leslie: 5,
    *   Rose: 7,
    *   Alec: 8,
    *   Brandon: 9
    * }
-   *
    */
 
   const [playerInfo, setPlayerInfo] = useState({});
@@ -168,7 +170,7 @@ const SwissController = (props) => {
         tiedArray.push(pair[1]);
       }
     })
-
+    
     if(tiedArray.length) {
       let highestRoundsWon = roundsWon[tiedArray[0]];
 
@@ -192,10 +194,60 @@ const SwissController = (props) => {
     } else {
       setGameDetails({ ...gameDetails, winner: pairs[0][0] })
     }
-
-    // PUT request for winner and latest scores
-    // add first(.50), second(.30), third(.20) place winners with their prize amount
+    //Get Winners First, Second, Third
+    let scores = Object.values(playerInfo);
+    let sorted = scores.sort((a, b) => b - a);
+    let places = {};
+    for (let x = 0; x < sorted.length; x++) {
+      for (let key in playerInfo) {
+        if (playerInfo[key] === sorted[x]) {
+          if (x === 0) {
+            places["first"] = key;
+          } else if (x === 1) {
+            places["second"] = key;
+          } else if (x === 2) {
+            places["third"] = key;
+          }
+        }
+      }
+    }
+    setWinners(places)
+    putWinners(places)
   }
+
+  const putWinners = (places) => {
+    axios.post('swiss/winners', places)
+    .then((res) => {
+      console.log('result', res);
+    })
+    .catch((err) => {
+      console.log('error winners', err);
+    })
+  }
+
+  const postTournament = () => {
+    if (postedToDatabase === false)  {
+      setPosted(true)
+      let data = {gameDetails, playerInfo}
+      let moneyAmount = gameDetails.prizeAmount;
+      let prize = {
+        first: Math.floor( moneyAmount * .50),
+        second: Math.floor( moneyAmount * .30),
+        third: Math.floor( moneyAmount * .20),
+      }
+      setAmount(prize);
+      axios.post('/swiss/tournament', data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("posting error", err);
+      })
+    }
+  }
+  let allDetailsIn = gameDetails.tournamentName.length >= 1 && 
+  gameDetails.rounds.length >= 1 && gameDetails.prizeAmount.length >= 1 &&
+  gameDetails.gameName.length >= 1;
 
   return (
     <Container maxWidth="lg" className="swissPairing">
@@ -205,22 +257,25 @@ const SwissController = (props) => {
           <h4>{gameDetails.gameName}</h4>
           <p>{gameDetails.rounds ? `Total Rounds: ${gameDetails.rounds}` : ''}</p>
           <h4>{gameDetails.prizeAmount ? `$${gameDetails.prizeAmount}` : ''} </h4>
-          {console.log('prizeAmount:', gameDetails.prizeAmount)}
         </div>
+      { allDetailsIn ? null : 
       <form noValidate autoComplete="off" onSubmit={handleSubmit} className="setup-form">
         <h3>Add your tournament details:</h3>
         <TextField label="tournament name" size="small" inputRef={tournamentRef} variant="filled" />
         <TextField label="game name" size="small" inputRef={game} variant="filled" />
         <TextField label="number of rounds" size="small" inputRef={rounds} variant="filled" />
+        <TextField label="prize amount" size="small" inputRef={prize} variant="filled" />
         <Button variant="contained" type="submit">Submit</Button>
-      </form>
+      </form>}
+
       {
         gameDetails.rounds !== ''
           ? <form onSubmit={handleAddPlayer} className="setup-form">
-              <h2>Add the players:</h2>
+              {pairs.length === 0 && <h2>Add the players:</h2> }
               <p>If odd number of players, add player named "Bye". If player gets a bye, give them 1 point for that round.</p>
-              <TextField label="enter player name" variant="filled" size="small" inputRef={players} />
-              <Button variant="contained" type="submit">Submit</Button>
+              {gameDetails.winner.length >= 1 && <Button variant="outlined" type="submit" onClick={() => window.print()} >Print Results</Button>}
+              {pairs.length === 0 && <TextField label="enter player name" variant="outlined" size="small" inputRef={players} /> }
+              {pairs.length === 0 && <Button variant="contained" color="secondary" type="submit">Submit</Button>}
             </form>
           : ''
       }
@@ -235,7 +290,9 @@ const SwissController = (props) => {
                 {
                   gameDetails.winner !== '' && !Array.isArray(gameDetails.winner)
                     ? <Container maxWidth="sm" className="pairings-container">
-                        <h2>{gameDetails.winner} wins!!</h2>
+                        <h2>{gameDetails.winner} wins ${money.first}!</h2>
+                        {winners.second && <h2>{winners.second} ${money.second}!</h2> }
+                        {winners.third && <h2>{winners.third} ${money.third}!</h2>}
                       </Container>
                     : ''
                 }
@@ -255,7 +312,7 @@ const SwissController = (props) => {
                 ? <Button
                     variant="contained"
                     color="primary"
-                    onClick={handlePairings}
+                    onClick={(e) => { handlePairings(e); postTournament(); }}
                     className="create-pairings">Create Pairings</Button>
                 : ''
               }
