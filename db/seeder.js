@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert').strict;
 
-const url = 'mongodb://localhost:27017';
+const url = 'http://3.17.55.136/:27017';
 
 const dbName = 'pogchamp';
 
