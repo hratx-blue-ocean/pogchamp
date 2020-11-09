@@ -1,12 +1,12 @@
 <p align="center"><img width=40% src=https://github.com/hratx-blue-ocean/pogchamp/blob/main/client/src/EXPWNENT.png></p>
 
 ## About Expwnent
-*Expwnent* is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="https://expwnent.com/">HERE</a> to start your collection! 
+*Expwnent* is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="https://expwnent.com/">HERE</a> to make your first tournament! 
 
 This application was built with pride by a team of eight full stack software engineers from the Hack Reactor Austin campus, 51st Cohort (HRATX51).
 
 
-<a href="https://mygamestocks.com/"><h2>expwnent.com</h2></a>
+<a href="http://3.139.59.142:3000/"><h2>expwnent.com</h2></a>
 
 
 ### Bracket Tournament Demo
