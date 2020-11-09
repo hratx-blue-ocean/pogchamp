@@ -32,13 +32,15 @@ const PlayerDashboard = () => {
     "attended": [{
       "name" : "My Previous Tournament",
       "prize" : "200",
+      "date": "09/15/2020",
       "game":  "Minecraft",
       "location" : "Houston basement",
-      "type": "Swiss"
+      "type": "Bracket"
     },
     {
       "name" : "Super Fun Tournament",
       "prize" : "100",
+      "date": "10/25/2020",
       "game":  "Magic the Gathering",
       "location" : "The Shop",
       "type": "Swiss",
@@ -48,18 +50,11 @@ const PlayerDashboard = () => {
       "name":"Smash Tournament",
       "date": "11/13/2020",
       "location": "Josh's backyard"
-    },
-    {
-      "name": '',
-      "date": '',
-      "tournament": ''
     }],
     "wins": 420,
     "losses": 1,
     "winnings": 1000
   })
-
-
 
   // useEffect(() => {
   //   console.log('Getting user dashboard information');

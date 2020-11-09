@@ -61,7 +61,7 @@ const OrganizerDashboard = (props) => {
     {
       "name": "Big Words Tournament",
       "game": "Scrabble",
-      "type": "Bracket",
+      "type": "Swiss",
       "winner": "leSLAY"
     }]
   });
@@ -76,16 +76,16 @@ const OrganizerDashboard = (props) => {
     setTournamentStyle(event.target.value);
   };
 
-  const getUserData = () => {
-    axios.get('/dashboard/player')
-    .then((res) => {
-      console.log('Getting Organizer data from DB');
-      setUserData(res.data);
-    })
-    .catch((err)=> {
-      console.log('Error geting organizer data', err)
-    })
-  }
+  // const getUserData = () => {
+  //   axios.get('/dashboard/player')
+  //   .then((res) => {
+  //     console.log('Getting Organizer data from DB');
+  //     setUserData(res.data);
+  //   })
+  //   .catch((err)=> {
+  //     console.log('Error geting organizer data', err)
+  //   })
+  // }
 
   return (
     <Container>
