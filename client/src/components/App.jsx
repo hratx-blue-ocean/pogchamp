@@ -27,9 +27,6 @@ const App = () => {
         <Login show={login} handleShow={showLogin} />
         <ul className="navigation">
           <li>
-            <Link to="/">It's Working!!</Link>
-          </li>
-          <li>
             <Link to="/">Home</Link>
           </li>
           <li>
