@@ -22,7 +22,7 @@ This application was built with pride by a team of eight full stack software eng
   * [Alec Brock]: Design Lead - 
   * [Grant Harris]: Product Lead - 
   * [Rose Bram]: 
-  * [Emmanuel Garcia]: 
+  * [Emmanuel Garcia]: Bracket Developer & Routing API -
   * [Daniel Leal]: 
   * [Brandon Bates]: 
   * [Emily White]: 
