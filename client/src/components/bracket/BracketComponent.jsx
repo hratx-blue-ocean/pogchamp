@@ -16,8 +16,8 @@ import './BracketForm.css';
 const iframeoptions = '?show_tournament_name=1&show_final_results=1&show_standings=1&scale_to_fit=1';
 
 class BracketComponent extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       view: 0,
       players: [],
@@ -30,16 +30,20 @@ class BracketComponent extends React.Component {
       prizeAmount: {},
       winners: { "first": {}, "second": {}, "third": [] },
       live_image_url: '',
+      registerOrStart: '',
+      hostName: props.hostName,
     };
 
     this.postNewParticipants = this.postNewParticipants.bind(this);
     this.startTournament = this.startTournament.bind(this);
     this.changeView = this.changeView.bind(this);
     this.updateMatchWinner = this.updateMatchWinner.bind(this);
+    this.registerTournament = this.registerTournament.bind(this);
+    this.startMatch = this.startMatch.bind(this);
   }
 
   // componentDidMount() {
-  //   this.showTopFive();
+
   // }
 
   participantNameList() {
@@ -60,7 +64,8 @@ class BracketComponent extends React.Component {
     )
   };
 
-  createTournament(tournamentInfo = null, players = null) {
+  createTournament(tournamentInfo = null, players = null, registerOrStart = null) {
+    console.log(this.state.hostName);
     let data = {
       data: {
         name: tournamentInfo.tournamentName,
@@ -74,31 +79,44 @@ class BracketComponent extends React.Component {
         playerLimit: tournamentInfo.numberOfPlayers,
         registered: [],
         totalPrize: tournamentInfo.prizeAmount,
-        winner: null
+        winner: null,
+        gameName: tournamentInfo.gameName,
+        description: tournamentInfo.description,
+        hostName: this.state.hostName
       }
     };
 
     axios.post("/api/createTournament", data)
       .then((res) => {
+        console.log(res.data.tournament.live_image_url, "THIS IS THE IMAGE URL");
         this.setState({
           liveUrl: res.data.tournament.url,
           currentTournament: res.data,
           tournamentId: res.data.tournament.id,
           live_image_url: res.data.tournament.live_image_url,
         });
-        this.postNewParticipants(players);
+        this.postNewParticipants(players, registerOrStart);
       })
       .catch((err) => {
         console.log("Error", err);
       });
   }
 
-  postNewParticipants(participants) {
+  postNewParticipants(participants, registerOrStart) {
     participants.tournamentId = this.state.tournamentId;
     axios.post("/api/postParticipant", participants)
       .then((res) => {
         this.setState({ players: res.data });
-        this.startMatch();
+        if (registerOrStart === "start") {
+          this.startMatch();
+        }
+        else {
+          this.setState({
+            registerOrStart: registerOrStart,
+            showIframe: true,
+            view: 2
+          })
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -115,9 +133,24 @@ class BracketComponent extends React.Component {
       });
   }
 
-  startTournament( tournamentInfo, participantInfo ) {
+  startTournament(tournamentInfo, participantInfo) {
     console.log("Start Tournament:", tournamentInfo, participantInfo);
-    this.createTournament(tournamentInfo, participantInfo)
+    this.createTournament(tournamentInfo, participantInfo, "start")
+
+    let prize = {
+      first: Math.floor(tournamentInfo.prizeAmount * .50),
+      second: Math.floor(tournamentInfo.prizeAmount * .30),
+      third: Math.floor(tournamentInfo.prizeAmount * .20),
+    }
+
+    this.setState({ prizeAmount: prize }, () => {
+      console.log('prizeAmount:', this.state.prizeAmount);
+    });
+  }
+
+  registerTournament(tournamentInfo, participantInfo) {
+    console.log("Start Tournament:", tournamentInfo, participantInfo);
+    this.createTournament(tournamentInfo, participantInfo, "register")
 
     let prize = {
       first: Math.floor(tournamentInfo.prizeAmount * .50),
@@ -230,9 +263,10 @@ class BracketComponent extends React.Component {
         {view === 0 && <BracketForm
           className="bracketForm"
           startTournament={this.startTournament}
+          registerTournament={this.registerTournament}
         />}
         {view === 2 && <LiveTournament players={players} prizes={this.state.prizeAmount}
-          winners={this.state.winners} live_image_url={this.state.live_image_url} />}
+          winners={this.state.winners} live_image_url={this.state.live_image_url} registerOrStart={this.state.registerOrStart} startMatch={this.startMatch} hostName={this.state.hostName}/>}
 
         <div>
           {players.length > 1 && view === 2 && (

@@ -10,7 +10,7 @@ import {
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import axios from 'axios';
 
-const BracketForm = ({ startTournament }) => {
+const BracketForm = ({ startTournament, registerTournament, registerOrStart }) => {
   const [bracketDetails, setBracketDetails] = useState({
     tournamentName: "",
     description: "",
@@ -102,6 +102,15 @@ const BracketForm = ({ startTournament }) => {
     }
   };
 
+  const registerTournaments = (e) => {
+    e.preventDefault();
+    if (players.length <= 3) {
+      alert("Need atleast 4 players to start tournament");
+    } else {
+      registerTournament(bracketDetails, playersInTournament);
+    }
+  };
+
   return (
     <Container maxWidth="lg" className="bracketForm">
       {bracketDetails.show === false ? (
@@ -163,7 +172,7 @@ const BracketForm = ({ startTournament }) => {
         onSubmit={handleAddingPlayers}
         className="setup-form"
       >
-        <Typography variant="subtitle2">{repeat}</Typography>
+        <Typography variant="subtitle2" style={{color: "red"}}>{repeat}</Typography>
         <TextField
           required
           label="player name"
@@ -206,6 +215,7 @@ const BracketForm = ({ startTournament }) => {
             </Grid>
           </div>
         )}
+
       <form noValidate autoComplete="off" className="setup-form">
         {playersInTournament.participants.length >= 4
           ?
@@ -221,6 +231,25 @@ const BracketForm = ({ startTournament }) => {
           :
           <Button type="submit" variant="outlined" disabled>
             Start Tournament
+        </Button>
+        }
+      </form>
+
+      <form noValidate autoComplete="off" className="setup-form">
+        {playersInTournament.participants.length >= 4
+          ?
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={(event) => {
+              registerTournaments(event);
+            }}
+          >
+            Register Tournament
+        </Button>
+          :
+          <Button type="submit" variant="outlined" disabled>
+            Register Tournament
         </Button>
         }
       </form>

@@ -171,10 +171,29 @@ const insertTournamentInfo = (obj) => {
 
 // UPDATES TOURNAMENT REGISTERED AND WINNER KEY TO USER ID
 const updateTournament = (id, array) => {
-  console.log(array);
+  let tournamentCollection = db.collection('tournament');
+  return new Promise((resolve, reject) => {
+    findTournament(id)
+      .then((data) => {
+        tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "registered": [...data.registered, ...array] } }, (error, res) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(res);
+          }
+
+        })
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+};
+
+const updateTournamentStatus = (id, status) => {
   return new Promise((resolve, reject) => {
     let tournamentCollection = db.collection('tournament');
-    tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "registered": array } }, (error, res) => {
+    tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "status": status } }, (error, res) => {
       if (error) {
         reject(error);
       } else {
@@ -184,14 +203,23 @@ const updateTournament = (id, array) => {
   })
 };
 
+
 // UPDATE USERS ATTENDED
-const updateUserInfo = (username, tournamentId) => {
+const updateUserInfo = (username, tournamentId, challongeId) => {
   return new Promise((resolve, reject) => {
     let userCollection = db.collection('users');
     findUserByName(username)
       .then((data) => {
         if (data !== null) {
-          userCollection.updateOne({ "name": username }, { $set: { "attended": [...data.attended, tournamentId] } }, (error, res) => {
+          let newObj = data;
+          if(newObj.challongeId) {
+            newObj = data.challongeId;
+            newObj[`${tournamentId}`] = {id: challongeId};
+          } else {
+            newObj = {};
+            newObj[`${tournamentId}`] = {id: challongeId};
+          }
+          userCollection.updateOne({ "name": username }, { $set: { "attended": [...data.attended, tournamentId], "challongeId": newObj } }, (error, res) => {
             if (error) {
               reject(error);
             } else {
@@ -227,6 +255,18 @@ const findTournament = (id) => {
   })
 };
 
+const findTournamentByHostName = (str) => {
+  return new Promise((resolve, reject) => {
+    db.collection('tournament').find({ "hostName": str }).toArray((err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+};
+
 // FIND USER BY NAME
 const findUserByName = (str) => {
   return new Promise((resolve, reject) => {
@@ -241,6 +281,18 @@ const findUserByName = (str) => {
             resolve(result);
           }
         })
+      }
+    })
+  })
+};
+
+const findTournamentByStatus = () => {
+  return new Promise((resolve, reject) => {
+    db.collection('tournament').find({ "status": "pending" }).toArray((error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
       }
     })
   })
@@ -386,5 +438,8 @@ module.exports = {
   handleWinner,
   topFiveEarners,
   topFiveWinners,
-  topFiveRatio
+  topFiveRatio,
+  updateTournamentStatus,
+  findTournamentByStatus,
+  findTournamentByHostName
 }
