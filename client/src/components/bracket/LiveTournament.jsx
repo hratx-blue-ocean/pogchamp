@@ -22,19 +22,20 @@ function LiveTournament({ players, prizes, live_image_url, winners, registerOrSt
     <React.Fragment>
       <Grid item xs={12}><h1 className="title">Bracket Tournament</h1></Grid>
       {live_image_url && players.length >= 1 &&
-      <Grid item xs={3}>
-        <span>
-          <button style={styles} onClick={() => window.print()} >Print Page</button>
-          <button style={styles} onClick={(e) => openInNewTab(e)} >Print Bracket</button>
-        </span>
-      </Grid>
+        <Grid item xs={3}>
+          <span>
+            {players.length === 1 && <button style={styles} onClick={() => window.print()} >Print Results</button>}
+
+            <button style={styles} onClick={(e) => openInNewTab(e)} >Print Bracket</button>
+          </span>
+        </Grid>
       }
 
       { players.length === 1 ?
         <div>
-          <h3>{winners.first.participant.name} ${prizes.first}</h3>
-          <h3>{winners.second.participant.name} ${prizes.second}</h3>
-          <h3>{winners.third[0].participant.name} ${thirdPlaceAmount} AND {winners.third[1].participant.name} ${thirdPlaceAmount}</h3>
+          <h3>1st: {winners.first.participant.name} ${prizes.first}</h3>
+          <h3>2nd: {winners.second.participant.name} ${prizes.second}</h3>
+          <h3>3rd: {winners.third[0].participant.name} ${thirdPlaceAmount} AND {winners.third[1].participant.name} ${thirdPlaceAmount}</h3>
         </div> : null
       }
 
@@ -43,7 +44,7 @@ function LiveTournament({ players, prizes, live_image_url, winners, registerOrSt
           <h4 style={{ color: "grey" }}>Click "Create New Tournament" to begin</h4>
         </div> : null
       }
-      {registerOrStart === "register" ? <Grid item xs={3}><Button onClick={() => {startMatch()}}type="submit" variant="outlined">
+      {registerOrStart === "register" ? <Grid item xs={3}><Button onClick={() => { startMatch() }} type="submit" variant="outlined">
         Start Tournament
         </Button></Grid> : null}
     </React.Fragment>

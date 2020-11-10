@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const PlayerTournamentHistory = ({userData}) => {
   console.log('props:', userData);
 
-  const [playerName, setPlayerName] = useState('Grantalf');
+  const [playerName, setPlayerName] = useState('rapwnzel');
   const classes = useStyles();
 
   return (
@@ -60,7 +60,7 @@ const PlayerTournamentHistory = ({userData}) => {
       </Table>
 
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={(e) => {e.preventDefault(); console.log('Only printing Once'); }}>
+        <Link color="primary" href="#" onClick={(e) => {e.preventDefault()}}>
           See more tournaments
         </Link>
       </div>

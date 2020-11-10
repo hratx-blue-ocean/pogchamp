@@ -4,18 +4,18 @@ import { Grid, Paper } from '@material-ui/core';
 
 const description = [
   {
-    name: "Welcome to Pog Champ",
-    description: "Create and manage tournaments between you and your friends! Supports Bracket pairings and Swiss Pair tournaments.",
+    name: "Expwnent: Up Your Game",
+    description: "Battle in your favorite games to determine the champion!",
     url: "https://nexus.leagueoflegends.com/wp-content/uploads/2019/06/Banner_T2_Image_tnp3w61gzna8r2n3rojp.jpg"
   },
   {
-    name: "How to use the app",
-    description: "Blah blah blah blah blah blah blah",
+    name: "Organize Your Own Tournament",
+    description: "Choose between Bracket or Swiss tournament styles",
     url: "https://blog.playstation.com/tachyon/2019/11/ow2-featured.jpg?resize=1088,612&crop_strategy=smart&zoom=1"
   },
   {
-    name: "How to use the app",
-    description: "Blah blah blah blah blah blah blah",
+    name: "Unleash the Winner in You",
+    description: "Do you have what it takes to reach the final match?",
     url: "https://cdn.gamer-network.net/2019/usgamer/Smash-Ultimate-Header-10.jpg/EG11/thumbnail/1920x1080/format/jpg/quality/65/super-smash-bros-ultimate-review-12072018.jpg"
   }
 ]

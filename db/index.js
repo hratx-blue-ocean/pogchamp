@@ -38,7 +38,8 @@ const getNewTournamentId = (callback) => {
     if (err) {
       console.log(err)
     } else {
-      callback(result[0].tournamentId);
+      let id = result[0]["tournamentId"];
+      callback(id);
     }
   });
 }
@@ -56,9 +57,9 @@ const getNewUserId = (callback) => {
 
 // increment (for use after get)
 const incrementTournamentId = (callback) => {
-  db.collection('utility').updateOne({}, { $inc: { tournamentId: 1 } })
-    .then((res) => { callback(res.result); })
-    .catch((err) => { callback(err); });
+  db.collection('utility').updateOne({}, {$inc: {tournamentId: 1}})
+  .then((res) => {callback(null, res.result);})
+  .catch((err) => {callback(err);});
 }
 
 // increment (for use after get)
@@ -71,19 +72,20 @@ const incrementUserId = (callback) => {
 // create new tournament
 const createNewTournament = (name, hostName, gameName, location, city, type, playerLimit, rounds, totalPrize, players, callback) => {
   getNewTournamentId((res) => {
-    let date = new Date();
-    db.collection('tournaments').insertOne({ name: name, tournamentId: res, hostName: hostName, gameName: gameName, date: date, location: location, city: city, type: type, rounds: rounds, totalPrize: totalPrize, players: players })
-      .then((res) => {
-        incrementTournamentId(callback);
-      })
-      .catch((err) => {
-        callback(err);
-      })
+    let date = new Date ();
+    console.log( res, "<--new tournament id");
+    db.collection('tournament').insertOne({name: name, tournamentId: res, hostName: hostName, gameName: gameName, date: date, location: location, city: city, type: type, rounds: rounds, totalPrize: totalPrize, players: players})
+    .then((res) => {
+      incrementTournamentId(callback);
+    })
+    .catch((err) => {
+      callback(err, null);
+    })
   });
 }
 
 // create new user
-const createNewUser = (name, password, type) => {
+const createNewUser = (name, password, type, callback) => {
   getNewUserId((res) => {
     let passNhash = saltNhash(password);
     if (type === 'organizer') {
@@ -95,7 +97,7 @@ const createNewUser = (name, password, type) => {
           callback(err);
         })
     } else if (type === 'player') {
-      db.collection('users').insertOne({ name: name, password: passNhash, attended: [], wins: 0, losses: 0, winnings: 0 })
+      db.collection('users').insertOne({ name: name, password: passNhash, userId: res, attended: [], wins: 0, losses: 0, winnings: 0 })
         .then((res) => {
           incrementUserId(callback);
         })
@@ -113,14 +115,14 @@ const issueWinnings = (name, purse, callback) => {
     .catch((err) => { callback(err); });
 }
 
-// TODO: queries to update tournaments (check with LC about what specifically we want to update), queries to update user W/L (is this by points, by match, or by tournament?)
+// TODO: queries to update tournament (check with LC about what specifically we want to update), queries to update user W/L (is this by points, by match, or by tournament?)
 
 
 // handle winner
 const handleWinner = (id, winner, callback) => {
-  db.collection('tournaments').updateOne({ tournamentId: id }, { $set: { winner: winner } })
-    .then((res) => { callback(res.result); })
-    .catch((err) => { callback(err); });
+  db.collection('tournament').updateOne({tournamentId: id}, {$set: {winner: winner}})
+  .then((res) => {callback(res.result);})
+  .catch((err) => {callback(err);});
 }
 
 const upWins = (winner, callback) => {

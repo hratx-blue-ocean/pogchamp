@@ -1,13 +1,13 @@
-# exPWNent #
-<p align="center"><img width=60% src="https://github.com/hratx-blue-ocean/pogchamp/blob/main/client/src/PogChamp.png"></p>
 
-## About exPWNent
-*exPWNent* is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="https://expwnent.com/">HERE</a> to start your collection! 
+<p align="center"><img width=40% src=https://github.com/hratx-blue-ocean/pogchamp/blob/main/client/src/EXPWNENT.png></p>
+
+## About Expwnent
+*Expwnent* is a web application for tournament organizers and players to meet and engage in epic battle with the game of their choice.  Click <a href="http://3.139.59.142:3000/">HERE</a> to make your first tournament! 
 
 This application was built with pride by a team of eight full stack software engineers from the Hack Reactor Austin campus, 51st Cohort (HRATX51).
 
 
-<a href="https://mygamestocks.com/"><h2>exPWNent.com</h2></a>
+<a href="http://3.139.59.142:3000/"><h2>expwnent.com</h2></a>
 
 
 ### Bracket Tournament Demo
@@ -23,7 +23,7 @@ This application was built with pride by a team of eight full stack software eng
   * [Alec Brock]: Design Lead - 
   * [Grant Harris]: Product Lead - 
   * [Rose Bram]: 
-  * [Emmanuel Garcia]: 
+  * [Emmanuel Garcia]: Bracket Developer & Routing API -
   * [Daniel Leal]: 
   * [Brandon Bates]: 
   * [Emily White]: 
@@ -33,7 +33,8 @@ This application was built with pride by a team of eight full stack software eng
 * Add user stories
 
 ## Tech Stack 
-*exPWNent* was built primarily with ReactJS on the front end and Node/Express/MongoDB on the backend. Other key technologies used are listed below: 
+*Expwnent* was built primarily with ReactJS on the front end and Node/Express/MongoDB on the backend. Other key technologies used are listed below: 
+
 
 ### Technologies
 
@@ -76,11 +77,18 @@ This application was built with pride by a team of eight full stack software eng
 
 # Workflow
 
-* Agile Methodology
-* Ticket Tracking via [Trello](https://trello.com/b/urq5Humy/pogchamp)
-* Feature Branch Git Workflow
+This project was managed using the git workflow:  
 
-   [Leslie Crunkilton]: <>
+The team maintains one development branch that is fed by feature branches. Ready to deploy features undergo the following agile process:
+
+1. Feature branch is rebased to consolidate commit history and ensure only working code is pushed to the dev branch.
+2. Feature branch is pushed to project repo. 
+3. A pull request is made with another dev tagged for review.
+4. Developer branch is merged in line with agile methodology.
+
+* Ticket Tracking via [Trello](https://trello.com/b/urq5Humy/pogchamp)
+
+   [Leslie Crunkilton]: <https://github.com/lesc90>
    [Emily White]: <https://github.com/13emwhite>
    [Brandon Bates]: <https://github.com/Banjo1224>
    [Emmanuel Garcia]: <https://github.com/emmanuel-a-g>
@@ -88,3 +96,4 @@ This application was built with pride by a team of eight full stack software eng
    [Rose Bram]: <https://github.com/rosemaling>
    [Alec Brock]: <https://github.com/alecbrock>
    [Daniel Leal]: <https://github.com/leal10>
+

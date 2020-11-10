@@ -32,23 +32,51 @@ const useStyles = makeStyles({
 });
 
 const PlayerDashboard = () => {
-  const [userData, setUp] = useState({})
-  useEffect(() => {
-    console.log('Getting user dashboard information');
-    getUserData()
-  }, []);
+  const [userData, setUp] = useState({
+    "name" : "rapwnzel",
+    "attended": [{
+      "name" : "My Previous Tournament",
+      "prize" : "200",
+      "date": "09/15/2020",
+      "game":  "Minecraft",
+      "location" : "Houston basement",
+      "type": "Bracket"
+    },
+    {
+      "name" : "Super Fun Tournament",
+      "prize" : "100",
+      "date": "10/25/2020",
+      "game":  "Magic the Gathering",
+      "location" : "The Shop",
+      "type": "Swiss",
+      "result": true
+    }],
+    "upcoming" : [{
+      "name":"Smash Tournament",
+      "date": "11/13/2020",
+      "location": "Josh's backyard"
+    }],
+    "wins": 420,
+    "losses": 1,
+    "winnings": 1000
+  })
+
+  // useEffect(() => {
+  //   console.log('Getting user dashboard information');
+  //   getUserData()
+  // }, []);
   const classes = useStyles();
 
-  const getUserData = () => {
-    axios.get('/dashboard/player')
-    .then((res) => {
-      console.log('Player data', res.data);
-      setUp(res.data);
-    })
-    .catch((err)=> {
-      console.log('Error geting player data', err)
-    })
-  }
+  // const getUserData = () => {
+  //   axios.get('/dashboard/player')
+  //   .then((res) => {
+  //     console.log('Getting Player data from DB');
+  //     setUp(res.data);
+  //   })
+  //   .catch((err)=> {
+  //     console.log('Error geting player data', err)
+  //   })
+  // }
 
   return (
     <Container>
@@ -66,7 +94,7 @@ const PlayerDashboard = () => {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2" className={classes.username}>
-                  {userData.name ? userData.name : null}
+                  {userData.name ? userData.name : null }
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -94,7 +122,6 @@ const PlayerDashboard = () => {
 
         <Grid item xs={4}>
           <Card className={classes.root}>
-
             {userData.name ?
               <CardContent>
                 <h2>Upcoming Tournaments</h2>
