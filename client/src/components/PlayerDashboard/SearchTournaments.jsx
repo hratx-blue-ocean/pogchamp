@@ -103,7 +103,7 @@ const SearchTournaments = (props) => {
         <TextField
           required
           label="Search Tournaments"
-          variant="outlined"
+          variant="filled"
           size="medium"
           inputRef={tournaments}
         />
