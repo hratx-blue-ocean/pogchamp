@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
   Button,
@@ -16,8 +16,8 @@ const MapTourns = (props) => {
   return (
     <Grid container>
       {props.openTournaments.map((x) => {
-        return <Grid item xs={4} style={{padding: 20}}>
-          <Card style={{maxWidth: 400}}>
+        return <Grid item xs={4} style={{ padding: 20 }}>
+          <Card style={{ maxWidth: 400 }}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 {x.name}
@@ -37,13 +37,13 @@ const MapTourns = (props) => {
             </CardContent>
             <CardActions>
               <Button size="small" color="textSecondary" onClick={() => {
-                axios.post("/api/postOneParticipant", {participants: [{name: props.fakeUserName}], tournamentId: x.tournamentId})
-                .then((data) => {
-                  console.log(data.data);
-                })
-                .catch((err) => {
-                  console.log(err);
-                })
+                axios.post("/api/postOneParticipant", { participants: [{ name: props.fakeUserName }], tournamentId: x.tournamentId })
+                  .then((data) => {
+                    console.log(data.data);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
               }}>Sign Up</Button>
             </CardActions>
           </Card>
@@ -56,6 +56,27 @@ const MapTourns = (props) => {
 const SearchTournaments = (props) => {
   const [openTournaments, setOpenTournaments] = useState(false);
   const [stop, setStop] = useState(0);
+  const tournaments = useRef(null);
+  const [repeat, setRepeat] = useState(false);
+
+  const handleTournaments = (e) => {
+    e.preventDefault();
+
+    let incomingTournament = tournaments.current.value;
+    axios.get(`/api/searchedOpen/?search=${incomingTournament}`)
+      .then((data) => {
+        if (data.data === "") {
+          setRepeat("Tournament Not Found")
+        } else {
+          setOpenTournaments(data.data);
+          setRepeat("");
+        }
+      })
+      .catch((err) => {
+        setRepeat("Tournament Not Found")
+      })
+    tournaments.current.value = "";
+  };
   //way around componentDidMount()
   useEffect(() => {
     findOpen();
@@ -73,6 +94,23 @@ const SearchTournaments = (props) => {
   };
   return (
     <div>
+      <form
+        autoComplete="off"
+        onSubmit={handleTournaments}
+        className="setup-form"
+      >
+        <Typography variant="subtitle2" style={{ color: "red" }}>{repeat}</Typography>
+        <TextField
+          required
+          label="Search Tournaments"
+          variant="outlined"
+          size="medium"
+          inputRef={tournaments}
+        />
+        <Button type="submit" variant="contained">
+          Search
+        </Button>
+      </form>
       {openTournaments ? <MapTourns openTournaments={openTournaments} fakeUserName={props.fakeUserName} /> : null}
     </div>
   )

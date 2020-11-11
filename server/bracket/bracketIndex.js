@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const baseUrl = 'https://api.challonge.com/v1/tournaments';
 const { api_key } = require('./config.js');
-const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner, topFiveEarners, topFiveWinners, topFiveRatio, updateTournamentStatus, findTournamentByStatus, findTournamentByHostName } = require('../../db/index.js');
+const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner, topFiveEarners, topFiveWinners, topFiveRatio, updateTournamentStatus, findTournamentByStatus, findTournamentByHostName, findSearchedTournaments } = require('../../db/index.js');
 // console.log('api key:', api_key);
 
 
@@ -107,16 +107,19 @@ router.post('/createTournament', (req, res) => {
   // console.log(obj, 'THIS IS THE OBJJJJJJJ');
   let tournamentId = null;
   let Url = null;
+  let live_image_urls = null;
   axios.post(`${baseUrl}.json?api_key=${api_key}`, obj)
     .then((result) => {
       tournamentId = result.data.tournament.id;
       Url = result.data.tournament.url;
+      live_image_urls= result.data.tournament.live_image_url;
       res.send(result.data);
     })
     .then(() => {
       req.body.form.name = body.name;
       req.body.form.tournamentId = tournamentId;
       req.body.form.Url = Url;
+      req.body.form.live_image_url = live_image_urls;
       req.body.form.status = "pending";
 
       insertTournamentInfo(req.body.form)
@@ -298,6 +301,18 @@ router.get('/organizerData', (req, res) => {
     .catch((err) => {
       console.log(err);
     })
+})
+
+router.get('/searchedOpen', (req, res) => {
+  let { search } = req.query;
+
+  findSearchedTournaments(search)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
 })
 
 

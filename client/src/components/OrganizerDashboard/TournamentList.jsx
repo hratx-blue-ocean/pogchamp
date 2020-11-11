@@ -23,6 +23,7 @@ class tournamentList extends React.Component {
       organizerData: false,
       hostName: props.hostName,
       live_image_url: false,
+      url: false,
       tournamentId: false,
       prizeAmount: false,
       registerOrStart: false,
@@ -74,6 +75,7 @@ class tournamentList extends React.Component {
       live_image_url: data[index].Url,
       registerOrStart: registerOrStart,
       showIframe: true,
+      url: data[index].live_image_url,
     })
   };
 
@@ -221,7 +223,7 @@ class tournamentList extends React.Component {
           {this.state.organizerData ? this.TournamentMap() : null}
           <Grid container item xs={9}>
             <LiveTournament players={this.state.players} prizes={this.state.prizeAmount}
-              winners={this.state.winners} live_image_url={this.state.live_image_url} registerOrStart={this.state.registerOrStart} startMatch={this.startMatch} hostName={this.state.hostName} />
+              winners={this.state.winners} live_image_url={this.state.url} registerOrStart={this.state.registerOrStart} startMatch={this.startMatch} hostName={this.state.hostName} />
 
             {this.state.players.length > 1 ? (
 
