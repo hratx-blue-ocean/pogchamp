@@ -7,12 +7,17 @@ import {
   CardMedia,
   Container,
   Grid,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PlayerTournamentHistory from './PlayerTournamentHistory/PlayerTournamentHistory.jsx';
 import './PlayerDashboard.css';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -76,6 +81,9 @@ const PlayerDashboard = () => {
   return (
     <Container>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+        <Button variant="outlined" className="select-style"><Link to="/search">Search</Link></Button>
+        </Grid>
         <Grid item xs={4}>
           <Card className={classes.root}>
             <CardActionArea>

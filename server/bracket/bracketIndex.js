@@ -3,28 +3,30 @@ const router = express.Router();
 const axios = require('axios');
 const baseUrl = 'https://api.challonge.com/v1/tournaments';
 const { api_key } = require('./config.js');
-const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner, topFiveEarners, topFiveWinners, topFiveRatio } = require('../../db/index.js');
+const { insertTournamentInfo, updateUserInfo, updateTournament, findTournament, findUserByName, findUserById, updateWinner, topFiveEarners, topFiveWinners, topFiveRatio, updateTournamentStatus, findTournamentByStatus, findTournamentByHostName, findSearchedTournaments } = require('../../db/index.js');
 // console.log('api key:', api_key);
 
 
 router.post('/postParticipant', (req, res) => {
   console.log('posting new participants');
   let body = req.body;
-  let result = null;
+  let results = null;
   let tournamentId = body.tournamentId;
   let participants = { "participants": body.participants };
+
   axios.post(`${baseUrl}/${tournamentId}/participants/bulk_add.json?api_key=${api_key}`, participants)
     .then((result) => {
-      result = result.data;
+      results = result.data;
+      console.log(results, "THIS IS THE RESULTS")
       // console.log(result, "posted participants");
-      res.send(result)
+      res.send(result.data)
     })
     .then(() => {
       let arr = [];
       let count = 0;
-      body.participants.map((username, i) => {
+      results.map((username, i) => {
         new Promise((resolve, reject) => {
-          updateUserInfo(username.name, tournamentId)
+          updateUserInfo(username.participant.name, tournamentId, username.participant.id)
             .then((data) => {
               resolve(data)
             })
@@ -34,7 +36,7 @@ router.post('/postParticipant', (req, res) => {
         })
           .then((result) => {
             count++;
-            if (count === body.participants.length) {
+            if (count === results.length) {
               if (result !== null) {
                 arr.push(result.userId);
               }
@@ -45,7 +47,7 @@ router.post('/postParticipant', (req, res) => {
                 .catch((err) => {
                   console.log(err);
                 })
-            } else if (result !== null && count !== body.participants.length) {
+            } else if (result !== null && count !== results.length) {
               arr.push(result.userId)
             }
           })
@@ -59,22 +61,66 @@ router.post('/postParticipant', (req, res) => {
     })
 })
 
+router.post('/postOneParticipant', (req, res) => {
+  let body = req.body;
+  let results = null;
+  let arr = [];
+  let tournamentId = body.tournamentId;
+  let name = { name: body.participants[0].name, description: "something" }
+  axios.post(`${baseUrl}/${tournamentId}/participants.json?api_key=${api_key}`, name)
+    .then((result) => {
+      results = result.data;
+      res.send(results)
+    })
+    .then(() => {
+      new Promise((resolve, reject) => {
+        updateUserInfo(results.participant.name, tournamentId, results.participant.id)
+          .then((data) => {
+            console.log(data, "YAY");
+            resolve(data)
+          })
+          .catch((err) => {
+            reject(err);
+          })
+      })
+        .then((result) => {
+          if (result !== null) {
+            arr.push(result.userId);
+            updateTournament(tournamentId, arr)
+              .then((result2) => {
+                console.log(result2);
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          }
+        })
+    })
+    .catch((err) => {
+      console.log("Error posting participants:", err);
+    })
+})
+
 router.post('/createTournament', (req, res) => {
   let body = req.body.data;
   let obj = { "name": body.name, "description": body.description };
   // console.log(obj, 'THIS IS THE OBJJJJJJJ');
   let tournamentId = null;
   let Url = null;
+  let live_image_urls = null;
   axios.post(`${baseUrl}.json?api_key=${api_key}`, obj)
     .then((result) => {
       tournamentId = result.data.tournament.id;
-      Url = result.data.tournament.id;
+      Url = result.data.tournament.url;
+      live_image_urls= result.data.tournament.live_image_url;
       res.send(result.data);
     })
     .then(() => {
       req.body.form.name = body.name;
       req.body.form.tournamentId = tournamentId;
       req.body.form.Url = Url;
+      req.body.form.live_image_url = live_image_urls;
+      req.body.form.status = "pending";
 
       insertTournamentInfo(req.body.form)
         .then((res) => {
@@ -95,6 +141,15 @@ router.post('/startTournament', (req, res) => {
     .then((result) => {
       res.status(200).end();
     })
+    .then(() => {
+      updateTournamentStatus(req.body.tournamentId, "active")
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    })
     .catch((err) => {
       console.log('Erorr starting Tournament', err)
     })
@@ -103,9 +158,9 @@ router.post('/startTournament', (req, res) => {
 router.post('/updateMatch', (req, res) => {
   // console.log("Updating Winner");
   let { participant_id, tournament_id } = req.body;
-
   axios.get(`${baseUrl}/${tournament_id}/matches.json?api_key=${api_key}&state=open&participant_id=${participant_id}`)
-    .then((result) => {
+  .then((result) => {
+    console.log(result.data, "THIS IS THE DAATA");
       let obj = { match: {} };
       let loserId = '';
       let match_id = result.data[0]["match"]["id"];
@@ -152,61 +207,112 @@ router.post('/declareWinner', (req, res) => {
     .then((data) => {
       res.send(data);
     })
+    .then(() => {
+      updateTournamentStatus(tournamentId, "completed")
+        .then((data2) => {
+          console.log(data2);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    })
     .catch((error) => {
-      console.log('this is the error', error);
+      console.log(error);
     })
 })
 //john keanu neo michael blue biden trump
 router.get('/top', (req, res) => {
   let result = {};
   topFiveEarners()
-  .then((data) => {
-    result.earners = data;
-    topFiveWinners()
-    .then((data2) => {
-      result.winners = data2;
-      topFiveRatio()
-      .then((data3) => {
-        result.ratio = data3;
-        res.send(result);
+    .then((data) => {
+      result.earners = data;
+      topFiveWinners()
+        .then((data2) => {
+          result.winners = data2;
+          topFiveRatio()
+            .then((data3) => {
+              result.ratio = data3;
+              res.send(result);
+            })
+        })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+})
+
+router.get('/checkUser', (req, res) => {
+  let { username } = req.query;
+  findUserByName(username)
+    .then((data) => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+})
+
+router.get('/openTournaments', (req, res) => {
+  findTournamentByStatus()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+})
+
+router.get('/organizerData', (req, res) => {
+  let { hostName } = req.query;
+  let result = null;
+  findTournamentByHostName(hostName)
+    .then((data) => {
+      result = data;
+      result.map((x, i) => {
+        let arr = [];
+        let count = 0;
+        x.registered.map((y, j) => {
+          return new Promise((resolve, reject) => {
+            findUserById(y)
+              .then((res) => {
+                count++;
+                arr.push({ name: res.name, id: res.userId, challongeId: res.challongeId });
+                if(count === x.registered.length) {
+                  resolve(arr);
+                }
+              })
+              .catch((error) => {
+                reject(error)
+              })
+          })
+            .then((data) => {
+              result[i].registered = data;
+              if(i === result.length - 1) {
+                res.send(result);
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        })
       })
     })
+    .catch((err) => {
+      console.log(err);
+    })
+})
+
+router.get('/searchedOpen', (req, res) => {
+  let { search } = req.query;
+
+  findSearchedTournaments(search)
+  .then((data) => {
+    res.send(data);
   })
   .catch((err) => {
     console.log(err);
   })
-  // .then(() => {
-  //   topFiveWinners()
-  //   .then((data2) => {
-  //     // console.log(data2);
-  //     // result.winners = data2;
-  //     winners = data2;
-  //   })
-  //   .catch((err2) => {
-  //     console.log(err2)
-  //   })
-  // })
-  // .then(() => {
-  //   topFiveRatio()
-  //   .then((data3) => {
-  //     // console.log('this is the ratio data', data3);
-  //     // result.ratio = data3;
-  //     ratio = data3;
-  //   })
-  //   .catch((err3) => {
-  //     console.log(err3)
-  //   })
-  // })
-  // .then(() => {
-  //   // if(Object.keys(result).length === 2) {
-  //     // console.log("this is the result oBJBJBJ", result, Object.keys(result).length);
-  //   //   res.send(result);
-  //   // }
-  //   console.log("EARNERS", earners, "WINNERS", winners, "RATIO", ratio);
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // })
 })
 
 

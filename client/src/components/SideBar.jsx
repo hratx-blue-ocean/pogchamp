@@ -45,7 +45,7 @@ const Winners = (props) => {
 const Players = (props) => {
   return (
     <div id="topplayers" className="sideBarItem">
-      <h2 className="sideBarHeader">Top Five Players:</h2>
+      <h2 className="sideBarHeader">Top Five Players: W / L</h2>
       <hr></hr>
       {props.players.map((player, i) => {
         return (

@@ -4,11 +4,13 @@ import {
   Container,
   Grid,
   FormControl,
-  TextField
+  TextField,
+  Typography
 } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import axios from 'axios';
 
-const BracketForm = ({ startTournament }) => {
+const BracketForm = ({ startTournament, registerTournament, registerOrStart }) => {
   const [bracketDetails, setBracketDetails] = useState({
     tournamentName: "",
     description: "",
@@ -22,7 +24,7 @@ const BracketForm = ({ startTournament }) => {
     participants: [],
   });
 
-  const [repeat, setRepeat] = useState({repeat: false});
+  const [repeat, setRepeat] = useState("");
 
   const playerName = useRef(null);
   const tournament = useRef(null);
@@ -60,14 +62,20 @@ const BracketForm = ({ startTournament }) => {
       return player.name === incomingPlayer;
     });
 
-    if(repeats.length === 1) {
-      // alert('Player is already in the list!')
-      setRepeat({repeat: true})
+    if (repeats.length === 1) {
+      setRepeat("This player is already in the list!")
     } else {
-      setRepeat({repeat: false});
-      setPlayers({
-        participants: [...playersInTournament.participants, { name: incomingPlayer }],
-      });
+      axios.get(`/api/checkUser/?username=${incomingPlayer}`)
+        .then((data) => {
+          if (data.data === "") {
+            setRepeat("This player does not exist")
+          } else {
+            setRepeat("")
+            setPlayers({
+              participants: [...playersInTournament.participants, { name: incomingPlayer }],
+            });
+          }
+        })
     }
     playerName.current.value = "";
   };
@@ -94,21 +102,30 @@ const BracketForm = ({ startTournament }) => {
     }
   };
 
+  const registerTournaments = (e) => {
+    e.preventDefault();
+    if (players.length <= 3) {
+      alert("Need atleast 4 players to start tournament");
+    } else {
+      registerTournament(bracketDetails, playersInTournament);
+    }
+  };
+
   return (
     <Container maxWidth="lg" className="bracketForm">
       {bracketDetails.show === false ? (
         ""
       ) : (
-        <div>
-          <h4>Tournament Name: {bracketDetails.tournamentName}</h4>
-          <h4>Game Name: {bracketDetails.gameName}</h4>
-          <h4>Number of Players: {bracketDetails.numberOfPlayers}</h4>
-          <h4>Prize Amount: ${bracketDetails.prizeAmount}</h4>
-        </div>
-      )}
+          <div>
+            <h4>Tournament Name: {bracketDetails.tournamentName}</h4>
+            <h4>Game Name: {bracketDetails.gameName}</h4>
+            <h4>Number of Players: {bracketDetails.numberOfPlayers}</h4>
+            <h4>Prize Amount: ${bracketDetails.prizeAmount}</h4>
+          </div>
+        )}
 
       <form autoComplete="off" onSubmit={handleSubmit} className="setup-form">
-      <h3 className="title">Enter Bracket Information</h3>
+        <h3 className="title">Enter Bracket Information</h3>
         <TextField
           required
           label="tournament name"
@@ -154,8 +171,8 @@ const BracketForm = ({ startTournament }) => {
         autoComplete="off"
         onSubmit={handleAddingPlayers}
         className="setup-form"
-        >
-        {repeat.repeat === false ? null : <div>This player is already in the list!</div>}
+      >
+        <Typography variant="subtitle2" style={{color: "red"}}>{repeat}</Typography>
         <TextField
           required
           label="player name"
@@ -172,49 +189,69 @@ const BracketForm = ({ startTournament }) => {
       {playersInTournament.participants === [] ? (
         ""
       ) : (
-        <div>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-            className="bracket-player"
-            item
-            xs={12}
-          >
-            {playersInTournament.participants.map((player, i) => {
-              return (
-                <Grid item xs={3} key={i}>
-                  <h4>{player.name} <DeleteForeverIcon
-                    className="delete"
-                    fontSize="small"
-                    onClick={(e) => {
-                      deletePlayers(e, player.name);
-                    }}
-                  /></h4>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </div>
-      )}
+          <div>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+              className="bracket-player"
+              item
+              xs={12}
+            >
+              {playersInTournament.participants.map((player, i) => {
+                return (
+                  <Grid item xs={3} key={i}>
+                    <h4>{player.name} <DeleteForeverIcon
+                      className="delete"
+                      fontSize="small"
+                      onClick={(e) => {
+                        deletePlayers(e, player.name);
+                      }}
+                    /></h4>
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </div>
+        )}
+
       <form noValidate autoComplete="off" className="setup-form">
         {playersInTournament.participants.length >= 4
-        ?
-        <Button
-          type="submit"
-          variant="contained"
-          onClick={(event) => {
-            handleTournament(event);
-          }}
-        >
-          Start Tournament
+          ?
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={(event) => {
+              handleTournament(event);
+            }}
+          >
+            Start Tournament
         </Button>
-        :
-        <Button type="submit" variant="outlined" disabled>
-        Start Tournament
+          :
+          <Button type="submit" variant="outlined" disabled>
+            Start Tournament
         </Button>
-      }
+        }
+      </form>
+
+      <form noValidate autoComplete="off" className="setup-form">
+        {playersInTournament.participants.length >= 4
+          ?
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={(event) => {
+              registerTournaments(event);
+            }}
+          >
+            Register Tournament
+        </Button>
+          :
+          <Button type="submit" variant="outlined" disabled>
+            Register Tournament
+        </Button>
+        }
       </form>
     </Container>
   );

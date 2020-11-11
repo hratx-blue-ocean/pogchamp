@@ -90,6 +90,9 @@ const OrganizerDashboard = (props) => {
   return (
     <Container>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+        <Button variant="outlined" className="select-style"><Link to="/yourTournaments">Your tournaments</Link></Button>
+        </Grid>
         <Grid item xs={4}>
           <Card className={classes.root}>
             <CardActionArea>

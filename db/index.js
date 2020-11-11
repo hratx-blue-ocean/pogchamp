@@ -57,9 +57,9 @@ const getNewUserId = (callback) => {
 
 // increment (for use after get)
 const incrementTournamentId = (callback) => {
-  db.collection('utility').updateOne({}, {$inc: {tournamentId: 1}})
-  .then((res) => {callback(null, res.result);})
-  .catch((err) => {callback(err);});
+  db.collection('utility').updateOne({}, { $inc: { tournamentId: 1 } })
+    .then((res) => { callback(null, res.result); })
+    .catch((err) => { callback(err); });
 }
 
 // increment (for use after get)
@@ -72,15 +72,15 @@ const incrementUserId = (callback) => {
 // create new tournament
 const createNewTournament = (name, hostName, gameName, location, city, type, playerLimit, rounds, totalPrize, players, callback) => {
   getNewTournamentId((res) => {
-    let date = new Date ();
-    console.log( res, "<--new tournament id");
-    db.collection('tournament').insertOne({name: name, tournamentId: res, hostName: hostName, gameName: gameName, date: date, location: location, city: city, type: type, rounds: rounds, totalPrize: totalPrize, players: players})
-    .then((res) => {
-      incrementTournamentId(callback);
-    })
-    .catch((err) => {
-      callback(err, null);
-    })
+    let date = new Date();
+    console.log(res, "<--new tournament id");
+    db.collection('tournament').insertOne({ name: name, tournamentId: res, hostName: hostName, gameName: gameName, date: date, location: location, city: city, type: type, rounds: rounds, totalPrize: totalPrize, players: players })
+      .then((res) => {
+        incrementTournamentId(callback);
+      })
+      .catch((err) => {
+        callback(err, null);
+      })
   });
 }
 
@@ -120,9 +120,9 @@ const issueWinnings = (name, purse, callback) => {
 
 // handle winner
 const handleWinner = (id, winner, callback) => {
-  db.collection('tournament').updateOne({tournamentId: id}, {$set: {winner: winner}})
-  .then((res) => {callback(res.result);})
-  .catch((err) => {callback(err);});
+  db.collection('tournament').updateOne({ tournamentId: id }, { $set: { winner: winner } })
+    .then((res) => { callback(res.result); })
+    .catch((err) => { callback(err); });
 }
 
 const upWins = (winner, callback) => {
@@ -173,10 +173,29 @@ const insertTournamentInfo = (obj) => {
 
 // UPDATES TOURNAMENT REGISTERED AND WINNER KEY TO USER ID
 const updateTournament = (id, array) => {
-  console.log(array);
+  let tournamentCollection = db.collection('tournament');
+  return new Promise((resolve, reject) => {
+    findTournament(id)
+      .then((data) => {
+        tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "registered": [...data.registered, ...array] } }, (error, res) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(res);
+          }
+
+        })
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+};
+
+const updateTournamentStatus = (id, status) => {
   return new Promise((resolve, reject) => {
     let tournamentCollection = db.collection('tournament');
-    tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "registered": array } }, (error, res) => {
+    tournamentCollection.updateOne({ "tournamentId": id }, { $set: { "status": status } }, (error, res) => {
       if (error) {
         reject(error);
       } else {
@@ -186,14 +205,23 @@ const updateTournament = (id, array) => {
   })
 };
 
+
 // UPDATE USERS ATTENDED
-const updateUserInfo = (username, tournamentId) => {
+const updateUserInfo = (username, tournamentId, challongeId) => {
   return new Promise((resolve, reject) => {
     let userCollection = db.collection('users');
     findUserByName(username)
       .then((data) => {
         if (data !== null) {
-          userCollection.updateOne({ "name": username }, { $set: { "attended": [...data.attended, tournamentId] } }, (error, res) => {
+          let newObj = data;
+          if (newObj.challongeId) {
+            newObj = data.challongeId;
+            newObj[`${tournamentId}`] = { id: challongeId };
+          } else {
+            newObj = {};
+            newObj[`${tournamentId}`] = { id: challongeId };
+          }
+          userCollection.updateOne({ "name": username }, { $set: { "attended": [...data.attended, tournamentId], "challongeId": newObj } }, (error, res) => {
             if (error) {
               reject(error);
             } else {
@@ -229,6 +257,42 @@ const findTournament = (id) => {
   })
 };
 
+const findSearchedTournaments = (str) => {
+  return new Promise((resolve, reject) => {
+    db.collection('tournament').find({
+      $and: [
+        { "type": "bracket" },
+        { "status": "pending" },
+        {
+          $or: [
+            {"hostName": str},
+            {"gameName": str},
+            {"name": str}
+          ]
+        }
+      ]
+    }).toArray((error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    })
+  })
+};
+
+const findTournamentByHostName = (str) => {
+  return new Promise((resolve, reject) => {
+    db.collection('tournament').find({ "hostName": str }).toArray((err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    })
+  })
+};
+
 // FIND USER BY NAME
 const findUserByName = (str) => {
   return new Promise((resolve, reject) => {
@@ -243,6 +307,18 @@ const findUserByName = (str) => {
             resolve(result);
           }
         })
+      }
+    })
+  })
+};
+
+const findTournamentByStatus = () => {
+  return new Promise((resolve, reject) => {
+    db.collection('tournament').find({ "status": "pending" }).toArray((error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
       }
     })
   })
@@ -388,5 +464,9 @@ module.exports = {
   handleWinner,
   topFiveEarners,
   topFiveWinners,
-  topFiveRatio
+  topFiveRatio,
+  updateTournamentStatus,
+  findTournamentByStatus,
+  findTournamentByHostName,
+  findSearchedTournaments
 }

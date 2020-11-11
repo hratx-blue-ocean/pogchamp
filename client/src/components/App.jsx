@@ -15,6 +15,8 @@ import PlayerDashboard from './PlayerDashboard/PlayerDashboard.jsx';
 import SignIn from './SignIn.jsx';
 import SignUp from './SignUp.jsx';
 import SwissController from './swiss/SwissController.jsx';
+import SearchTournaments from './PlayerDashboard/SearchTournaments.jsx';
+import TournamentList from './OrganizerDashboard/TournamentList.jsx';
 
 const App = () => {
   const [login, showLogin] = React.useState(false);
@@ -39,11 +41,17 @@ const App = () => {
       </div>
 
       <Switch>
+        <Route path="/search">
+          <SearchTournaments fakeUserName={"grant"}/>
+        </Route>
+        <Route path="/yourTournaments">
+          <TournamentList hostName={"josh"}/>
+        </Route>
         <Route path="/swiss">
           <SwissController />
         </Route>
         <Route path="/bracket">
-          <BracketComponent />
+          <BracketComponent hostName={"josh"}/>
         </Route>
         <Route path="/organizer-dashboard">
           <OrganizerDashboard />
@@ -57,7 +65,6 @@ const App = () => {
         <Route path="/">
           <LandingPage />
         </Route>
-
       </Switch>
       </div>
       <Footer />
