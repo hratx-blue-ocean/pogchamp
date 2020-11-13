@@ -21,7 +21,8 @@ This application was built with pride by a team of eight full stack software eng
 
   * [Leslie Crunkilton]: Architecture Lead - 
   * [Alec Brock]: Design Lead - 
-  * [Grant Harris]: Product Lead - 
+  * [Grant Harris]: Product Lead - Implemented agile workflow via daily stand-ups, Trello ticketing, and Git workflow.  Managed overall project and client relations with acceptance testing and production milestone meetings.  Created player and organizer dashboards using React, Material UI, and React Router.
+Implemented tournament logic for swiss-style tournaments (win conditions,  tie-break, player cycling).
   * [Rose Bram]: 
   * [Emmanuel Garcia]: Bracket Developer & Routing API -
   * [Daniel Leal]: 
