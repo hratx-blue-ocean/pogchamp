@@ -14,7 +14,7 @@ This application was built with pride by a team of eight full stack software eng
 
 
 ### Swiss Tournament Demo
-![](https://giphy.com/gifs/GtRVHKy8TuAp8iHha5/html5) &nbsp; &nbsp;
+![](https://media.giphy.com/media/GtRVHKy8TuAp8iHha5/giphy.gif) &nbsp; &nbsp;
 
 
 ## Dev Team
