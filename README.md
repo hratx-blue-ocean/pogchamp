@@ -27,7 +27,9 @@ Implemented tournament logic for swiss-style tournaments (win conditions,  tie-b
   * [Emmanuel Garcia]: Bracket Developer & Routing API -
   * [Daniel Leal]: 
   * [Brandon Bates]: 
-  * [Emily White]: 
+  * [Emily White]: Prize distribution, player and organizer dashboard, bracket forms.
+
+
 
 ### Client Deliverables
 
