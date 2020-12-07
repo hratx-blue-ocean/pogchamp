@@ -11,6 +11,7 @@ This application was built with pride by a team of eight full stack software eng
 
 
 ### Bracket Tournament Demo
+![](https://media.giphy.com/media/459ctxIoAAHZYbsla5/giphy.gif) &nbsp; &nbsp;
 
 
 ### Swiss Tournament Demo
